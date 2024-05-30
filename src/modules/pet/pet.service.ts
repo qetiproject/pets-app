@@ -14,12 +14,16 @@ export class PetService {
       {
         id: 1,
         name: 'Ada',
-        category: 'dog',
+        age: 3,
+        animal: 'dog',
+        ownerId: 1,
       },
       {
         id: 2,
         name: 'Dingo',
-        category: 'dog',
+        age: 7,
+        animal: 'dog',
+        ownerId: 2,
       },
     ];
   }
@@ -30,7 +34,9 @@ export class PetService {
     return {
       id,
       name: 'Dingo',
-      category: 'dog',
+      age: 3,
+      animal: 'dog',
+      ownerId: 1,
     };
   }
 
