@@ -6,10 +6,13 @@ import {
   Param,
   Post,
   Query,
+  UseFilters,
 } from '@nestjs/common';
 import { OwnerDto } from './dto/owner.dto';
 import { OwnerService } from './owner.service';
+import { CommonErrorFilter } from '../shared/filters/common-error.filter';
 
+@UseFilters(CommonErrorFilter)
 @Controller('owner')
 export class OwnerController {
   constructor(private readonly ownerService: OwnerService) {}

@@ -6,10 +6,13 @@ import {
   Param,
   Post,
   Query,
+  UseFilters,
 } from '@nestjs/common';
 import { PetService } from './pet.service';
 import { PetDto } from './dto/pet.dto';
+import { CommonErrorFilter } from '../shared/filters/common-error.filter';
 
+@UseFilters(CommonErrorFilter)
 @Controller('pet')
 export class PetController {
   constructor(private readonly petService: PetService) {}

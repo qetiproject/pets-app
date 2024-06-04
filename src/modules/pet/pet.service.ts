@@ -1,10 +1,15 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { PetDto } from './dto/pet.dto';
+import { PetEnum } from './enums/pet';
 
 @Injectable()
 export class PetService {
   addPet(pet: PetDto): string {
     console.log('add pet', pet);
+    throw new HttpException(
+      { errorMessage: 'No Content' },
+      HttpStatus.NO_CONTENT,
+    );
     return 'OK';
   }
 
@@ -15,14 +20,21 @@ export class PetService {
         id: 1,
         name: 'Ada',
         age: 3,
-        animal: 'dog',
+        animal: PetEnum.DOG,
         ownerId: 1,
       },
       {
         id: 2,
         name: 'Dingo',
         age: 7,
-        animal: 'dog',
+        animal: PetEnum.DOG,
+        ownerId: 2,
+      },
+      {
+        id: 3,
+        name: 'Taso',
+        age: 4,
+        animal: PetEnum.CAT,
         ownerId: 2,
       },
     ];
@@ -35,7 +47,7 @@ export class PetService {
       id,
       name: 'Dingo',
       age: 3,
-      animal: 'dog',
+      animal: PetEnum.DOG,
       ownerId: 1,
     };
   }
