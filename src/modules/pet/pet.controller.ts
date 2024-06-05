@@ -7,12 +7,15 @@ import {
   Post,
   Query,
   UseFilters,
+  UseGuards,
 } from '@nestjs/common';
 import { PetService } from './pet.service';
 import { PetDto } from './dto/pet.dto';
 import { CommonErrorFilter } from '../shared/filters/common-error.filter';
+import { AuthGuard } from '../auth/auth.guard';
 
 @UseFilters(CommonErrorFilter)
+@UseGuards(AuthGuard)
 @Controller('pet')
 export class PetController {
   constructor(private readonly petService: PetService) {}

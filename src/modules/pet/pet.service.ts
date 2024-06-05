@@ -6,7 +6,7 @@ import { PetEnum } from './enums/pet';
 export class PetService {
   addPet(pet: PetDto): string {
     console.log('add pet', pet);
- 
+
     return 'OK';
   }
 
