@@ -6,10 +6,7 @@ import { PetEnum } from './enums/pet';
 export class PetService {
   addPet(pet: PetDto): string {
     console.log('add pet', pet);
-    throw new HttpException(
-      { errorMessage: 'No Content' },
-      HttpStatus.NO_CONTENT,
-    );
+ 
     return 'OK';
   }
 
@@ -54,7 +51,10 @@ export class PetService {
 
   deletePet(id: number): string {
     console.log(`Deleted pet with id: ${id}`);
-
     return 'OK';
+    throw new HttpException(
+      { errorMessage: 'Not Found', errorStatus: HttpStatus.NOT_FOUND },
+      HttpStatus.NOT_FOUND,
+    );
   }
 }
