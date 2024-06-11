@@ -20,5 +20,5 @@ export class PetEntity {
     cascade: true,
     nullable: true,
   })
-  owner: OwnerEntity;
+  owner?: OwnerEntity;
 }

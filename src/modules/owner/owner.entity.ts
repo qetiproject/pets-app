@@ -16,5 +16,5 @@ export class OwnerEntity {
   age: number;
 
   @OneToMany(() => PetEntity, (pet) => pet.owner)
-  pets: PetEntity[];
+  pets?: PetEntity[];
 }

@@ -27,7 +27,7 @@ export class PetDto {
   @ApiProperty({
     description: 'ownerId',
   })
-  @IsNumber()
+  @IsString()
   @IsNotEmpty()
-  ownerId: number;
+  ownerId: string;
 }

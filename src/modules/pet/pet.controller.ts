@@ -5,13 +5,13 @@ import {
   Get,
   Param,
   Post,
-  Query,
   UseFilters,
 } from '@nestjs/common';
 import { PetService } from './pet.service';
 import { PetDto } from './dto/pet.dto';
 import { CommonErrorFilter } from '../shared/filters/common-error.filter';
 import { ApiTags } from '@nestjs/swagger';
+import { PetEntity } from './pet.entity';
 
 @ApiTags('Pets')
 @UseFilters(CommonErrorFilter)
@@ -25,18 +25,17 @@ export class PetController {
   }
 
   @Get('/all')
-  getPets(): PetDto[] {
-    console.log(this.petService.getPets());
+  getPets(): Promise<PetEntity[]> {
     return this.petService.getPets();
   }
 
   @Get('/:id')
-  getPetDetails(@Param() { id }): PetDto {
+  getPetDetails(@Param('id') id: string): Promise<PetEntity> {
     return this.petService.getPetDetails(id);
   }
 
-  @Delete('')
-  deletePet(@Query() { id }): string {
+  @Delete('/:id')
+  deletePet(@Param('id') id: string): Promise<any> {
     return this.petService.deletePet(id);
   }
 }

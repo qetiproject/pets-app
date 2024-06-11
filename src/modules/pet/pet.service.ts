@@ -1,6 +1,5 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { PetDto } from './dto/pet.dto';
-import { PetEnum } from './enums/pet';
 import { InjectRepository } from '@nestjs/typeorm';
 import { PetEntity } from './pet.entity';
 import { Repository } from 'typeorm';
@@ -16,47 +15,28 @@ export class PetService {
     return this.petRepository.save<PetDto>(body);
   }
 
-  getPets(): PetDto[] {
-    console.log('Get all pets');
-    return [
-      {
-        name: 'Ada',
-        age: 3,
-        animal: PetEnum.DOG,
-        ownerId: 1,
-      },
-      {
-        name: 'Dingo',
-        age: 7,
-        animal: PetEnum.DOG,
-        ownerId: 2,
-      },
-      {
-        name: 'Taso',
-        age: 4,
-        animal: PetEnum.CAT,
-        ownerId: 2,
-      },
-    ];
+  getPets(): Promise<PetEntity[]> {
+    return this.petRepository.find({ relations: ['owner'] });
   }
 
-  getPetDetails(id: number): PetDto {
-    console.log('Pet details with id: ', id);
-
-    return {
-      name: 'Dingo',
-      age: 3,
-      animal: PetEnum.DOG,
-      ownerId: 1,
-    };
+  getPetDetails(id: string): Promise<PetEntity> {
+    try {
+      return this.petRepository.findOneOrFail({ where: { id } });
+    } catch (error) {
+      throw new HttpException(
+        { error: `Pet with id: ${id} not found` },
+        HttpStatus.NOT_FOUND,
+      );
+    }
   }
-
-  deletePet(id: number): string {
-    console.log(`Deleted pet with id: ${id}`);
-    return 'OK';
-    throw new HttpException(
-      { errorMessage: 'Not Found', errorStatus: HttpStatus.NOT_FOUND },
-      HttpStatus.NOT_FOUND,
-    );
+  async deletePet(id: string): Promise<any> {
+    try {
+      return await this.petRepository.delete(id);
+    } catch (error) {
+      throw new HttpException(
+        { error: `Pet with id: ${id} not found` },
+        HttpStatus.NOT_FOUND,
+      );
+    }
   }
 }
