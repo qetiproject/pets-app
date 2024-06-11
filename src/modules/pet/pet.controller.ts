@@ -20,7 +20,7 @@ export class PetController {
   constructor(private readonly petService: PetService) {}
 
   @Post('/add')
-  addPet(@Body() petDto: PetDto): string {
+  addPet(@Body() petDto: PetDto): Promise<PetDto> {
     return this.petService.addPet(petDto);
   }
 

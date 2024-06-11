@@ -1,13 +1,19 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { PetDto } from './dto/pet.dto';
 import { PetEnum } from './enums/pet';
+import { InjectRepository } from '@nestjs/typeorm';
+import { PetEntity } from './pet.entity';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class PetService {
-  addPet(pet: PetDto): string {
-    console.log('add pet', pet);
+  constructor(
+    @InjectRepository(PetEntity)
+    private readonly petRepository: Repository<PetEntity>,
+  ) {}
 
-    return 'OK';
+  addPet(body: PetDto): Promise<PetDto> {
+    return this.petRepository.save<PetDto>(body);
   }
 
   getPets(): PetDto[] {
