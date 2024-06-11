@@ -1,10 +1,4 @@
-import {
-  Column,
-  Entity,
-  PrimaryGeneratedColumn,
-  ManyToOne,
-  JoinColumn,
-} from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
 import { PetEnum } from './enums/pet';
 import { OwnerEntity } from '../owner/owner.entity';
 
@@ -22,10 +16,6 @@ export class PetEntity {
   @Column()
   animal: PetEnum;
 
-  @ManyToOne(() => OwnerEntity, (owner) => owner.pets, {
-    onDelete: 'CASCADE',
-    onUpdate: 'CASCADE',
-  })
-  @JoinColumn({ name: 'ownerId' })
+  @ManyToOne(() => OwnerEntity, (owner) => owner.pets)
   owner: OwnerEntity;
 }

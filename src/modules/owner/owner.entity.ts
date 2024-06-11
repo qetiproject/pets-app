@@ -18,6 +18,7 @@ export class OwnerEntity {
   @OneToMany(() => PetEntity, (pet) => pet.owner, {
     cascade: true,
     eager: true,
+    nullable: true,
   })
   pets: PetEntity[];
 }

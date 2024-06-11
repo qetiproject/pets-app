@@ -5,7 +5,6 @@ import {
   Get,
   Param,
   Post,
-  Query,
   UseFilters,
 } from '@nestjs/common';
 import { OwnerDto } from './dto/owner.dto';
@@ -30,12 +29,12 @@ export class OwnerController {
   }
 
   @Get('/:id')
-  getOwnerDetails(@Param() { id }): OwnerDto {
+  getOwnerDetails(@Param('id') id: string): Promise<OwnerDto> {
     return this.ownerService.getOwnerDetails(id);
   }
 
-  @Delete('')
-  deleteOwner(@Query() { id }): string {
+  @Delete('/:id')
+  deleteOwner(@Param('id') id: string): Promise<any> {
     return this.ownerService.deleteOwner(id);
   }
 }

@@ -29,7 +29,7 @@ export class PetService {
       );
     }
   }
-  async deletePet(id: string): Promise<any> {
+  async deletePet(id: string): Promise<unknown> {
     try {
       return await this.petRepository.delete(id);
     } catch (error) {
