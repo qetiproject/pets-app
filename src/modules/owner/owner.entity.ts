@@ -15,6 +15,9 @@ export class OwnerEntity {
   @Column()
   age: number;
 
-  @OneToMany(() => PetEntity, (pet) => pet.owner)
-  pets?: PetEntity[];
+  @OneToMany(() => PetEntity, (pet) => pet.owner, {
+    cascade: true,
+    eager: true,
+  })
+  pets: PetEntity[];
 }

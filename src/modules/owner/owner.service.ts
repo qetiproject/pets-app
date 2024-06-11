@@ -1,27 +1,21 @@
 import { Injectable } from '@nestjs/common';
 import { OwnerDto } from './dto/owner.dto';
+import { OwnerEntity } from './owner.entity';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class OwnerService {
-  addOwner(owner: OwnerDto): string {
-    console.log('add owner', owner);
-    return 'OK';
+  constructor(
+    @InjectRepository(OwnerEntity)
+    private readonly ownerRepository: Repository<OwnerEntity>,
+  ) {}
+  addOwner(owner: OwnerDto): Promise<OwnerDto> {
+    return this.ownerRepository.save<OwnerDto>(owner);
   }
 
-  getOwners() {
-    console.log('Get all owner');
-    // return [
-    //   {
-    //     firstName: 'Keti',
-    //     lastName: 'Khetsuriani',
-    //     age: 27,
-    //   },
-    //   {
-    //     firstName: 'Khatia',
-    //     lastName: 'Khetsuriani',
-    //     age: 30,
-    //   },
-    // ];
+  getOwners(): Promise<OwnerDto[]> {
+    return this.ownerRepository.find({ relations: ['pets'] });
   }
 
   getOwnerDetails(id: number): OwnerDto {

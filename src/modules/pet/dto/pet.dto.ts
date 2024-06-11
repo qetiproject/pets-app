@@ -1,6 +1,7 @@
 import { IsEnum, IsNotEmpty, IsNumber, IsString } from 'class-validator';
 import { PetEnum } from '../enums/pet';
 import { ApiProperty } from '@nestjs/swagger';
+import { OwnerDto } from 'src/modules/owner/dto/owner.dto';
 
 export class PetDto {
   @ApiProperty({
@@ -25,9 +26,8 @@ export class PetDto {
   animal: PetEnum;
 
   @ApiProperty({
-    description: 'ownerId',
+    description: 'owner',
   })
-  @IsString()
   @IsNotEmpty()
-  ownerId: string;
+  owner: OwnerDto;
 }

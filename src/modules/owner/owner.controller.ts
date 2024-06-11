@@ -20,12 +20,12 @@ export class OwnerController {
   constructor(private readonly ownerService: OwnerService) {}
 
   @Post('/add')
-  addOwner(@Body() ownerDto: OwnerDto): string {
+  addOwner(@Body() ownerDto: OwnerDto): Promise<OwnerDto> {
     return this.ownerService.addOwner(ownerDto);
   }
 
   @Get('/all')
-  getOwners() {
+  getOwners(): Promise<OwnerDto[]> {
     return this.ownerService.getOwners();
   }
 

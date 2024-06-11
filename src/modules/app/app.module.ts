@@ -5,6 +5,9 @@ import { PetModule } from '../pet/pet.module';
 import { OwnerModule } from '../owner/owner.module';
 import { AuthModule } from '../auth/auth.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { UserEntity } from '../auth/user.entity';
+import { PetEntity } from '../pet/pet.entity';
+import { OwnerEntity } from '../owner/owner.entity';
 
 @Module({
   imports: [
@@ -15,7 +18,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       database: 'pets',
       username: 'postgres',
       password: 'root',
-      entities: [],
+      entities: [UserEntity, PetEntity, OwnerEntity],
       synchronize: true,
       autoLoadEntities: true,
     }),
