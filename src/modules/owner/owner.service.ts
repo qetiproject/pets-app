@@ -8,29 +8,26 @@ export class OwnerService {
     return 'OK';
   }
 
-  getOwners(): OwnerDto[] {
+  getOwners() {
     console.log('Get all owner');
-    return [
-      {
-        id: 1,
-        firstName: 'Keti',
-        lastName: 'Khetsuriani',
-        age: 27,
-      },
-      {
-        id: 2,
-        firstName: 'Khatia',
-        lastName: 'Khetsuriani',
-        age: 30,
-      },
-    ];
+    // return [
+    //   {
+    //     firstName: 'Keti',
+    //     lastName: 'Khetsuriani',
+    //     age: 27,
+    //   },
+    //   {
+    //     firstName: 'Khatia',
+    //     lastName: 'Khetsuriani',
+    //     age: 30,
+    //   },
+    // ];
   }
 
   getOwnerDetails(id: number): OwnerDto {
     console.log('Owner details with id: ', id);
 
     return {
-      id,
       firstName: 'Keti',
       lastName: 'Khetsuriani',
       age: 27,

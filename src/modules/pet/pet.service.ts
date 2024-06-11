@@ -14,21 +14,18 @@ export class PetService {
     console.log('Get all pets');
     return [
       {
-        id: 1,
         name: 'Ada',
         age: 3,
         animal: PetEnum.DOG,
         ownerId: 1,
       },
       {
-        id: 2,
         name: 'Dingo',
         age: 7,
         animal: PetEnum.DOG,
         ownerId: 2,
       },
       {
-        id: 3,
         name: 'Taso',
         age: 4,
         animal: PetEnum.CAT,
@@ -41,7 +38,6 @@ export class PetService {
     console.log('Pet details with id: ', id);
 
     return {
-      id,
       name: 'Dingo',
       age: 3,
       animal: PetEnum.DOG,

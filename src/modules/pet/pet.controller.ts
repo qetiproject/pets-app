@@ -13,7 +13,9 @@ import { PetService } from './pet.service';
 import { PetDto } from './dto/pet.dto';
 import { CommonErrorFilter } from '../shared/filters/common-error.filter';
 import { AuthGuard } from '../auth/auth.guard';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Pets')
 @UseFilters(CommonErrorFilter)
 @UseGuards(AuthGuard)
 @Controller('pet')
@@ -27,6 +29,7 @@ export class PetController {
 
   @Get('/all')
   getPets(): PetDto[] {
+    console.log(this.petService.getPets());
     return this.petService.getPets();
   }
 

@@ -11,7 +11,9 @@ import {
 import { OwnerDto } from './dto/owner.dto';
 import { OwnerService } from './owner.service';
 import { CommonErrorFilter } from '../shared/filters/common-error.filter';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Owner')
 @UseFilters(CommonErrorFilter)
 @Controller('owner')
 export class OwnerController {
@@ -23,7 +25,7 @@ export class OwnerController {
   }
 
   @Get('/all')
-  getOwners(): OwnerDto[] {
+  getOwners() {
     return this.ownerService.getOwners();
   }
 
