@@ -1,14 +1,17 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { PetDto } from './dto/pet.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { PetEntity } from './pet.entity';
 import { Repository } from 'typeorm';
+import { OwnerEntity } from '../owner/owner.entity';
+import { PetDto, PetOwnerDto } from './dto';
 
 @Injectable()
 export class PetService {
   constructor(
     @InjectRepository(PetEntity)
     private readonly petRepository: Repository<PetEntity>,
+    @InjectRepository(OwnerEntity)
+    private readonly ownerRepository: Repository<OwnerEntity>,
   ) {}
 
   addPet(body: PetDto): Promise<PetDto> {
@@ -38,5 +41,17 @@ export class PetService {
         HttpStatus.NOT_FOUND,
       );
     }
+  }
+
+  async petWithOwner(petOwnerDto: PetOwnerDto): Promise<PetDto> {
+    const ownerFromDb = await this.ownerRepository.findOneByOrFail({
+      id: petOwnerDto.ownerId,
+    });
+
+    const petFromDb = await this.petRepository.findOneByOrFail({
+      id: petOwnerDto.petId,
+    });
+
+    return this.petRepository.save({ ...petFromDb, owner: ownerFromDb });
   }
 }

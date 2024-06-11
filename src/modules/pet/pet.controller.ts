@@ -8,10 +8,10 @@ import {
   UseFilters,
 } from '@nestjs/common';
 import { PetService } from './pet.service';
-import { PetDto } from './dto/pet.dto';
 import { CommonErrorFilter } from '../shared/filters/common-error.filter';
 import { ApiTags } from '@nestjs/swagger';
 import { PetEntity } from './pet.entity';
+import { PetDto, PetOwnerDto } from './dto';
 
 @ApiTags('Pets')
 @UseFilters(CommonErrorFilter)
@@ -37,5 +37,10 @@ export class PetController {
   @Delete('/:id')
   deletePet(@Param('id') id: string): Promise<any> {
     return this.petService.deletePet(id);
+  }
+
+  @Post('/owner')
+  getPetWithOwner(@Body() petOwnerDto: PetOwnerDto): Promise<PetDto> {
+    return this.petService.petWithOwner(petOwnerDto);
   }
 }
