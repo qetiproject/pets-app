@@ -1,13 +1,11 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import config from 'src/config';
+import * as Joi from 'joi';
 import { PetModule } from '../pet/pet.module';
 import { OwnerModule } from '../owner/owner.module';
 import { AuthModule } from '../auth/auth.module';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { ConfigModule, ConfigService } from '@nestjs/config';
-import * as Joi from 'joi';
-import config from 'src/config';
 
 @Module({
   imports: [
@@ -29,7 +27,7 @@ import config from 'src/config';
     PetModule,
     OwnerModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [],
+  providers: [],
 })
 export class AppModule {}

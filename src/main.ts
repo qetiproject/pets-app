@@ -8,16 +8,14 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe());
 
   const config = new DocumentBuilder()
-    .setTitle('Pets')
-    .setDescription('Pets API')
+    .setTitle('Pets APP')
+    .setDescription('This app is about pets services')
     .setVersion('1.0')
     .build();
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api', app, document);
+  SwaggerModule.setup('pets-app/document', app, document);
 
-  const PORT = 3000;
-
-  await app.listen(PORT);
+  await app.listen(process.env.PORT);
 }
 
 bootstrap();
