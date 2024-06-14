@@ -6,8 +6,8 @@ export default () => {
     password: process.env.DATABASE_PASSWORD,
     database: process.env.DATABASE_NAME,
     autoLoadEntities: true,
-    synchronize: true,
-    // migrations: ['dist/migrations/*{.ts,.js}'],
-    // migrationsRun: true,
+    synchronize: false,
+    migrations: ['dist/migrations/*{.ts,.js}'],
+    migrationsRun: true,
   };
 };

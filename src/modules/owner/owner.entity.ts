@@ -3,7 +3,7 @@ import { PetEntity } from '../pet/pet.entity';
 
 @Entity('owner')
 export class OwnerEntity {
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryGeneratedColumn({ name: 'id' })
   id: string;
 
   @Column()
