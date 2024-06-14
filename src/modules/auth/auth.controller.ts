@@ -8,7 +8,7 @@ import { ApiTags } from '@nestjs/swagger';
 export class AuthController {
   constructor(private authService: AuthService) {}
   @Post('/signup')
-  login(@Body() authCredentialsDto: AuthCredentialsDto): Promise<void> {
+  signup(@Body() authCredentialsDto: AuthCredentialsDto): Promise<void> {
     return this.authService.signup(authCredentialsDto);
   }
 

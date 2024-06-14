@@ -5,22 +5,25 @@ import { PetModule } from '../pet/pet.module';
 import { OwnerModule } from '../owner/owner.module';
 import { AuthModule } from '../auth/auth.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { UserEntity } from '../auth/user.entity';
-import { PetEntity } from '../pet/pet.entity';
-import { OwnerEntity } from '../owner/owner.entity';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import * as Joi from 'joi';
+import config from 'src/config';
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot({
-      type: 'postgres',
-      host: 'localhost',
-      port: 5432,
-      database: 'pets',
-      username: 'postgres',
-      password: 'root',
-      entities: [UserEntity, PetEntity, OwnerEntity],
-      synchronize: true,
-      autoLoadEntities: true,
+    ConfigModule.forRoot({
+      load: [config],
+      validationSchema: Joi.object({
+        DATABASE_USER: Joi.string().required(),
+        DATABASE_PASSWORD: Joi.string().required(),
+        DATABASE_NAME: Joi.string().required(),
+        DATABASE_PORT: Joi.number().required(),
+      }),
+    }),
+    TypeOrmModule.forRootAsync({
+      imports: [ConfigModule],
+      useFactory: (config: ConfigService) => config.get('db'),
+      inject: [ConfigService],
     }),
     AuthModule,
     PetModule,
