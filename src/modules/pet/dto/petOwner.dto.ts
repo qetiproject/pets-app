@@ -1,9 +1,11 @@
-import { IsNotEmpty } from 'class-validator';
+import { IsNotEmpty, IsString } from 'class-validator';
 
 export class PetOwnerDto {
   @IsNotEmpty()
+  @IsString()
   petId: string;
 
   @IsNotEmpty()
-  ownerId: string;
+  @IsString()
+  username: string;
 }

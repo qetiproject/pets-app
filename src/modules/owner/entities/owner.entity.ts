@@ -1,10 +1,10 @@
+import { PetEntity } from 'src/modules/pet/entities';
 import { Column, Entity, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
-import { PetEntity } from '../pet/pet.entity';
 
 @Entity('owner')
 export class OwnerEntity {
-  @PrimaryGeneratedColumn({ name: 'id' })
-  id: string;
+  @PrimaryGeneratedColumn({ name: 'username' })
+  username: string;
 
   @Column({ name: 'firstName' })
   firstName: string;

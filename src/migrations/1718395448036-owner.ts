@@ -7,10 +7,9 @@ export class Owner1718395448036 implements MigrationInterface {
         name: 'owner',
         columns: [
           {
-            name: 'id',
-            type: 'uuid',
+            name: 'username',
+            type: 'varchar',
             isPrimary: true,
-            default: 'uuid_generate_v4()',
           },
           {
             name: 'firstName',
