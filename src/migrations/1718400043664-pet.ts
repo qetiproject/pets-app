@@ -32,12 +32,17 @@ export class Pet1718400043664 implements MigrationInterface {
             type: 'uuid',
             isNullable: true,
           },
+          {
+            name: 'date',
+            type: 'timestamp',
+            isNullable: false,
+          },
         ],
         foreignKeys: [
           {
             columnNames: ['ownerId'],
             referencedTableName: 'owner',
-            referencedColumnNames: ['id'],
+            referencedColumnNames: ['username'],
             onDelete: 'CASCADE',
             onUpdate: 'CASCADE',
           },

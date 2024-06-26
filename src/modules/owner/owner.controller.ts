@@ -28,13 +28,13 @@ export class OwnerController {
     return this.ownerService.getOwners();
   }
 
-  @Get('/:id')
-  getOwnerDetails(@Param('id') id: string): Promise<OwnerDto> {
-    return this.ownerService.getOwnerDetails(id);
+  @Get('/:username')
+  getOwnerDetails(@Param('username') username: string): Promise<OwnerDto> {
+    return this.ownerService.getOwnerDetails(username);
   }
 
-  @Delete('/:id')
-  deleteOwner(@Param('id') id: string): Promise<any> {
-    return this.ownerService.deleteOwner(id);
+  @Delete('/:username')
+  deleteOwner(@Param('username') username: string): Promise<any> {
+    return this.ownerService.deleteOwner(username);
   }
 }

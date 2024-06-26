@@ -5,5 +5,5 @@ export class PetOwnerDto {
   petId: string;
 
   @IsNotEmpty()
-  ownerId: string;
+  username: string;
 }

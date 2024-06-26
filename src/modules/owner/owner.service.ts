@@ -18,23 +18,23 @@ export class OwnerService {
     return this.ownerRepository.find({ relations: ['pets'] });
   }
 
-  getOwnerDetails(id: string): Promise<OwnerDto> {
+  getOwnerDetails(username: string): Promise<OwnerDto> {
     try {
-      return this.ownerRepository.findOneOrFail({ where: { id } });
+      return this.ownerRepository.findOneOrFail({ where: { username } });
     } catch (error) {
       throw new HttpException(
-        { error: `Owner with id: ${id} not found` },
+        { error: `Owner with username: ${username} not found` },
         HttpStatus.NOT_FOUND,
       );
     }
   }
 
-  async deleteOwner(id: string): Promise<unknown> {
+  async deleteOwner(username: string): Promise<unknown> {
     try {
-      return await this.ownerRepository.delete(id);
+      return await this.ownerRepository.delete(username);
     } catch (error) {
       throw new HttpException(
-        { error: `Owner with id: ${id} not found` },
+        { error: `Owner with username: ${username} not found` },
         HttpStatus.NOT_FOUND,
       );
     }

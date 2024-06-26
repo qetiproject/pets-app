@@ -6,6 +6,7 @@ import * as Joi from 'joi';
 import { PetModule } from '../pet/pet.module';
 import { OwnerModule } from '../owner/owner.module';
 import { AuthModule } from '../auth/auth.module';
+import { UserModule } from '../user/user.module';
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { AuthModule } from '../auth/auth.module';
     AuthModule,
     PetModule,
     OwnerModule,
+    UserModule,
   ],
   controllers: [],
   providers: [],

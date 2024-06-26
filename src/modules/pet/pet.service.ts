@@ -45,7 +45,7 @@ export class PetService {
 
   async petWithOwner(petOwnerDto: PetOwnerDto): Promise<PetDto> {
     const ownerFromDb = await this.ownerRepository.findOneByOrFail({
-      id: petOwnerDto.ownerId,
+      username: petOwnerDto.username,
     });
 
     const petFromDb = await this.petRepository.findOneByOrFail({
