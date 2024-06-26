@@ -1,10 +1,17 @@
-import { Column, Entity, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import {
+  Column,
+  Entity,
+  PrimaryGeneratedColumn,
+  OneToMany,
+  OneToOne,
+} from 'typeorm';
 import { PetEntity } from '../pet/pet.entity';
+import { UserEntity } from '../user/entities';
 
 @Entity('owner')
 export class OwnerEntity {
-  @PrimaryGeneratedColumn({ name: 'id' })
-  id: string;
+  @PrimaryGeneratedColumn({ name: 'username' })
+  username: string;
 
   @Column({ name: 'firstName' })
   firstName: string;
@@ -21,4 +28,9 @@ export class OwnerEntity {
     nullable: true,
   })
   pets: PetEntity[];
+
+  @OneToOne(() => UserEntity, (user) => user.owner, {
+    nullable: true,
+  })
+  user?: UserEntity;
 }

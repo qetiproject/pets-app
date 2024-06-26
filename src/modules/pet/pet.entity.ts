@@ -16,6 +16,9 @@ export class PetEntity {
   @Column({ name: 'animal' })
   animal: PetEnum;
 
+  @Column({ name: 'date' })
+  date: Date;
+
   @ManyToOne(() => OwnerEntity, (owner) => owner.pets)
   owner: OwnerEntity;
 }
