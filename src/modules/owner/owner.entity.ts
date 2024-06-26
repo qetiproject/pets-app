@@ -6,13 +6,13 @@ export class OwnerEntity {
   @PrimaryGeneratedColumn({ name: 'id' })
   id: string;
 
-  @Column()
+  @Column({ name: 'firstName' })
   firstName: string;
 
-  @Column()
+  @Column({ name: 'lastName' })
   lastName: string;
 
-  @Column()
+  @Column({ name: 'age' })
   age: number;
 
   @OneToMany(() => PetEntity, (pet) => pet.owner, {

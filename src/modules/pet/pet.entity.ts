@@ -4,16 +4,16 @@ import { OwnerEntity } from '../owner/owner.entity';
 
 @Entity('pet')
 export class PetEntity {
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryGeneratedColumn({ name: 'id' })
   id: string;
 
-  @Column()
+  @Column({ name: 'name' })
   name: string;
 
-  @Column()
+  @Column({ name: 'age' })
   age: number;
 
-  @Column()
+  @Column({ name: 'animal' })
   animal: PetEnum;
 
   @ManyToOne(() => OwnerEntity, (owner) => owner.pets)
