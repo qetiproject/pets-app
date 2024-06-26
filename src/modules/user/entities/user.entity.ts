@@ -1,5 +1,5 @@
 import { Column, Entity, OneToOne, PrimaryColumn } from 'typeorm';
-import { Role } from 'src/modules/shared/enums';
+import { RoleEnum } from 'src/modules/shared/enums';
 import { OwnerEntity } from 'src/modules/owner/owner.entity';
 
 @Entity('user')
@@ -8,7 +8,7 @@ export class UserEntity {
   username: string;
 
   @Column({ name: 'role' })
-  role: Role;
+  role: RoleEnum;
 
   @Column({ name: 'email' })
   email: string;
