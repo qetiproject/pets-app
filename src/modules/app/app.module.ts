@@ -5,7 +5,7 @@ import config from 'src/config';
 import * as Joi from 'joi';
 import { PetModule } from '../pet/pet.module';
 import { OwnerModule } from '../owner/owner.module';
-import { AuthModule } from '../auth/auth.module';
+// import { AuthModule } from '../auth/auth.module';
 
 @Module({
   imports: [
@@ -23,7 +23,7 @@ import { AuthModule } from '../auth/auth.module';
       useFactory: (config: ConfigService) => config.get('db'),
       inject: [ConfigService],
     }),
-    AuthModule,
+    // AuthModule,
     PetModule,
     OwnerModule,
   ],

@@ -1,8 +1,8 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { OwnerDto } from './dto/owner.dto';
-import { OwnerEntity } from './owner.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { OwnerEntity } from './entities';
 
 @Injectable()
 export class OwnerService {

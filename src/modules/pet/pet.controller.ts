@@ -10,7 +10,7 @@ import {
 import { PetService } from './pet.service';
 import { CommonErrorFilter } from '../shared/filters/common-error.filter';
 import { ApiTags } from '@nestjs/swagger';
-import { PetEntity } from './pet.entity';
+import { PetEntity } from './entities/pet.entity';
 import { PetDto, PetOwnerDto } from './dto';
 
 @ApiTags('Pets')

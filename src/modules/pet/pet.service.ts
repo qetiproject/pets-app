@@ -1,9 +1,9 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { PetEntity } from './pet.entity';
+import { PetEntity } from './entities/pet.entity';
 import { Repository } from 'typeorm';
-import { OwnerEntity } from '../owner/owner.entity';
 import { PetDto, PetOwnerDto } from './dto';
+import { OwnerEntity } from '../owner/entities';
 
 @Injectable()
 export class PetService {

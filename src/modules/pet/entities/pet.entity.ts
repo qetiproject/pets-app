@@ -1,5 +1,5 @@
 import { Column, Entity, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
-import { PetEnum } from './enums/pet';
+import { PetEnum } from '../enums/pet.enum';
 import { OwnerEntity } from '../owner/owner.entity';
 
 @Entity('pet')

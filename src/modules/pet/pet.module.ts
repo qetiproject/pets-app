@@ -3,7 +3,7 @@ import { PetService } from './pet.service';
 import { PetController } from './pet.controller';
 import { AuthModule } from '../auth/auth.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { PetEntity } from './pet.entity';
+import { PetEntity } from './entities/pet.entity';
 import { OwnerEntity } from '../owner/owner.entity';
 
 @Module({
