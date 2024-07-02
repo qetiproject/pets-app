@@ -1,6 +1,11 @@
-import { MigrationInterface, QueryRunner, Table } from 'typeorm';
+import {
+  MigrationInterface,
+  QueryRunner,
+  Table,
+  TableForeignKey,
+} from 'typeorm';
 
-export class Owner1719418158968 implements MigrationInterface {
+export class Owner1719950507567 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
@@ -27,7 +32,22 @@ export class Owner1719418158968 implements MigrationInterface {
             type: 'int',
             isNullable: false,
           },
+          {
+            name: 'balance',
+            type: 'int',
+            isNullable: false,
+          },
         ],
+      }),
+    );
+    await queryRunner.createForeignKey(
+      'owner',
+      new TableForeignKey({
+        columnNames: ['username'],
+        referencedColumnNames: ['username'],
+        referencedTableName: 'user',
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
       }),
     );
   }

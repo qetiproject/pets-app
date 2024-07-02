@@ -1,6 +1,7 @@
 import { Column, Entity, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
 import { PetEnum } from './enums/pet';
 import { OwnerEntity } from '../owner/owner.entity';
+import { PetShopEntity } from '../pet_shop/entities/pet_shop.entity';
 
 @Entity('pet')
 export class PetEntity {
@@ -16,9 +17,12 @@ export class PetEntity {
   @Column({ name: 'animal' })
   animal: PetEnum;
 
-  @Column({ name: 'date' })
-  date: Date;
+  @Column({ name: 'price' })
+  price: number;
 
   @ManyToOne(() => OwnerEntity, (owner) => owner.pets)
-  owner: OwnerEntity;
+  owner?: OwnerEntity;
+
+  @ManyToOne(() => PetShopEntity, (pet_shop) => pet_shop.pets)
+  pet_shop?: PetShopEntity;
 }
