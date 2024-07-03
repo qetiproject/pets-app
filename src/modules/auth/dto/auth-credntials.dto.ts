@@ -1,4 +1,13 @@
-import { IsString, Matches, MaxLength, MinLength } from 'class-validator';
+import {
+  // IsEmail,
+  // IsEnum,
+  // IsNotEmpty,
+  IsString,
+  Matches,
+  MaxLength,
+  MinLength,
+} from 'class-validator';
+// import { RoleEnum } from 'src/modules/shared/enums';
 
 export class AuthCredentialsDto {
   @IsString()
@@ -13,4 +22,12 @@ export class AuthCredentialsDto {
     message: 'password is too weak',
   })
   password: string;
+
+  // @IsEmail()
+  // @IsNotEmpty()
+  // email: string;
+
+  // @IsNotEmpty()
+  // @IsEnum(RoleEnum)
+  // role: RoleEnum;
 }

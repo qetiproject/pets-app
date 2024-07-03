@@ -23,6 +23,6 @@ export class PetEntity {
   @ManyToOne(() => OwnerEntity, (owner) => owner.pets)
   owner?: OwnerEntity;
 
-  @ManyToOne(() => PetShopEntity, (pet_shop) => pet_shop.pets)
-  pet_shop?: PetShopEntity;
+  @ManyToOne(() => PetShopEntity, (petShop) => petShop.pets)
+  petShop?: PetShopEntity;
 }

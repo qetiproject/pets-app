@@ -4,8 +4,8 @@ import {
   Column,
   Entity,
   PrimaryGeneratedColumn,
-  ManyToMany,
   OneToMany,
+  ManyToMany,
   JoinTable,
 } from 'typeorm';
 
@@ -14,21 +14,19 @@ export class AccessoryEntity {
   @PrimaryGeneratedColumn({ name: 'id' })
   id: string;
 
-  @OneToMany(() => CategoryEntity, (categories) => categories.accessory, {
+  @Column({ name: 'brand' })
+  brand: string;
+
+  @JoinTable({ name: 'accessories_categories' })
+  @ManyToMany(() => CategoryEntity, (categories) => categories.accessories, {
     cascade: true,
-    eager: true,
     nullable: true,
   })
   categories: CategoryEntity[];
 
-  @Column({ name: 'brand' })
-  brand: string;
-
-  @JoinTable({ name: 'accessory_shop_items' })
-  @ManyToMany(() => ShopItemEntity, (shop_items) => shop_items.accessoryId, {
+  @OneToMany(() => ShopItemEntity, (shopItems) => shopItems.accessoryId, {
     cascade: true,
-    eager: true,
     nullable: true,
   })
-  shop_items: ShopItemEntity[];
+  shopItems: ShopItemEntity[];
 }

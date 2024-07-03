@@ -1,13 +1,6 @@
 import { PetEntity } from 'src/modules/pet/pet.entity';
 import { ShopItemEntity } from 'src/modules/shop_items/entities/shop_item.entity';
-import {
-  Entity,
-  PrimaryGeneratedColumn,
-  Column,
-  OneToMany,
-  ManyToMany,
-  JoinTable,
-} from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
 
 @Entity('pet_shop')
 export class PetShopEntity {
@@ -20,10 +13,9 @@ export class PetShopEntity {
   @Column({ name: 'active' })
   active: boolean;
 
-  @OneToMany(() => PetEntity, (pets) => pets.pet_shop)
+  @OneToMany(() => PetEntity, (pets) => pets.petShop)
   pets?: PetEntity[];
 
-  @JoinTable({ name: 'pet_shop_items' })
-  @ManyToMany(() => ShopItemEntity, (shop_items) => shop_items.pet_shop)
-  shop_items: ShopItemEntity[];
+  @OneToMany(() => ShopItemEntity, (shopItems) => shopItems.petShop)
+  shopItems: ShopItemEntity[];
 }

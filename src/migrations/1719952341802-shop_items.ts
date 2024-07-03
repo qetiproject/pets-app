@@ -1,4 +1,9 @@
-import { MigrationInterface, QueryRunner, Table } from 'typeorm';
+import {
+  MigrationInterface,
+  QueryRunner,
+  Table,
+  TableForeignKey,
+} from 'typeorm';
 
 export class ShopItems1719952341802 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
@@ -7,13 +12,13 @@ export class ShopItems1719952341802 implements MigrationInterface {
         name: 'shop_items',
         columns: [
           {
-            name: 'shopId',
+            name: 'shop_id',
             type: 'varchar',
             isNullable: false,
             isPrimary: true,
           },
           {
-            name: 'accessoryId',
+            name: 'accessory_id',
             type: 'varchar',
             isNullable: false,
             isPrimary: true,
@@ -25,57 +30,14 @@ export class ShopItems1719952341802 implements MigrationInterface {
           },
           {
             name: 'active',
-            type: 'varchar',
+            type: 'boolean',
             isNullable: false,
           },
         ],
         foreignKeys: [
           {
-            columnNames: ['shopId'],
-            referencedTableName: 'accessories_shop_items',
-            referencedColumnNames: ['shopId'],
-            onDelete: 'CASCADE',
-            onUpdate: 'CASCADE',
-          },
-          {
-            columnNames: ['accessoryId'],
-            referencedTableName: 'accessories_shop_items',
-            referencedColumnNames: ['accessoryId'],
-            onDelete: 'CASCADE',
-            onUpdate: 'CASCADE',
-          },
-        ],
-      }),
-    );
-
-    await queryRunner.createTable(
-      new Table({
-        name: 'accessories_shop_items',
-        columns: [
-          {
-            name: 'shopId',
-            type: 'varchar',
-            isNullable: false,
-            isPrimary: true,
-          },
-          {
-            name: 'accessoryId',
-            type: 'varchar',
-            isNullable: false,
-            isPrimary: true,
-          },
-        ],
-        foreignKeys: [
-          {
-            columnNames: ['shopId'],
-            referencedTableName: 'shop_items',
-            referencedColumnNames: ['shopId'],
-            onDelete: 'CASCADE',
-            onUpdate: 'CASCADE',
-          },
-          {
-            columnNames: ['accessoryId'],
-            referencedTableName: 'accessories',
+            columnNames: ['shop_id'],
+            referencedTableName: 'pet_shop',
             referencedColumnNames: ['id'],
             onDelete: 'CASCADE',
             onUpdate: 'CASCADE',
@@ -83,9 +45,21 @@ export class ShopItems1719952341802 implements MigrationInterface {
         ],
       }),
     );
+
+    await queryRunner.createForeignKey(
+      'pet',
+      new TableForeignKey({
+        columnNames: ['shopId'],
+        referencedTableName: 'pet-shop',
+        referencedColumnNames: ['id'],
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
+      }),
+    );
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.dropTable('shop_items');
+    await queryRunner.dropTable('accessories_shop_items');
   }
 }

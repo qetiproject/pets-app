@@ -11,7 +11,7 @@ export class OwnerService {
     private readonly ownerRepository: Repository<OwnerEntity>,
   ) {}
   addOwner(owner: OwnerDto): Promise<OwnerDto> {
-    return this.ownerRepository.save<OwnerDto>(owner);
+    return this.ownerRepository.save<any>(owner);
   }
 
   getOwners(): Promise<OwnerDto[]> {

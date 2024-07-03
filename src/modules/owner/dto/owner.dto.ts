@@ -16,4 +16,8 @@ export class OwnerDto {
   @IsNumber()
   @IsNotEmpty()
   age: number;
+
+  @IsNumber()
+  @IsNotEmpty()
+  balance: number;
 }

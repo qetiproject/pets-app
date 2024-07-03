@@ -1,10 +1,10 @@
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
-export class Pet1719950771729 implements MigrationInterface {
+export class Category1720027920992 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: 'pet',
+        name: 'category',
         columns: [
           {
             name: 'id',
@@ -18,36 +18,43 @@ export class Pet1719950771729 implements MigrationInterface {
             isNullable: false,
           },
           {
-            name: 'age',
+            name: 'description',
             type: 'int',
             isNullable: false,
           },
+        ],
+      }),
+    );
+
+    await queryRunner.createTable(
+      new Table({
+        name: 'accessories_category',
+        columns: [
           {
-            name: 'animal',
+            name: 'category_id',
             type: 'varchar',
             isNullable: false,
+            isPrimary: true,
           },
           {
-            name: 'owner_id',
+            name: 'accessory_id',
             type: 'varchar',
-            isNullable: true,
-          },
-          {
-            name: 'price',
-            type: 'int',
             isNullable: false,
-          },
-          {
-            name: 'shop_id',
-            type: 'varchar',
-            isNullable: true,
+            isPrimary: true,
           },
         ],
         foreignKeys: [
           {
-            columnNames: ['owner_id'],
-            referencedTableName: 'owner',
-            referencedColumnNames: ['username'],
+            columnNames: ['category_id'],
+            referencedTableName: 'category',
+            referencedColumnNames: ['id'],
+            onDelete: 'CASCADE',
+            onUpdate: 'CASCADE',
+          },
+          {
+            columnNames: ['accessory_id'],
+            referencedTableName: 'accessory',
+            referencedColumnNames: ['id'],
             onDelete: 'CASCADE',
             onUpdate: 'CASCADE',
           },
@@ -57,6 +64,7 @@ export class Pet1719950771729 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('pet');
+    await queryRunner.dropTable('accessories_category');
+    await queryRunner.dropTable('category');
   }
 }

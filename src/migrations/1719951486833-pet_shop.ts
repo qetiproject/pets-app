@@ -1,4 +1,9 @@
-import { MigrationInterface, QueryRunner, Table } from 'typeorm';
+import {
+  MigrationInterface,
+  QueryRunner,
+  Table,
+  TableForeignKey,
+} from 'typeorm';
 
 export class PetShop1719951486833 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
@@ -19,55 +24,21 @@ export class PetShop1719951486833 implements MigrationInterface {
           },
           {
             name: 'active',
-            type: 'varchar',
+            type: 'boolean',
             isNullable: false,
-          },
-        ],
-        foreignKeys: [
-          {
-            columnNames: ['id'],
-            referencedTableName: 'pet_shop_items',
-            referencedColumnNames: ['id'],
-            onDelete: 'CASCADE',
-            onUpdate: 'CASCADE',
           },
         ],
       }),
     );
 
-    await queryRunner.createTable(
-      new Table({
-        name: 'pet_shop_items',
-        columns: [
-          {
-            name: 'shopId',
-            type: 'varchar',
-            isNullable: false,
-            isPrimary: true,
-          },
-          {
-            name: 'id',
-            type: 'varchar',
-            isNullable: false,
-            isPrimary: true,
-          },
-        ],
-        foreignKeys: [
-          {
-            columnNames: ['shopId'],
-            referencedTableName: 'shop_items',
-            referencedColumnNames: ['shopId'],
-            onDelete: 'CASCADE',
-            onUpdate: 'CASCADE',
-          },
-          {
-            columnNames: ['id'],
-            referencedTableName: 'pet_shop',
-            referencedColumnNames: ['id'],
-            onDelete: 'CASCADE',
-            onUpdate: 'CASCADE',
-          },
-        ],
+    await queryRunner.createForeignKey(
+      'pet',
+      new TableForeignKey({
+        columnNames: ['shop_id'],
+        referencedTableName: 'pet-shop',
+        referencedColumnNames: ['id'],
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
       }),
     );
   }
