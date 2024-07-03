@@ -44,8 +44,8 @@ export class Owner1719950507567 implements MigrationInterface {
       'owner',
       new TableForeignKey({
         columnNames: ['username'],
-        referencedColumnNames: ['username'],
         referencedTableName: 'user',
+        referencedColumnNames: ['username'],
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE',
       }),

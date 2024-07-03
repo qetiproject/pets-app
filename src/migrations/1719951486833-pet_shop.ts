@@ -23,6 +23,15 @@ export class PetShop1719951486833 implements MigrationInterface {
             isNullable: false,
           },
         ],
+        foreignKeys: [
+          {
+            columnNames: ['id'],
+            referencedTableName: 'pet_shop_items',
+            referencedColumnNames: ['id'],
+            onDelete: 'CASCADE',
+            onUpdate: 'CASCADE',
+          },
+        ],
       }),
     );
 

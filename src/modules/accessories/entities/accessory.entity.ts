@@ -1,12 +1,5 @@
-import { ShopItemsEntity } from 'src/modules/shop_items/entities/shop_item.entity';
-import {
-  Column,
-  Entity,
-  PrimaryGeneratedColumn,
-  ManyToMany,
-  OneToOne,
-} from 'typeorm';
-
+import { ShopItemEntity } from 'src/modules/shop_items/entities/shop_item.entity';
+import { Column, Entity, PrimaryGeneratedColumn, ManyToMany } from 'typeorm';
 
 @Entity('accessory')
 export class AccessoryEntity {
@@ -19,11 +12,10 @@ export class AccessoryEntity {
   @Column({ name: 'brand' })
   brand: string;
 
-  @ManyToMany(() => ShopItemsEntity, (shop_items) => shop_items.accessoryId, {
+  @ManyToMany(() => ShopItemEntity, (shop_items) => shop_items.accessoryId, {
     cascade: true,
     eager: true,
     nullable: true,
   })
-  shop_items: ShopItemsEntity[];
-
+  shop_items: ShopItemEntity[];
 }

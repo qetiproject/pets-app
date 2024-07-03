@@ -1,5 +1,5 @@
 import { PetEntity } from 'src/modules/pet/pet.entity';
-import { ShopItemsEntity } from 'src/modules/shop_items/entities/shop_item.entity';
+import { ShopItemEntity } from 'src/modules/shop_items/entities/shop_item.entity';
 import {
   Entity,
   PrimaryGeneratedColumn,
@@ -22,6 +22,6 @@ export class PetShopEntity {
   @OneToMany(() => PetEntity, (pets) => pets.pet_shop)
   pets?: PetEntity[];
 
-  @ManyToMany(() => ShopItemsEntity, (shop_items) => shop_items.pet_shop)
-  shop_items: ShopItemsEntity[];
+  @ManyToMany(() => ShopItemEntity, (shop_items) => shop_items.pet_shop)
+  shop_items: ShopItemEntity[];
 }

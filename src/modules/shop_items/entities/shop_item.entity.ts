@@ -2,7 +2,7 @@ import { PetShopEntity } from 'src/modules/pet_shop/entities/pet_shop.entity';
 import { Entity, PrimaryGeneratedColumn, Column, ManyToMany } from 'typeorm';
 
 @Entity('shop_item')
-export class ShopItemsEntity {
+export class ShopItemEntity {
   @PrimaryGeneratedColumn({ name: 'shopId' })
   shopId: string;
 

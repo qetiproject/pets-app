@@ -29,6 +29,22 @@ export class ShopItems1719952341802 implements MigrationInterface {
             isNullable: false,
           },
         ],
+        foreignKeys: [
+          {
+            columnNames: ['shopId'],
+            referencedTableName: 'accessories_shop_items',
+            referencedColumnNames: ['shopId'],
+            onDelete: 'CASCADE',
+            onUpdate: 'CASCADE',
+          },
+          {
+            columnNames: ['accessoryId'],
+            referencedTableName: 'accessories_shop_items',
+            referencedColumnNames: ['accessoryId'],
+            onDelete: 'CASCADE',
+            onUpdate: 'CASCADE',
+          },
+        ],
       }),
     );
 
