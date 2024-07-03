@@ -1,3 +1,4 @@
+import { CategoryEntity } from 'src/modules/category/entities/category.entity';
 import { ShopItemEntity } from 'src/modules/shop_items/entities/shop_item.entity';
 import { Column, Entity, PrimaryGeneratedColumn, ManyToMany } from 'typeorm';
 
@@ -7,7 +8,7 @@ export class AccessoryEntity {
   id: string;
 
   @Column({ name: 'categories' })
-  categories: string[];
+  categories: CategoryEntity[];
 
   @Column({ name: 'brand' })
   brand: string;
