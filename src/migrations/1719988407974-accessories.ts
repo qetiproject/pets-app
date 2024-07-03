@@ -34,7 +34,7 @@ export class Accessories1719988407974 implements MigrationInterface {
       'shop_items',
       new TableForeignKey({
         columnNames: ['accessory_id'],
-        referencedTableName: 'accesory',
+        referencedTableName: 'accessory',
         referencedColumnNames: ['id'],
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE',

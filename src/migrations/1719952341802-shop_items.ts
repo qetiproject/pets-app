@@ -49,8 +49,8 @@ export class ShopItems1719952341802 implements MigrationInterface {
     await queryRunner.createForeignKey(
       'pet',
       new TableForeignKey({
-        columnNames: ['shopId'],
-        referencedTableName: 'pet-shop',
+        columnNames: ['shop_id'],
+        referencedTableName: 'pet_shop',
         referencedColumnNames: ['id'],
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE',
@@ -60,6 +60,5 @@ export class ShopItems1719952341802 implements MigrationInterface {
 
   public async down(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.dropTable('shop_items');
-    await queryRunner.dropTable('accessories_shop_items');
   }
 }

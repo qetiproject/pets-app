@@ -14,7 +14,6 @@ export class CategoryEntity {
 
   @ManyToMany(() => AccessoryEntity, (accessory) => accessory.categories, {
     nullable: true,
-    cascade: true,
   })
   accessories: AccessoryEntity[];
 }

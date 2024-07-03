@@ -35,7 +35,8 @@ export class PetShop1719951486833 implements MigrationInterface {
       'pet',
       new TableForeignKey({
         columnNames: ['shop_id'],
-        referencedTableName: 'pet-shop',
+        name: 'FK_pet_shop',
+        referencedTableName: 'pet_shop',
         referencedColumnNames: ['id'],
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE',
