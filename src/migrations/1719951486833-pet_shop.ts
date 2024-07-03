@@ -1,12 +1,11 @@
-import { table } from 'console';
-import { MigrationInterface, QueryRunner } from 'typeorm';
+import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
 export class PetShop1719951486833 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
-      new table({
+      new Table({
         name: 'pet_shop',
-        column: [
+        columns: [
           {
             name: 'id',
             type: 'varchar',
@@ -28,7 +27,7 @@ export class PetShop1719951486833 implements MigrationInterface {
     );
 
     await queryRunner.createTable(
-      new table({
+      new Table({
         name: 'pet_shop_items',
         columns: [
           {

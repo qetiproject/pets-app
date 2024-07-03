@@ -1,12 +1,11 @@
-import { table } from 'console';
-import { MigrationInterface, QueryRunner } from 'typeorm';
+import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
-export class Accessories1719953084253 implements MigrationInterface {
+export class Accessories1719988407974 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
-      new table({
+      new Table({
         name: 'accessory',
-        column: [
+        columns: [
           {
             name: 'id',
             type: 'varchar',
