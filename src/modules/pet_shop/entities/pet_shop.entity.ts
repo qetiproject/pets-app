@@ -6,6 +6,7 @@ import {
   Column,
   OneToMany,
   ManyToMany,
+  JoinTable,
 } from 'typeorm';
 
 @Entity('pet_shop')
@@ -22,6 +23,7 @@ export class PetShopEntity {
   @OneToMany(() => PetEntity, (pets) => pets.pet_shop)
   pets?: PetEntity[];
 
+  @JoinTable({ name: 'pet_shop_items' })
   @ManyToMany(() => ShopItemEntity, (shop_items) => shop_items.pet_shop)
   shop_items: ShopItemEntity[];
 }

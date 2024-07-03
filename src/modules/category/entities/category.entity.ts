@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { AccessoryEntity } from 'src/modules/accessories/entities/accessory.entity';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
 
 @Entity('category')
 export class CategoryEntity {
@@ -10,4 +11,9 @@ export class CategoryEntity {
 
   @Column({ name: 'description' })
   description: boolean;
+
+  @OneToMany(() => AccessoryEntity, (accessory) => accessory.categories, {
+    nullable: true,
+  })
+  accessory: AccessoryEntity[];
 }
