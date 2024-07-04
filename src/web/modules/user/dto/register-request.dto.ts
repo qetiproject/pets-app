@@ -10,19 +10,21 @@ import {
 } from 'class-validator';
 
 export class RegisterRequestDto {
+  @IsNotEmpty()
   @IsString()
   @MinLength(4)
   @MaxLength(20)
   username: string;
 
-  @IsEmail()
   @IsNotEmpty()
+  @IsEmail()
   email: string;
 
   @IsNotEmpty()
   @IsEnum(RoleEnum)
   role: RoleEnum;
 
+  @IsNotEmpty()
   @IsString()
   @MinLength(8)
   @MaxLength(32)

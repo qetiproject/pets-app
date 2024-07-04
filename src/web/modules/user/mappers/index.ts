@@ -1,1 +1,1 @@
-export * from './response.mappers';
+export * from './response.mapper';

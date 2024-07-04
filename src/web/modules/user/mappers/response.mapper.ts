@@ -1,4 +1,5 @@
 import { RegisterResponseDto } from '../dto';
+import { LoginResponseDto } from '../dto/login-response.dto';
 import { UserEntity } from '../entities';
 
 export class ResponseMapper {
@@ -11,13 +12,13 @@ export class ResponseMapper {
     };
   }
 
-  //   loginResponse(userFromDb: UserEntity, accessToken: string): LoginResponseDto {
-  //     return {
-  //       accessToken,
-  //       email: userFromDb.email,
-  //       role: userFromDb.role,
-  //       status: 'OK',
-  //       username: userFromDb.username,
-  //     };
-  //   }
+  loginResponse(userFromDb: UserEntity, accessToken: string): LoginResponseDto {
+    return {
+      accessToken,
+      email: userFromDb.email,
+      role: userFromDb.role,
+      status: 'OK',
+      username: userFromDb.username,
+    };
+  }
 }
