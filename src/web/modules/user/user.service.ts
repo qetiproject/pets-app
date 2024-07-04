@@ -16,6 +16,7 @@ import {
   RegisterRequestDto,
 } from './dto';
 import { ResponseMapper } from './mappers/response.mapper';
+import { UserResponseDto } from './dto/user-response.dto';
 
 @Injectable()
 export class UserService {
@@ -73,5 +74,9 @@ export class UserService {
     } else {
       throw new UnauthorizedException('Please check your login credentials');
     }
+  }
+
+  async getUsers(): Promise<UserResponseDto[]> {
+    return this.userRepository.find();
   }
 }
