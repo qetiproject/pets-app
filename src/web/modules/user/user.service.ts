@@ -48,8 +48,7 @@ export class UserService {
       }
     }
 
-    const registerdUser =
-      await this.userRepository.save<UserEntity>(registerDto);
+    const registerdUser = await this.userRepository.save<UserEntity>(user);
 
     return this.responseMappers.registerResponse(registerdUser);
   }

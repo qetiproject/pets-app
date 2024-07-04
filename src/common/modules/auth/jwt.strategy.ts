@@ -9,7 +9,7 @@ import { Repository } from 'typeorm';
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
   constructor(
-    @InjectRepository(UserEntity) private usersService: Repository<UserEntity>,
+    @InjectRepository(UserEntity) private userService: Repository<UserEntity>,
   ) {
     super({
       secretOrKey: process.env.SECRET_KEY,
@@ -17,10 +17,10 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     });
   }
 
-  async validate(payload: JwtPayload): Promise<UserEntity> {
+  async validate(payload: JwtPayload): Promise<unknown> {
     const { username } = payload;
 
-    const user: UserEntity = await this.usersService.findOne({
+    const user: UserEntity = await this.userService.findOne({
       where: { username },
     });
 
