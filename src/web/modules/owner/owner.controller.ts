@@ -3,24 +3,46 @@ import {
   Controller,
   Delete,
   Get,
+  HttpException,
+  HttpStatus,
   Param,
   Post,
   UseFilters,
+  UseGuards,
 } from '@nestjs/common';
 import { OwnerDto } from './dto/owner.dto';
 import { OwnerService } from './owner.service';
 import { CommonErrorFilter } from '../../../common/filters/common-error.filter';
 import { ApiTags } from '@nestjs/swagger';
+import { AuthGuard } from '@nestjs/passport';
 
-@ApiTags('Owner')
 @UseFilters(CommonErrorFilter)
+@UseGuards(AuthGuard())
+@ApiTags('Owner')
 @Controller('owner')
 export class OwnerController {
   constructor(private readonly ownerService: OwnerService) {}
 
   @Post('/add')
-  addOwner(@Body() ownerDto: OwnerDto): Promise<OwnerDto> {
-    return this.ownerService.addOwner(ownerDto);
+  async addOwner(@Body() ownerDto: OwnerDto): Promise<any> {
+    // return this.ownerService.addOwner(ownerDto);
+
+    try {
+      const newOwner = await this.ownerService.addOwner(ownerDto);
+      console.log(newOwner)
+      return newOwner; // Return the newly created owner
+    } catch (error) {
+      if (error instanceof HttpException) {
+        throw error; // Re-throw HTTP exceptions as-is
+      } else {
+        // Handle unexpected errors
+        console.error(error, "error");
+        throw new HttpException(
+          { error: 'Failed to add owner' },
+          HttpStatus.INTERNAL_SERVER_ERROR,
+        );
+      }
+    }
   }
 
   @Get('/all')

@@ -51,9 +51,8 @@ export class UserService {
       );
     }
 
-    const registerdUser = await this.userRepository.save<UserEntity>(user);
-
-    return this.responseMappers.registerResponse(registerdUser);
+    const registeredUser = await this.userRepository.save<UserEntity>(user);
+    return this.responseMappers.registerResponse(registeredUser);
   }
 
   async login(loginDto: LoginRequestDto): Promise<LoginResponseDto> {

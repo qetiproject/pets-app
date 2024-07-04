@@ -1,12 +1,46 @@
-import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
-import { Observable } from 'rxjs';
+import {
+  CanActivate,
+  ExecutionContext,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
+import { Reflector } from '@nestjs/core';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
-  canActivate(
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    context: ExecutionContext,
-  ): boolean | Promise<boolean> | Observable<boolean> {
-    throw new Error('Method not implemented.');
+  constructor(
+    private readonly jwtService: JwtService,
+    private readonly reflector: Reflector,
+  ) {}
+
+  private getToken(headers: any): string {
+    const [type, token] = headers.authorization?.split(' ');
+
+    if (!(type === 'Bearer')) {
+      throw new Error();
+    }
+
+    return token;
+  }
+
+  async canActivate(context: ExecutionContext): Promise<boolean> {
+    const request = context.switchToHttp().getRequest();
+    let token;
+    try {
+      token = this.getToken(request.headers);
+    } catch (e) {
+      throw new UnauthorizedException();
+    }
+
+    request['user'] = await this.jwtService
+      .verifyAsync(token, {
+        secret: process.env.SECRET_KEY,
+      })
+      .catch(() => {
+        throw new UnauthorizedException();
+      });
+
+    return true;
   }
 }

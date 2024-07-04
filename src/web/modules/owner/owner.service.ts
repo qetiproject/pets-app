@@ -3,15 +3,38 @@ import { OwnerDto } from './dto/owner.dto';
 import { OwnerEntity } from './owner.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { UserEntity } from '@modules/user/entities';
 
 @Injectable()
 export class OwnerService {
   constructor(
     @InjectRepository(OwnerEntity)
     private readonly ownerRepository: Repository<OwnerEntity>,
+    @InjectRepository(UserEntity)
+    private readonly userRepository: Repository<UserEntity>,
   ) {}
-  addOwner(owner: OwnerDto): Promise<OwnerDto> {
-    return this.ownerRepository.save<any>(owner);
+
+  async addOwner(owner: any): Promise<any> {
+    const user = await this.userRepository.findOne({
+      where: { username: owner.username },
+    });
+
+    if (!user) {
+      throw new HttpException(
+        { error: `User with username: ${owner.username} not found` },
+        HttpStatus.NOT_FOUND,
+      );
+    }
+
+    try {
+      return await this.ownerRepository.save(owner);
+    } catch (error) {
+      console.log(error, 'error');
+      throw new HttpException(
+        { error: 'Failed to add owner' },
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
   }
 
   getOwners(): Promise<OwnerDto[]> {
