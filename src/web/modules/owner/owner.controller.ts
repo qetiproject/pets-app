@@ -29,14 +29,14 @@ export class OwnerController {
 
     try {
       const newOwner = await this.ownerService.addOwner(ownerDto);
-      console.log(newOwner)
+      console.log(newOwner);
       return newOwner; // Return the newly created owner
     } catch (error) {
       if (error instanceof HttpException) {
         throw error; // Re-throw HTTP exceptions as-is
       } else {
         // Handle unexpected errors
-        console.error(error, "error");
+        console.error(error, 'error');
         throw new HttpException(
           { error: 'Failed to add owner' },
           HttpStatus.INTERNAL_SERVER_ERROR,

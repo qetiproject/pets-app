@@ -1,5 +1,4 @@
-import { RegisterResponseDto } from '../dto';
-import { LoginResponseDto } from '../dto/login-response.dto';
+import { LoginResponseDto, RegisterResponseDto } from '../dto';
 import { UserEntity } from '../entities';
 
 export class ResponseMapper {

@@ -16,7 +16,6 @@ import {
   RegisterRequestDto,
 } from './dto';
 import { ResponseMapper } from './mappers/response.mapper';
-import { UserResponseDto } from './dto/user-response.dto';
 
 @Injectable()
 export class UserService {
@@ -76,7 +75,16 @@ export class UserService {
     }
   }
 
-  async getUsers(): Promise<UserResponseDto[]> {
-    return this.userRepository.find();
+  async getUsers(): Promise<Omit<UserEntity, 'password'>[]> {
+    const users: UserEntity[] = await this.userRepository.find();
+    const usersWithoutPassword: Omit<UserEntity, 'password'>[] = users.map(
+      (user) => ({
+        username: user.username,
+        email: user.email,
+        role: user.role,
+      }),
+    );
+
+    return usersWithoutPassword;
   }
 }

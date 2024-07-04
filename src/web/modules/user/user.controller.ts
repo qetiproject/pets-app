@@ -6,8 +6,8 @@ import {
   LoginResponseDto,
   RegisterRequestDto,
   RegisterResponseDto,
+  UsersResponseDto,
 } from './dto';
-import { UserResponseDto } from './dto/user-response.dto';
 
 @ApiTags('user')
 @Controller('user')
@@ -27,7 +27,7 @@ export class UserController {
   }
 
   @Get('/all')
-  getUsers(): Promise<UserResponseDto[]> {
+  getUsers(): Promise<UsersResponseDto[]> {
     return this.userService.getUsers();
   }
 }
