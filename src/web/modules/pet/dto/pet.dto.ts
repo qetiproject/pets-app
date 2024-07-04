@@ -1,6 +1,6 @@
 import { IsEnum, IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import { OwnerEntity } from '@modules/owner/owner.entity';
 import { PetEnum } from '../enums/pet';
-import { OwnerEntity } from 'src/modules/owner/owner.entity';
 
 export class PetDto {
   @IsString()

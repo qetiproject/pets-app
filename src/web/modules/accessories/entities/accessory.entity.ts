@@ -1,5 +1,3 @@
-import { CategoryEntity } from 'src/modules/category/entities/category.entity';
-import { ShopItemEntity } from 'src/modules/shop_items/entities/shop_item.entity';
 import {
   Column,
   Entity,
@@ -8,6 +6,8 @@ import {
   ManyToMany,
   JoinTable,
 } from 'typeorm';
+import { CategoryEntity } from '@modules/category/entities/category.entity';
+import { ShopItemEntity } from '@modules/shop_items/entities/shop_item.entity';
 
 @Entity('accessory')
 export class AccessoryEntity {

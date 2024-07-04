@@ -1,6 +1,6 @@
 import { Column, Entity, OneToOne, PrimaryColumn } from 'typeorm';
-import { RoleEnum } from 'src/modules/shared/enums';
-import { OwnerEntity } from 'src/modules/owner/owner.entity';
+import { OwnerEntity } from '@modules/owner/owner.entity';
+import { RoleEnum } from '@modules/shared/enums';
 
 @Entity('user')
 export class UserEntity {

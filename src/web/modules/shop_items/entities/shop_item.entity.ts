@@ -1,6 +1,6 @@
-import { AccessoryEntity } from 'src/modules/accessories/entities/accessory.entity';
-import { PetShopEntity } from 'src/modules/pet_shop/entities/pet_shop.entity';
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
+import { AccessoryEntity } from '@modules/accessories/entities/accessory.entity';
+import { PetShopEntity } from '@modules/pet_shop/entities/pet_shop.entity';
 
 @Entity('shop_item')
 export class ShopItemEntity {
