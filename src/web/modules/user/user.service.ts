@@ -14,6 +14,7 @@ import {
   LoginRequestDto,
   LoginResponseDto,
   RegisterRequestDto,
+  RegisterResponseDto,
 } from './dto';
 import { ResponseMapper } from './mappers/response.mapper';
 
@@ -26,7 +27,9 @@ export class UserService {
     private jwtService: JwtService,
   ) {}
 
-  async registerUser(registerDto: RegisterRequestDto): Promise<any> {
+  async registerUser(
+    registerDto: RegisterRequestDto,
+  ): Promise<RegisterResponseDto> {
     const salt = await bcrypt.genSalt();
     const hashPassword = await bcrypt.hash(registerDto.password, salt);
     const user = this.userRepository.create({

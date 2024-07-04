@@ -1,5 +1,5 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { UserService } from './user.service';
 import {
   LoginRequestDto,
@@ -8,6 +8,10 @@ import {
   RegisterResponseDto,
   UsersResponseDto,
 } from './dto';
+import { AuthGuard } from '@common/modules/auth/guards/auth.guard';
+import { Roles } from '@common/decorators/roles.decorator';
+import { RoleGuard } from '@common/modules/auth/guards/role.guard';
+import { RoleEnum } from '@common/enums';
 
 @ApiTags('user')
 @Controller('user')
@@ -26,6 +30,9 @@ export class UserController {
     return this.userService.login(loginDto);
   }
 
+  @ApiBearerAuth()
+  @UseGuards(AuthGuard, RoleGuard)
+  @Roles(RoleEnum.ADMIN)
   @Get('/all')
   getUsers(): Promise<UsersResponseDto[]> {
     return this.userService.getUsers();

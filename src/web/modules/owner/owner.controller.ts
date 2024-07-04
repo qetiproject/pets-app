@@ -25,17 +25,14 @@ export class OwnerController {
 
   @Post('/add')
   async addOwner(@Body() ownerDto: OwnerDto): Promise<any> {
-    // return this.ownerService.addOwner(ownerDto);
-
     try {
       const newOwner = await this.ownerService.addOwner(ownerDto);
       console.log(newOwner);
-      return newOwner; // Return the newly created owner
+      return newOwner;
     } catch (error) {
       if (error instanceof HttpException) {
-        throw error; // Re-throw HTTP exceptions as-is
+        throw error;
       } else {
-        // Handle unexpected errors
         console.error(error, 'error');
         throw new HttpException(
           { error: 'Failed to add owner' },
