@@ -1,15 +1,15 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import config from 'src/config';
+import config from '@common/config';
 import * as Joi from 'joi';
 import { PetModule } from '../pet/pet.module';
 import { OwnerModule } from '../owner/owner.module';
-import { AuthModule } from '../auth/auth.module';
 import { ShopItemModule } from '../shop_items/shop-item.module';
 import { PetShopModule } from '../pet_shop/pet-shop.module';
 import { AccessoryModule } from '../accessories/accessory.module';
 import { CategoryModule } from '../category/category.module';
+import { AuthModule } from '@common/modules';
 
 @Module({
   imports: [
