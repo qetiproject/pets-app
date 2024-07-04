@@ -1,5 +1,6 @@
-import { RoleEnum } from '@common/enums';
 import { IsEmail, IsEnum, IsString } from 'class-validator';
+
+import { RoleEnum } from '@common/enums';
 
 export class UsersResponseDto {
   @IsString()

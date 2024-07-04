@@ -1,6 +1,10 @@
 import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
-import { UserService } from './user.service';
+
+import { AuthGuard, RoleGuard } from '@common/modules/auth/guards';
+import { RoleEnum } from '@common/enums';
+import { Roles } from '@common/decorators';
+
 import {
   LoginRequestDto,
   LoginResponseDto,
@@ -8,10 +12,7 @@ import {
   RegisterResponseDto,
   UsersResponseDto,
 } from './dto';
-import { AuthGuard } from '@common/modules/auth/guards/auth.guard';
-import { Roles } from '@common/decorators/roles.decorator';
-import { RoleGuard } from '@common/modules/auth/guards/role.guard';
-import { RoleEnum } from '@common/enums';
+import { UserService } from './user.service';
 
 @ApiTags('user')
 @Controller('user')

@@ -1,3 +1,4 @@
+import { Repository } from 'typeorm';
 import {
   HttpException,
   HttpStatus,
@@ -5,9 +6,9 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
-import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
+import * as bcrypt from 'bcrypt';
+
 import { UserEntity } from './entities';
 import {
   JwtPayload,

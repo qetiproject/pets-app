@@ -1,16 +1,18 @@
-import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { Module } from '@nestjs/common';
 import config from '@common/config';
 import * as Joi from 'joi';
-import { PetModule } from '../pet/pet.module';
-import { OwnerModule } from '../owner/owner.module';
-import { ShopItemModule } from '../shop_items/shop-item.module';
-import { PetShopModule } from '../pet_shop/pet-shop.module';
-import { AccessoryModule } from '../accessories/accessory.module';
-import { CategoryModule } from '../category/category.module';
 import { AuthModule } from '@common/modules';
-import { UserModule } from '@modules/user/user.module';
+import {
+  AccessoryModule,
+  CategoryModule,
+  OwnerModule,
+  PetModule,
+  PetShopModule,
+  ShopItemModule,
+  UserModule,
+} from '@modules/index';
 
 @Module({
   imports: [

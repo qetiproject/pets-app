@@ -1,4 +1,3 @@
-import { RoleEnum } from '@common/enums';
 import {
   IsString,
   MinLength,
@@ -8,6 +7,8 @@ import {
   IsEnum,
   IsNotEmpty,
 } from 'class-validator';
+
+import { RoleEnum } from '@common/enums';
 
 export class RegisterRequestDto {
   @IsNotEmpty()
