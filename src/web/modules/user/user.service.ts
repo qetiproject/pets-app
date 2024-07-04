@@ -1,7 +1,7 @@
 import {
-  ConflictException,
+  HttpException,
+  HttpStatus,
   Injectable,
-  InternalServerErrorException,
   UnauthorizedException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -27,25 +27,28 @@ export class UserService {
   ) {}
 
   async registerUser(registerDto: RegisterRequestDto): Promise<any> {
-    const { username, password, role, email } = registerDto;
-
     const salt = await bcrypt.genSalt();
-    const hashPassword = await bcrypt.hash(password, salt);
+    const hashPassword = await bcrypt.hash(registerDto.password, salt);
     const user = this.userRepository.create({
-      username,
-      role,
-      email,
+      username: registerDto.username,
+      role: registerDto.role,
+      email: registerDto.email,
       password: hashPassword,
     });
 
-    try {
-      await this.userRepository.save(user);
-    } catch (error) {
-      if (error.code === 'ER_DUP_ENTRY') {
-        throw new ConflictException('Username or email already exists');
-      } else {
-        throw new InternalServerErrorException();
-      }
+    const userFromDb = await this.userRepository.findOne({
+      where: { username: registerDto.username },
+    });
+
+    const userFromDbWithEmail = await this.userRepository.findOne({
+      where: { email: registerDto.email },
+    });
+
+    if (userFromDb || userFromDbWithEmail) {
+      throw new HttpException(
+        { errorMessage: 'Username or Email already exists' },
+        HttpStatus.CONFLICT,
+      );
     }
 
     const registerdUser = await this.userRepository.save<UserEntity>(user);
