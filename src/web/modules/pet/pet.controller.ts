@@ -8,7 +8,7 @@ import {
   UseFilters,
 } from '@nestjs/common';
 import { PetService } from './pet.service';
-import { CommonErrorFilter } from '../shared/filters/common-error.filter';
+import { CommonErrorFilter } from '../../../common/filters/common-error.filter';
 import { ApiTags } from '@nestjs/swagger';
 import { PetEntity } from './pet.entity';
 import { PetDto, PetOwnerDto } from './dto';

@@ -1,4 +1,3 @@
-import { RoleEnum } from '@modules/shared/enums';
 import {
   IsEmail,
   IsEnum,
@@ -8,6 +7,7 @@ import {
   MaxLength,
   MinLength,
 } from 'class-validator';
+import { RoleEnum } from '@common/enums';
 
 export class CreateUserDto {
   @IsString()

@@ -9,7 +9,7 @@ import {
 } from '@nestjs/common';
 import { OwnerDto } from './dto/owner.dto';
 import { OwnerService } from './owner.service';
-import { CommonErrorFilter } from '../shared/filters/common-error.filter';
+import { CommonErrorFilter } from '../../../common/filters/common-error.filter';
 import { ApiTags } from '@nestjs/swagger';
 
 @ApiTags('Owner')
