@@ -12,7 +12,7 @@ export class UserEntity {
   @Column({ name: 'role' })
   role: RoleEnum;
 
-  @Column({ name: 'email' })
+  @Column({ name: 'email', unique: true })
   email: string;
 
   @Column({ name: 'password' })
