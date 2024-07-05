@@ -18,6 +18,7 @@ import { JwtStrategy } from './jwt.strategy';
       },
     }),
     ConfigModule,
+    PassportModule,
   ],
   providers: [JwtStrategy, JwtService],
   exports: [JwtStrategy],

@@ -1,6 +1,6 @@
 import { Column, Entity, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
 import { PetEnum } from './enums/pet';
-import { OwnerEntity } from '../owner/owner.entity';
+import { OwnerEntity } from '../owner/entities/owner.entity';
 import { PetShopEntity } from '../pet_shop/entities/pet_shop.entity';
 
 @Entity('pet')

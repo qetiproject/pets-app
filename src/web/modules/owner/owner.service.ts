@@ -1,9 +1,11 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { OwnerDto } from './dto/owner.dto';
-import { OwnerEntity } from './owner.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+
 import { UserEntity } from '@modules/user/entities';
+import { OwnerResponseDto } from './dto/owner-response.dto';
+import { OwnerEntity } from './entities/owner.entity';
+import { CreateOwnerRequestDto } from './dto';
 
 @Injectable()
 export class OwnerService {
@@ -14,11 +16,13 @@ export class OwnerService {
     private readonly userRepository: Repository<UserEntity>,
   ) {}
 
-  async addOwner(owner: any): Promise<any> {
+  async addOwner(owner: CreateOwnerRequestDto): Promise<OwnerResponseDto> {
+    // Check if the user exists
     const user = await this.userRepository.findOne({
       where: { username: owner.username },
     });
 
+    // If user does not exist, throw an HTTP exception with status 404
     if (!user) {
       throw new HttpException(
         { error: `User with username: ${owner.username} not found` },
@@ -27,8 +31,10 @@ export class OwnerService {
     }
 
     try {
+      // Save the owner to the repository and return the result
       return await this.ownerRepository.save(owner);
     } catch (error) {
+      // If there is an error while saving, log the error and throw an HTTP exception with status 500
       console.log(error, 'error');
       throw new HttpException(
         { error: 'Failed to add owner' },
@@ -37,11 +43,11 @@ export class OwnerService {
     }
   }
 
-  getOwners(): Promise<OwnerDto[]> {
+  getOwners(): Promise<OwnerResponseDto[]> {
     return this.ownerRepository.find({ relations: ['pets'] });
   }
 
-  getOwnerDetails(username: string): Promise<OwnerDto> {
+  getOwnerDetails(username: string): Promise<OwnerResponseDto> {
     try {
       return this.ownerRepository.findOneOrFail({ where: { username } });
     } catch (error) {

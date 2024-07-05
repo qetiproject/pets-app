@@ -1,6 +1,6 @@
 import { IsNumber, IsNotEmpty, IsString } from 'class-validator';
 
-export class OwnerDto {
+export class OwnerResponseDto {
   @IsString()
   @IsNotEmpty()
   username: string;

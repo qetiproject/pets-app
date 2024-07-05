@@ -5,8 +5,8 @@ import {
   OneToMany,
   OneToOne,
 } from 'typeorm';
-import { PetEntity } from '../pet/pet.entity';
 import { UserEntity } from '@modules/user/entities';
+import { PetEntity } from '@modules/pet/pet.entity';
 
 @Entity('owner')
 export class OwnerEntity {

@@ -3,18 +3,17 @@ import {
   Controller,
   Delete,
   Get,
-  HttpException,
-  HttpStatus,
   Param,
   Post,
   UseFilters,
   UseGuards,
 } from '@nestjs/common';
-import { OwnerDto } from './dto/owner.dto';
+import { OwnerResponseDto } from './dto/owner-response.dto';
 import { OwnerService } from './owner.service';
 import { CommonErrorFilter } from '../../../common/filters/common-error.filter';
 import { ApiTags } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
+import { CreateOwnerRequestDto } from './dto';
 
 @UseFilters(CommonErrorFilter)
 @UseGuards(AuthGuard())
@@ -24,31 +23,21 @@ export class OwnerController {
   constructor(private readonly ownerService: OwnerService) {}
 
   @Post('/add')
-  async addOwner(@Body() ownerDto: OwnerDto): Promise<any> {
-    try {
-      const newOwner = await this.ownerService.addOwner(ownerDto);
-      console.log(newOwner);
-      return newOwner;
-    } catch (error) {
-      if (error instanceof HttpException) {
-        throw error;
-      } else {
-        console.error(error, 'error');
-        throw new HttpException(
-          { error: 'Failed to add owner' },
-          HttpStatus.INTERNAL_SERVER_ERROR,
-        );
-      }
-    }
+  async addOwner(
+    @Body() ownerDto: CreateOwnerRequestDto,
+  ): Promise<OwnerResponseDto> {
+    return await this.ownerService.addOwner(ownerDto);
   }
 
   @Get('/all')
-  getOwners(): Promise<OwnerDto[]> {
+  getOwners(): Promise<OwnerResponseDto[]> {
     return this.ownerService.getOwners();
   }
 
   @Get('/:username')
-  getOwnerDetails(@Param('username') username: string): Promise<OwnerDto> {
+  getOwnerDetails(
+    @Param('username') username: string,
+  ): Promise<OwnerResponseDto> {
     return this.ownerService.getOwnerDetails(username);
   }
 
