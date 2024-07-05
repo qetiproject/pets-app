@@ -8,15 +8,17 @@ import {
   UseFilters,
   UseGuards,
 } from '@nestjs/common';
-import { OwnerResponseDto } from './dto/owner-response.dto';
-import { OwnerService } from './owner.service';
-import { CommonErrorFilter } from '../../../common/filters/common-error.filter';
 import { ApiTags } from '@nestjs/swagger';
-import { AuthGuard } from '@nestjs/passport';
-import { CreateOwnerRequestDto } from './dto';
+
+import { CommonErrorFilter } from '@common/filters';
+import { AuthGuard, RoleGuard } from '@common/modules/auth/guards';
+import { RoleEnum } from '@common/enums';
+import { Roles } from '@common/decorators';
+import { OwnerService } from './owner.service';
+import { CreateOwnerRequestDto, OwnerResponseDto } from './dto';
 
 @UseFilters(CommonErrorFilter)
-@UseGuards(AuthGuard())
+@UseGuards(AuthGuard, RoleGuard)
 @ApiTags('Owner')
 @Controller('owner')
 export class OwnerController {
@@ -41,6 +43,7 @@ export class OwnerController {
     return this.ownerService.getOwnerDetails(username);
   }
 
+  @Roles(RoleEnum.ADMIN)
   @Delete('/:username')
   deleteOwner(@Param('username') username: string): Promise<any> {
     return this.ownerService.deleteOwner(username);

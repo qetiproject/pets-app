@@ -17,12 +17,10 @@ export class OwnerService {
   ) {}
 
   async addOwner(owner: CreateOwnerRequestDto): Promise<OwnerResponseDto> {
-    // Check if the user exists
     const user = await this.userRepository.findOne({
       where: { username: owner.username },
     });
 
-    // If user does not exist, throw an HTTP exception with status 404
     if (!user) {
       throw new HttpException(
         { error: `User with username: ${owner.username} not found` },
@@ -30,12 +28,22 @@ export class OwnerService {
       );
     }
 
+    const ownerFromDB = await this.ownerRepository.findOne({
+      where: { username: owner.username },
+    });
+
+    if (ownerFromDB) {
+      throw new HttpException(
+        { errorMessage: 'Username already exists' },
+        HttpStatus.CONFLICT,
+      );
+    }
+
+    const newOwner = this.ownerRepository.create(owner);
     try {
-      // Save the owner to the repository and return the result
-      return await this.ownerRepository.save(owner);
+      return await this.ownerRepository.save<any>(newOwner);
     } catch (error) {
-      // If there is an error while saving, log the error and throw an HTTP exception with status 500
-      console.log(error, 'error');
+      console.log(error);
       throw new HttpException(
         { error: 'Failed to add owner' },
         HttpStatus.INTERNAL_SERVER_ERROR,
@@ -43,8 +51,9 @@ export class OwnerService {
     }
   }
 
-  getOwners(): Promise<OwnerResponseDto[]> {
-    return this.ownerRepository.find({ relations: ['pets'] });
+  async getOwners(): Promise<OwnerResponseDto[]> {
+    return await this.ownerRepository.find();
+    // return this.ownerRepository.find({ relations: ['pets'] });
   }
 
   getOwnerDetails(username: string): Promise<OwnerResponseDto> {
