@@ -79,8 +79,9 @@ export class UserService {
     }
   }
 
-  async getUsers(): Promise<Omit<UserEntity, 'password'>[]> {
+  async getUsersService(): Promise<Omit<UserEntity, 'password'>[]> {
     const users: UserEntity[] = await this.userRepository.find();
+
     const usersWithoutPassword: Omit<UserEntity, 'password'>[] = users.map(
       (user) => ({
         username: user.username,
@@ -90,5 +91,21 @@ export class UserService {
     );
 
     return usersWithoutPassword;
+  }
+
+  async getUserByUsernameService(
+    username: string,
+  ): Promise<Omit<UserEntity, 'password'>> {
+    try {
+      const user = await this.userRepository.findOneOrFail({
+        where: { username },
+      });
+      return this.responseMappers.userResponse(user);
+    } catch (error) {
+      throw new HttpException(
+        { error: `User with username: ${username} not found` },
+        HttpStatus.NOT_FOUND,
+      );
+    }
   }
 }

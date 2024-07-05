@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
 import { AuthGuard, RoleGuard } from '@common/modules/auth/guards';
@@ -10,6 +10,7 @@ import {
   LoginResponseDto,
   RegisterRequestDto,
   RegisterResponseDto,
+  UserResponseDto,
   UsersResponseDto,
 } from './dto';
 import { UserService } from './user.service';
@@ -36,6 +37,16 @@ export class UserController {
   @Roles(RoleEnum.ADMIN)
   @Get('/all')
   getUsers(): Promise<UsersResponseDto[]> {
-    return this.userService.getUsers();
+    return this.userService.getUsersService();
+  }
+
+  @ApiBearerAuth()
+  @UseGuards(AuthGuard, RoleGuard)
+  @Roles(RoleEnum.ADMIN)
+  @Get('/:username')
+  getUserByUsername(
+    @Param('username') username: string,
+  ): Promise<UserResponseDto> {
+    return this.userService.getUserByUsernameService(username);
   }
 }
