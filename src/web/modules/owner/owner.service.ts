@@ -6,6 +6,7 @@ import { UserEntity } from '@modules/user/entities';
 import { OwnerResponseDto } from './dto/owner-response.dto';
 import { OwnerEntity } from './entities/owner.entity';
 import { CreateOwnerRequestDto } from './dto';
+import { ResponseMapper } from '@modules/user/mappers';
 
 @Injectable()
 export class OwnerService {
@@ -14,58 +15,57 @@ export class OwnerService {
     private readonly ownerRepository: Repository<OwnerEntity>,
     @InjectRepository(UserEntity)
     private readonly userRepository: Repository<UserEntity>,
+    private readonly responseMappers: ResponseMapper,
   ) {}
 
-  async addOwner(ownerDto: CreateOwnerRequestDto): Promise<OwnerResponseDto> {
-    // const user = await this.userRepository.findOne({
-    //   where: { username: owner.username },
-    // });
-
-    // if (!user) {
-    //   throw new HttpException(
-    //     { error: `User with username: ${owner.username} not found` },
-    //     HttpStatus.NOT_FOUND,
-    //   );
-    // }
-
-    // const ownerFromDB = await this.ownerRepository.findOne({
-    //   where: { username: owner.username },
-    // });
-
-    // if (ownerFromDB) {
-    //   throw new HttpException(
-    //     { errorMessage: 'Username already exists' },
-    //     HttpStatus.CONFLICT,
-    //   );
-    // }
-
-    // const newOwner = this.ownerRepository.create(owner);
-    // try {
-    //   return await this.ownerRepository.save<any>(newOwner);
-    // } catch (error) {
-    //   console.log(error);
-    //   throw new HttpException(
-    //     { error: 'Failed to add owner' },
-    //     HttpStatus.INTERNAL_SERVER_ERROR,
-    //   );
-    // }
-    const newOwner = new OwnerEntity();
-    newOwner.username = ownerDto.username; // Make sure you set the username
-    newOwner.firstName = ownerDto.firstName;
-    newOwner.lastName = ownerDto.lastName;
-    newOwner.age = ownerDto.age;
-    newOwner.balance = ownerDto.balance;
-
-    // Save the newOwner instance to the database
-    return await this.ownerRepository.save(newOwner);
+  private async getUserByUsernameService(
+    username: string,
+  ): Promise<Omit<UserEntity, 'password'>> {
+    try {
+      const user = await this.userRepository.findOneOrFail({
+        where: { username },
+      });
+      return this.responseMappers.userResponse(user);
+    } catch (error) {
+      throw new HttpException(
+        { error: `User with username: ${username} not found` },
+        HttpStatus.NOT_FOUND,
+      );
+    }
   }
 
-  async getOwners(): Promise<OwnerResponseDto[]> {
+  async addOwnerService(
+    ownerDto: CreateOwnerRequestDto,
+  ): Promise<OwnerResponseDto> {
+    await this.getUserByUsernameService(ownerDto.username);
+
+    const ownerFromDB = await this.ownerRepository.findOne({
+      where: { username: ownerDto.username },
+    });
+
+    if (ownerFromDB) {
+      throw new HttpException(
+        { errorMessage: 'Username already exists' },
+        HttpStatus.CONFLICT,
+      );
+    }
+
+    try {
+      return await this.ownerRepository.save<OwnerEntity>(ownerDto);
+    } catch (error) {
+      throw new HttpException(
+        { error: 'Failed to add owner' },
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+  }
+
+  async getOwnersService(): Promise<OwnerResponseDto[]> {
     return await this.ownerRepository.find();
     // return this.ownerRepository.find({ relations: ['pets'] });
   }
 
-  getOwnerDetails(username: string): Promise<OwnerResponseDto> {
+  getOwnerDetailsService(username: string): Promise<OwnerResponseDto> {
     try {
       return this.ownerRepository.findOneOrFail({ where: { username } });
     } catch (error) {
@@ -76,7 +76,7 @@ export class OwnerService {
     }
   }
 
-  async deleteOwner(username: string): Promise<unknown> {
+  async deleteOwnerService(username: string): Promise<unknown> {
     try {
       return await this.ownerRepository.delete(username);
     } catch (error) {

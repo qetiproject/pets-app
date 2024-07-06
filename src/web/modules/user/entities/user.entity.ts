@@ -21,6 +21,5 @@ export class UserEntity {
     cascade: true,
     nullable: true,
   })
-  @JoinColumn({ name: 'user_owner' })
   owner?: OwnerEntity;
 }

@@ -26,24 +26,24 @@ export class OwnerController {
   async addOwner(
     @Body() ownerDto: CreateOwnerRequestDto,
   ): Promise<OwnerResponseDto> {
-    return await this.ownerService.addOwner(ownerDto);
+    return await this.ownerService.addOwnerService(ownerDto);
   }
 
   @Get('/all')
   getOwners(): Promise<OwnerResponseDto[]> {
-    return this.ownerService.getOwners();
+    return this.ownerService.getOwnersService();
   }
 
   @Get('/:username')
   getOwnerDetails(
     @Param('username') username: string,
   ): Promise<OwnerResponseDto> {
-    return this.ownerService.getOwnerDetails(username);
+    return this.ownerService.getOwnerDetailsService(username);
   }
 
   @Roles(RoleEnum.ADMIN)
   @Delete('/:username')
   deleteOwner(@Param('username') username: string): Promise<any> {
-    return this.ownerService.deleteOwner(username);
+    return this.ownerService.deleteOwnerService(username);
   }
 }

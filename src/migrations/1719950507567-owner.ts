@@ -35,9 +35,18 @@ export class Owner1719950507567 implements MigrationInterface {
         ],
       }),
     );
+
+    await queryRunner.query(`
+      ALTER TABLE "owner"
+      ALTER COLUMN "username" SET DEFAULT 'ketidev';
+    `);
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.dropTable('owner');
+    await queryRunner.query(`
+      ALTER TABLE "owner"
+      ALTER COLUMN "username" DROP DEFAULT;
+    `);
   }
 }
