@@ -45,11 +45,11 @@ export class Pet1719950771729 implements MigrationInterface {
         ],
         foreignKeys: [
           {
-            columnNames: ['owner_id'],
             name: 'FK_pet_owner',
+            columnNames: ['owner_id'],
             referencedTableName: 'owner',
             referencedColumnNames: ['username'],
-            onDelete: 'CASCADE',
+            onDelete: 'SET NULL',
             onUpdate: 'CASCADE',
           },
         ],

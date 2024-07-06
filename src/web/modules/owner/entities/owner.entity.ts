@@ -4,6 +4,7 @@ import {
   PrimaryGeneratedColumn,
   OneToMany,
   OneToOne,
+  JoinColumn,
 } from 'typeorm';
 import { UserEntity } from '@modules/user/entities';
 import { PetEntity } from '@modules/pet/entities/pet.entity';
@@ -29,7 +30,8 @@ export class OwnerEntity {
     cascade: true,
     nullable: true,
   })
-  pets: PetEntity[];
+  @JoinColumn({ name: 'owner_pets' })
+  pets?: PetEntity[];
 
   @OneToOne(() => UserEntity, (user) => user.owner, {
     nullable: true,

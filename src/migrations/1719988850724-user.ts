@@ -43,7 +43,7 @@ export class User1719988850724 implements MigrationInterface {
         columnNames: ['username'],
         referencedTableName: 'user',
         referencedColumnNames: ['username'],
-        onDelete: 'CASCADE',
+        onDelete: 'SET null',
         onUpdate: 'CASCADE',
       }),
     );

@@ -15,7 +15,7 @@ export class PetService {
     private readonly ownerRepository: Repository<OwnerEntity>,
   ) {}
 
-  getOwnerDetails(username: string): Promise<OwnerResponseDto> {
+  private getOwnerDetails(username: string): Promise<OwnerResponseDto> {
     try {
       return this.ownerRepository.findOneOrFail({ where: { username } });
     } catch (error) {
@@ -25,10 +25,10 @@ export class PetService {
       );
     }
   }
-  addPet(body: AddPetRequestDto): Promise<PetResponseDto> {
-    console.log(body)
-    if (this.getOwnerDetails) {
-      return this.petRepository.save<any>(body);
+  addPet(addPetDto: AddPetRequestDto): Promise<PetResponseDto> {
+    console.log(this.getOwnerDetails(addPetDto.owner.username));
+    if (this.getOwnerDetails(addPetDto.owner.username)) {
+      return this.petRepository.save<any>(addPetDto);
     }
   }
 

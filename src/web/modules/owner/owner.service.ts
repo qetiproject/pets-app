@@ -16,39 +16,48 @@ export class OwnerService {
     private readonly userRepository: Repository<UserEntity>,
   ) {}
 
-  async addOwner(owner: CreateOwnerRequestDto): Promise<OwnerResponseDto> {
-    const user = await this.userRepository.findOne({
-      where: { username: owner.username },
-    });
+  async addOwner(ownerDto: CreateOwnerRequestDto): Promise<OwnerResponseDto> {
+    // const user = await this.userRepository.findOne({
+    //   where: { username: owner.username },
+    // });
 
-    if (!user) {
-      throw new HttpException(
-        { error: `User with username: ${owner.username} not found` },
-        HttpStatus.NOT_FOUND,
-      );
-    }
+    // if (!user) {
+    //   throw new HttpException(
+    //     { error: `User with username: ${owner.username} not found` },
+    //     HttpStatus.NOT_FOUND,
+    //   );
+    // }
 
-    const ownerFromDB = await this.ownerRepository.findOne({
-      where: { username: owner.username },
-    });
+    // const ownerFromDB = await this.ownerRepository.findOne({
+    //   where: { username: owner.username },
+    // });
 
-    if (ownerFromDB) {
-      throw new HttpException(
-        { errorMessage: 'Username already exists' },
-        HttpStatus.CONFLICT,
-      );
-    }
+    // if (ownerFromDB) {
+    //   throw new HttpException(
+    //     { errorMessage: 'Username already exists' },
+    //     HttpStatus.CONFLICT,
+    //   );
+    // }
 
-    const newOwner = this.ownerRepository.create(owner);
-    try {
-      return await this.ownerRepository.save<any>(newOwner);
-    } catch (error) {
-      console.log(error);
-      throw new HttpException(
-        { error: 'Failed to add owner' },
-        HttpStatus.INTERNAL_SERVER_ERROR,
-      );
-    }
+    // const newOwner = this.ownerRepository.create(owner);
+    // try {
+    //   return await this.ownerRepository.save<any>(newOwner);
+    // } catch (error) {
+    //   console.log(error);
+    //   throw new HttpException(
+    //     { error: 'Failed to add owner' },
+    //     HttpStatus.INTERNAL_SERVER_ERROR,
+    //   );
+    // }
+    const newOwner = new OwnerEntity();
+    newOwner.username = ownerDto.username; // Make sure you set the username
+    newOwner.firstName = ownerDto.firstName;
+    newOwner.lastName = ownerDto.lastName;
+    newOwner.age = ownerDto.age;
+    newOwner.balance = ownerDto.balance;
+
+    // Save the newOwner instance to the database
+    return await this.ownerRepository.save(newOwner);
   }
 
   async getOwners(): Promise<OwnerResponseDto[]> {
