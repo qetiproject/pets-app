@@ -21,3 +21,17 @@ export class CreateOwnerRequestDto {
   @IsNotEmpty()
   balance: number;
 }
+
+export class UpdateOwnerRequestDto {
+  @IsString()
+  firstName: string;
+
+  @IsString()
+  lastName: string;
+
+  @IsNumber()
+  age: number;
+
+  @IsNumber()
+  balance: number;
+}

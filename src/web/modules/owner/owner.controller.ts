@@ -5,6 +5,7 @@ import {
   Get,
   Param,
   Post,
+  Patch,
   UseFilters,
   UseGuards,
 } from '@nestjs/common';
@@ -15,7 +16,11 @@ import { RoleEnum } from '@common/enums';
 import { Roles } from '@common/decorators';
 import { CommonErrorFilter } from '@common/filters';
 import { OwnerService } from './owner.service';
-import { CreateOwnerRequestDto, OwnerResponseDto } from './dto';
+import {
+  CreateOwnerRequestDto,
+  OwnerResponseDto,
+  UpdateOwnerRequestDto,
+} from './dto';
 
 @UseFilters(CommonErrorFilter)
 @UseGuards(AuthGuard, RoleGuard)
@@ -41,6 +46,15 @@ export class OwnerController {
     @Param('username') username: string,
   ): Promise<OwnerResponseDto> {
     return this.ownerService.getOwnerDetailsService(username);
+  }
+
+  // not running
+  @Patch('/:username')
+  async updateOwner(
+    @Param('username') username: string,
+    @Body() ownerUpdateDto: UpdateOwnerRequestDto,
+  ): Promise<OwnerResponseDto> {
+    return await this.ownerService.ownerUpdateService(username, ownerUpdateDto);
   }
 
   @Roles(RoleEnum.ADMIN)

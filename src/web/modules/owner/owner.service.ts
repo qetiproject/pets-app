@@ -5,7 +5,7 @@ import { Repository } from 'typeorm';
 import { UserEntity } from '@modules/user/entities';
 import { OwnerResponseDto } from './dto/owner-response.dto';
 import { OwnerEntity } from './entities/owner.entity';
-import { CreateOwnerRequestDto } from './dto';
+import { CreateOwnerRequestDto, UpdateOwnerRequestDto } from './dto';
 import { ResponseMapper } from '@modules/user/mappers';
 import { DeleteResponseDto } from '@common/dto';
 
@@ -79,11 +79,47 @@ export class OwnerService {
     }
   }
 
+  async ownerUpdateService(
+    username: string,
+    ownerUpdateDto: UpdateOwnerRequestDto,
+  ): Promise<OwnerResponseDto> {
+    try {
+      const owner = await this.getOwnerDetailsService(username);
+      if (owner) {
+        owner.age = ownerUpdateDto.age;
+        owner.balance = ownerUpdateDto.balance;
+        owner.firstName = ownerUpdateDto.firstName;
+        owner.lastName = ownerUpdateDto.lastName;
+
+        return await this.ownerRepository.save(owner);
+      } else {
+        throw new HttpException(
+          {
+            error: `Owner with username: ${username} not found`,
+          },
+          HttpStatus.NOT_FOUND,
+        );
+      }
+    } catch (error) {
+      if (error instanceof HttpException) {
+        throw error; // Rethrow HttpException if it's already an HttpException
+      } else {
+        throw new HttpException(
+          {
+            error: `Failed to update owner with username: ${username}`,
+          },
+          HttpStatus.INTERNAL_SERVER_ERROR,
+        );
+      }
+    }
+  }
+
   async deleteOwnerService(username: string): Promise<DeleteResponseDto> {
     try {
       const owner = await this.getOwnerDetailsService(username);
       if (owner) {
-        const deleteResult: DeleteResponseDto = await this.ownerRepository.delete(username);
+        const deleteResult: DeleteResponseDto =
+          await this.ownerRepository.delete(username);
         return new DeleteResponseDto(deleteResult.raw, deleteResult.affected);
       }
     } catch (error) {
