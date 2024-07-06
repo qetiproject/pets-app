@@ -1,9 +1,10 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { PetEntity } from './pet.entity';
+import { PetEntity } from './entities/pet.entity';
 import { Repository } from 'typeorm';
 import { OwnerEntity } from '../owner/entities/owner.entity';
-import { PetDto, PetOwnerDto } from './dto';
+import { AddPetRequestDto, PetOwnerDto, PetResponseDto } from './dto';
+import { OwnerResponseDto } from '@modules/owner/dto';
 
 @Injectable()
 export class PetService {
@@ -14,8 +15,21 @@ export class PetService {
     private readonly ownerRepository: Repository<OwnerEntity>,
   ) {}
 
-  addPet(body: PetDto): Promise<PetDto> {
-    return this.petRepository.save<PetDto>(body);
+  getOwnerDetails(username: string): Promise<OwnerResponseDto> {
+    try {
+      return this.ownerRepository.findOneOrFail({ where: { username } });
+    } catch (error) {
+      throw new HttpException(
+        { error: `Owner with username: ${username} not found` },
+        HttpStatus.NOT_FOUND,
+      );
+    }
+  }
+  addPet(body: AddPetRequestDto): Promise<PetResponseDto> {
+    console.log(body)
+    if (this.getOwnerDetails) {
+      return this.petRepository.save<any>(body);
+    }
   }
 
   getPets(): Promise<PetEntity[]> {
@@ -43,7 +57,7 @@ export class PetService {
     }
   }
 
-  async petWithOwner(petOwnerDto: PetOwnerDto): Promise<PetDto> {
+  async petWithOwner(petOwnerDto: PetOwnerDto): Promise<any> {
     const ownerFromDb = await this.ownerRepository.findOneByOrFail({
       username: petOwnerDto.username,
     });

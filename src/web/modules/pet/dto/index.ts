@@ -1,2 +1,3 @@
-export * from './pet.dto';
-export * from './petOwner.dto';
+export * from './pet-request.dto';
+export * from './pet-response.dto';
+export * from './pet-owner.dto';

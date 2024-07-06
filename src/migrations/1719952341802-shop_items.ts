@@ -36,6 +36,7 @@ export class ShopItems1719952341802 implements MigrationInterface {
         ],
         foreignKeys: [
           {
+            name: 'FK_shop_items_shop',
             columnNames: ['shop_id'],
             referencedTableName: 'pet_shop',
             referencedColumnNames: ['id'],

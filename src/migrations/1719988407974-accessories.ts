@@ -33,6 +33,7 @@ export class Accessories1719988407974 implements MigrationInterface {
     await queryRunner.createForeignKey(
       'shop_items',
       new TableForeignKey({
+        name: 'FK_shop_items_accessory',
         columnNames: ['accessory_id'],
         referencedTableName: 'accessory',
         referencedColumnNames: ['id'],

@@ -1,5 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
-import { PetEntity } from '@modules/pet/pet.entity';
+import { PetEntity } from '@modules/pet/entities/pet.entity';
 import { ShopItemEntity } from '@modules/shop_items/entities/shop_item.entity';
 
 @Entity('pet_shop')

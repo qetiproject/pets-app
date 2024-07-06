@@ -39,6 +39,7 @@ export class User1719988850724 implements MigrationInterface {
     await queryRunner.createForeignKey(
       'owner',
       new TableForeignKey({
+        name: 'FK_owner_username',
         columnNames: ['username'],
         referencedTableName: 'user',
         referencedColumnNames: ['username'],
