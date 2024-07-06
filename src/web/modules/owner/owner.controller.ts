@@ -5,6 +5,7 @@ import {
   Get,
   Param,
   Post,
+  UseFilters,
   UseGuards,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
@@ -12,10 +13,11 @@ import { ApiTags } from '@nestjs/swagger';
 import { AuthGuard, RoleGuard } from '@common/modules/auth/guards';
 import { RoleEnum } from '@common/enums';
 import { Roles } from '@common/decorators';
+import { CommonErrorFilter } from '@common/filters';
 import { OwnerService } from './owner.service';
 import { CreateOwnerRequestDto, OwnerResponseDto } from './dto';
 
-// @UseFilters(CommonErrorFilter)
+@UseFilters(CommonErrorFilter)
 @UseGuards(AuthGuard, RoleGuard)
 @ApiTags('Owner')
 @Controller('owner')

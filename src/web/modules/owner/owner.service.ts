@@ -7,6 +7,7 @@ import { OwnerResponseDto } from './dto/owner-response.dto';
 import { OwnerEntity } from './entities/owner.entity';
 import { CreateOwnerRequestDto } from './dto';
 import { ResponseMapper } from '@modules/user/mappers';
+import { DeleteResponseDto } from '@common/dto';
 
 @Injectable()
 export class OwnerService {
@@ -65,9 +66,11 @@ export class OwnerService {
     // return this.ownerRepository.find({ relations: ['pets'] });
   }
 
-  getOwnerDetailsService(username: string): Promise<OwnerResponseDto> {
+  async getOwnerDetailsService(username: string): Promise<OwnerResponseDto> {
     try {
-      return this.ownerRepository.findOneOrFail({ where: { username } });
+      return await this.ownerRepository.findOneOrFail({
+        where: { username },
+      });
     } catch (error) {
       throw new HttpException(
         { error: `Owner with username: ${username} not found` },
@@ -76,14 +79,22 @@ export class OwnerService {
     }
   }
 
-  async deleteOwnerService(username: string): Promise<unknown> {
+  async deleteOwnerService(username: string): Promise<DeleteResponseDto> {
     try {
-      return await this.ownerRepository.delete(username);
+      const owner = await this.getOwnerDetailsService(username);
+      if (owner) {
+        const deleteResult: DeleteResponseDto = await this.ownerRepository.delete(username);
+        return new DeleteResponseDto(deleteResult.raw, deleteResult.affected);
+      }
     } catch (error) {
-      throw new HttpException(
-        { error: `Owner with username: ${username} not found` },
-        HttpStatus.NOT_FOUND,
-      );
+      if (error instanceof HttpException) {
+        throw error;
+      } else {
+        throw new HttpException(
+          { error: `Owner with username: ${username} not found` },
+          HttpStatus.NOT_FOUND,
+        );
+      }
     }
   }
 }
