@@ -52,8 +52,9 @@ export class OwnerService {
     }
 
     try {
-      return await this.ownerRepository.save<OwnerEntity>(ownerDto);
+      return await this.ownerRepository.save<OwnerEntity>({ ...ownerDto });
     } catch (error) {
+      console.log(error);
       throw new HttpException(
         { error: 'Failed to add owner' },
         HttpStatus.INTERNAL_SERVER_ERROR,

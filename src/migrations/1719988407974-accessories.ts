@@ -16,6 +16,7 @@ export class Accessories1719988407974 implements MigrationInterface {
             type: 'varchar',
             isNullable: false,
             isPrimary: true,
+            default: 'uuid_generate_v4()',
           },
           {
             name: 'categories',

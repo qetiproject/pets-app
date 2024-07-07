@@ -26,10 +26,7 @@ export class PetService {
     }
   }
   addPet(addPetDto: AddPetRequestDto): Promise<PetResponseDto> {
-    console.log(this.getOwnerDetails(addPetDto.owner.username));
-    if (this.getOwnerDetails(addPetDto.owner.username)) {
-      return this.petRepository.save<any>(addPetDto);
-    }
+    return this.petRepository.save<any>({ ...addPetDto });
   }
 
   getPets(): Promise<PetEntity[]> {

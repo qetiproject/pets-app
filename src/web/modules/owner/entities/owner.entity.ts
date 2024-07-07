@@ -1,7 +1,7 @@
 import {
   Column,
   Entity,
-  PrimaryGeneratedColumn,
+  PrimaryColumn,
   OneToMany,
   OneToOne,
   JoinColumn,
@@ -11,7 +11,7 @@ import { PetEntity } from '@modules/pet/entities/pet.entity';
 
 @Entity('owner')
 export class OwnerEntity {
-  @PrimaryGeneratedColumn({ name: 'username' })
+  @PrimaryColumn({ name: 'username' })
   username: string;
 
   @Column({ name: 'firstName' })

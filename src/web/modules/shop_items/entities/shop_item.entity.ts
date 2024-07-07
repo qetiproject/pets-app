@@ -1,10 +1,10 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
+import { Entity, PrimaryColumn, Column, ManyToOne } from 'typeorm';
 import { AccessoryEntity } from '@modules/accessories/entities/accessory.entity';
 import { PetShopEntity } from '@modules/pet_shop/entities/pet_shop.entity';
 
 @Entity('shop_item')
 export class ShopItemEntity {
-  @PrimaryGeneratedColumn({ name: 'shop_id' })
+  @PrimaryColumn({ name: 'shop_id' })
   shopId: string;
 
   @Column({ name: 'accessory_id' })

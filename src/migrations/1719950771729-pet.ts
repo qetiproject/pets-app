@@ -8,9 +8,10 @@ export class Pet1719950771729 implements MigrationInterface {
         columns: [
           {
             name: 'id',
-            type: 'varchar',
+            type: 'uuid',
             isNullable: false,
             isPrimary: true,
+            default: 'uuid_generate_v4()',
           },
           {
             name: 'name',

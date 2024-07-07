@@ -11,6 +11,7 @@ export class Category1720027920992 implements MigrationInterface {
             type: 'varchar',
             isNullable: false,
             isPrimary: true,
+            default: 'uuid_generate_v4()',
           },
           {
             name: 'name',
