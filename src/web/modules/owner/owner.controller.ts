@@ -23,7 +23,7 @@ import {
 } from './dto';
 
 @UseFilters(CommonErrorFilter)
-@UseGuards(AuthGuard, RoleGuard)
+// @UseGuards(AuthGuard, RoleGuard)
 @ApiTags('Owner')
 @Controller('owner')
 export class OwnerController {
@@ -48,7 +48,6 @@ export class OwnerController {
     return this.ownerService.getOwnerDetailsService(username);
   }
 
-  // not running
   @Patch('/:username')
   async updateOwner(
     @Param('username') username: string,

@@ -70,6 +70,7 @@ export class OwnerService {
     try {
       return await this.ownerRepository.findOneOrFail({
         where: { username },
+        relations: ['pets'],
       });
     } catch (error) {
       throw new HttpException(
@@ -84,13 +85,15 @@ export class OwnerService {
     ownerUpdateDto: UpdateOwnerRequestDto,
   ): Promise<OwnerResponseDto> {
     try {
-      const owner = await this.getOwnerDetailsService(username);
+      let owner = await this.getOwnerDetailsService(username);
       if (owner) {
-        owner.age = ownerUpdateDto.age;
-        owner.balance = ownerUpdateDto.balance;
-        owner.firstName = ownerUpdateDto.firstName;
-        owner.lastName = ownerUpdateDto.lastName;
-
+        owner = {
+          username: ownerUpdateDto.username,
+          age: ownerUpdateDto.age,
+          balance: ownerUpdateDto.balance,
+          firstName: ownerUpdateDto.firstName,
+          lastName: ownerUpdateDto.lastName,
+        };
         return await this.ownerRepository.save(owner);
       } else {
         throw new HttpException(
@@ -102,7 +105,7 @@ export class OwnerService {
       }
     } catch (error) {
       if (error instanceof HttpException) {
-        throw error; // Rethrow HttpException if it's already an HttpException
+        throw error;
       } else {
         throw new HttpException(
           {

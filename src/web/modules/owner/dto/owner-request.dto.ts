@@ -24,6 +24,9 @@ export class CreateOwnerRequestDto {
 
 export class UpdateOwnerRequestDto {
   @IsString()
+  username: string;
+
+  @IsString()
   firstName: string;
 
   @IsString()

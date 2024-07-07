@@ -1,8 +1,8 @@
 import { IsNumber, IsNotEmpty, IsString } from 'class-validator';
 
 export class OwnerResponseDto {
-  @IsString()
   @IsNotEmpty()
+  @IsString()
   username: string;
 
   @IsString()
