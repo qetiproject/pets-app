@@ -4,8 +4,7 @@ import { PetEntity } from './entities/pet.entity';
 import { Repository } from 'typeorm';
 
 import { DeleteResponseDto } from '@common/dto';
-import { AddPetRequestDto, UpdatePetWithOwnerOrAddRequestDto } from './dto';
-import { PetResponseDto } from './dto/index';
+import { AddPetRequestDto, UpdatePetRequestDto, PetResponseDto } from './dto';
 
 @Injectable()
 export class PetService {
@@ -40,15 +39,24 @@ export class PetService {
     }
   }
 
-  async updatePetWithOwnerOrAddService(
+  async updatePetService(
     id: string,
-    updatePetWithOwnerOrAddRequestDto: UpdatePetWithOwnerOrAddRequestDto,
-  ): Promise<any> {
+    updatePetDto: UpdatePetRequestDto,
+  ): Promise<PetResponseDto> {
     try {
-      const pet = this.getPetDetails(id);
-      console.log(pet, 'pet');
-      console.log(updatePetWithOwnerOrAddRequestDto);
-    } catch (error) {}
+      console.log(id, updatePetDto);
+      const pet = await this.getPetDetails(id);
+      Object.assign(pet, updatePetDto);
+      const updatedPet = await this.petRepository.save<PetEntity>(pet);
+      return updatedPet;
+    } catch (error) {
+      throw new HttpException(
+        {
+          error: `Pet with id: ${id} not found`,
+        },
+        HttpStatus.NOT_FOUND,
+      );
+    }
   }
 
   async deletePet(id: string): Promise<DeleteResponseDto> {

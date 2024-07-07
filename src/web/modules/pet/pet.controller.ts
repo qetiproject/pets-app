@@ -11,12 +11,7 @@ import { ApiTags } from '@nestjs/swagger';
 
 import { DeleteResponseDto } from '@common/dto';
 import { PetService } from './pet.service';
-import {
-  AddPetRequestDto,
-  PetResponseDto,
-  UpdatePetWithOwnerOrAddRequestDto,
-  UpdatePetWithOwnerOrAddResponseDto,
-} from './dto';
+import { AddPetRequestDto, PetResponseDto, UpdatePetRequestDto } from './dto';
 
 // @UseFilters(CommonErrorFilter)
 @ApiTags('Pets')
@@ -40,14 +35,11 @@ export class PetController {
   }
 
   @Put('/:id')
-  updatePetWithOwnerOrAdd(
+  updatePet(
     @Param('id') id: string,
-    updatePetWithOwnerOrAddRequestDto: UpdatePetWithOwnerOrAddRequestDto,
-  ): Promise<UpdatePetWithOwnerOrAddResponseDto> {
-    return this.petService.updatePetWithOwnerOrAddService(
-      id,
-      updatePetWithOwnerOrAddRequestDto,
-    );
+    @Body() updatePetRequestDto: UpdatePetRequestDto,
+  ): Promise<PetResponseDto> {
+    return this.petService.updatePetService(id, updatePetRequestDto);
   }
 
   @Delete('/:id')
