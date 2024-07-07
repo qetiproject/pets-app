@@ -1,10 +1,22 @@
-import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Put,
+} from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 
-import { PetService } from './pet.service';
-import { PetEntity } from './entities';
-import { AddPetRequestDto, PetResponseDto } from './dto';
 import { DeleteResponseDto } from '@common/dto';
+import { PetService } from './pet.service';
+import {
+  AddPetRequestDto,
+  PetResponseDto,
+  UpdatePetWithOwnerOrAddRequestDto,
+  UpdatePetWithOwnerOrAddResponseDto,
+} from './dto';
 
 // @UseFilters(CommonErrorFilter)
 @ApiTags('Pets')
@@ -25,6 +37,17 @@ export class PetController {
   @Get('/:id')
   getPetDetails(@Param('id') id: string): Promise<PetResponseDto> {
     return this.petService.getPetDetails(id);
+  }
+
+  @Put('/:id')
+  updatePetWithOwnerOrAdd(
+    @Param('id') id: string,
+    updatePetWithOwnerOrAddRequestDto: UpdatePetWithOwnerOrAddRequestDto,
+  ): Promise<UpdatePetWithOwnerOrAddResponseDto> {
+    return this.petService.updatePetWithOwnerOrAddService(
+      id,
+      updatePetWithOwnerOrAddRequestDto,
+    );
   }
 
   @Delete('/:id')

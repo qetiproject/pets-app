@@ -3,32 +3,26 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { PetEntity } from './entities/pet.entity';
 import { Repository } from 'typeorm';
 
-import { OwnerResponseDto } from '@modules/owner/dto';
 import { DeleteResponseDto } from '@common/dto';
-import { OwnerEntity } from '@modules/owner/entities/owner.entity';
-import { AddPetRequestDto, PetResponseDto } from './dto';
+import { AddPetRequestDto, UpdatePetWithOwnerOrAddRequestDto } from './dto';
+import { PetResponseDto } from './dto/index';
 
 @Injectable()
 export class PetService {
   constructor(
     @InjectRepository(PetEntity)
     private readonly petRepository: Repository<PetEntity>,
-    @InjectRepository(OwnerEntity)
-    private readonly ownerRepository: Repository<OwnerEntity>,
   ) {}
 
-  private getOwnerDetails(username: string): Promise<OwnerResponseDto> {
+  addPet(addPetDto: AddPetRequestDto): Promise<PetResponseDto> {
     try {
-      return this.ownerRepository.findOneOrFail({ where: { username } });
+      return this.petRepository.save<PetEntity>(addPetDto);
     } catch (error) {
       throw new HttpException(
-        { error: `Owner with username: ${username} not found` },
-        HttpStatus.NOT_FOUND,
+        { error: 'Failed to add pet' },
+        HttpStatus.INTERNAL_SERVER_ERROR,
       );
     }
-  }
-  addPet(addPetDto: AddPetRequestDto): Promise<PetResponseDto> {
-    return this.petRepository.save<PetEntity>({ ...addPetDto });
   }
 
   getPets(): Promise<PetResponseDto[]> {
@@ -44,6 +38,17 @@ export class PetService {
         HttpStatus.NOT_FOUND,
       );
     }
+  }
+
+  async updatePetWithOwnerOrAddService(
+    id: string,
+    updatePetWithOwnerOrAddRequestDto: UpdatePetWithOwnerOrAddRequestDto,
+  ): Promise<any> {
+    try {
+      const pet = this.getPetDetails(id);
+      console.log(pet, 'pet');
+      console.log(updatePetWithOwnerOrAddRequestDto);
+    } catch (error) {}
   }
 
   async deletePet(id: string): Promise<DeleteResponseDto> {

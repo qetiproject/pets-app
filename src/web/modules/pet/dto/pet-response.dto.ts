@@ -1,30 +1,27 @@
-import {
-  IsEnum,
-  IsNotEmpty,
-  IsNumber,
-  IsOptional,
-  IsString,
-} from 'class-validator';
+import { IsEnum, IsNotEmpty, IsNumber, IsString } from 'class-validator';
 
-import { PetEnum } from '../enums';
 import { OwnerResponseDto } from '@modules/owner/dto';
+import { PetEnum } from '../enums';
 
 export class PetResponseDto {
   @IsString()
-  @IsNotEmpty()
   name: string;
 
   @IsNumber()
-  @IsNotEmpty()
   age: number;
 
   @IsNotEmpty()
   @IsEnum(PetEnum)
   animal: PetEnum;
 
-  @IsNotEmpty()
+  @IsNumber()
   price: number;
+}
 
-  @IsOptional()
-  owner?: OwnerResponseDto;
+export class UpdatePetWithOwnerOrAddResponseDto {
+  @IsNotEmpty()
+  pet: PetResponseDto;
+
+  @IsNotEmpty()
+  owner: OwnerResponseDto;
 }
