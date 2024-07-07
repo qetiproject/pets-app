@@ -26,11 +26,6 @@ export class PetController {
     return this.petService.getPetDetails(id);
   }
 
-  @Post('/owner')
-  getPetWithOwner(@Body() petOwnerDto: any): Promise<any> {
-    return this.petService.petWithOwner(petOwnerDto);
-  }
-
   @Delete('/:id')
   deletePet(@Param('id') id: string): Promise<any> {
     return this.petService.deletePet(id);

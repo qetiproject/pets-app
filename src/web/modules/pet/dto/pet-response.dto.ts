@@ -1,7 +1,13 @@
-import { IsEnum, IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator';
+import {
+  IsEnum,
+  IsNotEmpty,
+  IsNumber,
+  IsOptional,
+  IsString,
+} from 'class-validator';
 
-import { OwnerEntity } from '@modules/owner/entities/owner.entity';
 import { PetEnum } from '../enums';
+import { OwnerResponseDto } from '@modules/owner/dto';
 
 export class PetResponseDto {
   @IsString()
@@ -20,5 +26,5 @@ export class PetResponseDto {
   price: number;
 
   @IsOptional()
-  owner?: OwnerEntity;
+  owner?: OwnerResponseDto;
 }

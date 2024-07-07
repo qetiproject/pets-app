@@ -63,8 +63,7 @@ export class OwnerService {
   }
 
   async getOwnersService(): Promise<OwnerResponseDto[]> {
-    return await this.ownerRepository.find();
-    // return this.ownerRepository.find({ relations: ['pets'] });
+    return this.ownerRepository.find({ relations: ['pets'] });
   }
 
   async getOwnerDetailsService(username: string): Promise<OwnerResponseDto> {

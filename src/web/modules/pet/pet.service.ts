@@ -2,9 +2,11 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { PetEntity } from './entities/pet.entity';
 import { Repository } from 'typeorm';
-import { OwnerEntity } from '../owner/entities/owner.entity';
-import { AddPetRequestDto, PetOwnerDto, PetResponseDto } from './dto';
+
 import { OwnerResponseDto } from '@modules/owner/dto';
+import { DeleteResponseDto } from '@common/dto';
+import { OwnerEntity } from '@modules/owner/entities/owner.entity';
+import { AddPetRequestDto, PetResponseDto } from './dto';
 
 @Injectable()
 export class PetService {
@@ -26,14 +28,14 @@ export class PetService {
     }
   }
   addPet(addPetDto: AddPetRequestDto): Promise<PetResponseDto> {
-    return this.petRepository.save<any>({ ...addPetDto });
+    return this.petRepository.save<PetEntity>({ ...addPetDto });
   }
 
-  getPets(): Promise<PetEntity[]> {
+  getPets(): Promise<PetResponseDto[]> {
     return this.petRepository.find({ relations: ['owner'] });
   }
 
-  getPetDetails(id: string): Promise<PetEntity> {
+  getPetDetails(id: string): Promise<PetResponseDto> {
     try {
       return this.petRepository.findOneOrFail({ where: { id } });
     } catch (error) {
@@ -43,7 +45,8 @@ export class PetService {
       );
     }
   }
-  async deletePet(id: string): Promise<unknown> {
+
+  async deletePet(id: string): Promise<DeleteResponseDto> {
     try {
       return await this.petRepository.delete(id);
     } catch (error) {
@@ -52,17 +55,5 @@ export class PetService {
         HttpStatus.NOT_FOUND,
       );
     }
-  }
-
-  async petWithOwner(petOwnerDto: PetOwnerDto): Promise<any> {
-    const ownerFromDb = await this.ownerRepository.findOneByOrFail({
-      username: petOwnerDto.username,
-    });
-
-    const petFromDb = await this.petRepository.findOneByOrFail({
-      id: petOwnerDto.petId,
-    });
-
-    return this.petRepository.save({ ...petFromDb, owner: ownerFromDb });
   }
 }
