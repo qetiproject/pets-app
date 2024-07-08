@@ -23,7 +23,8 @@ import {
 } from './dto';
 
 @UseFilters(CommonErrorFilter)
-// @UseGuards(AuthGuard, RoleGuard)
+@UseGuards(AuthGuard, RoleGuard)
+@Roles(RoleEnum.ADMIN, RoleEnum.USER)
 @ApiTags('Owner')
 @Controller('owner')
 export class OwnerController {
@@ -56,7 +57,6 @@ export class OwnerController {
     return await this.ownerService.ownerUpdateService(username, ownerUpdateDto);
   }
 
-  @Roles(RoleEnum.ADMIN)
   @Delete('/:username')
   deleteOwner(@Param('username') username: string): Promise<any> {
     return this.ownerService.deleteOwnerService(username);
