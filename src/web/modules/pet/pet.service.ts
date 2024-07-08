@@ -41,10 +41,9 @@ export class PetService {
 
   async updatePetService(
     id: string,
-    updatePetDto: UpdatePetRequestDto,
+    updatePetDto: Partial<UpdatePetRequestDto>,
   ): Promise<PetResponseDto> {
     try {
-      console.log(id, updatePetDto);
       const pet = await this.getPetDetails(id);
       Object.assign(pet, updatePetDto);
       const updatedPet = await this.petRepository.save<PetEntity>(pet);

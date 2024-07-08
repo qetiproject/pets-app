@@ -37,7 +37,7 @@ export class PetController {
   @Put('/:id')
   updatePet(
     @Param('id') id: string,
-    @Body() updatePetRequestDto: UpdatePetRequestDto,
+    @Body() updatePetRequestDto: Partial<UpdatePetRequestDto>,
   ): Promise<PetResponseDto> {
     return this.petService.updatePetService(id, updatePetRequestDto);
   }
