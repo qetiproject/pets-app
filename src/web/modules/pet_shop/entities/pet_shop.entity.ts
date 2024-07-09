@@ -1,11 +1,12 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
+
 import { PetEntity } from '@modules/pet/entities/pet.entity';
 import { ShopItemEntity } from '@modules/shop_items/entities/shop_item.entity';
 
 @Entity('pet_shop')
 export class PetShopEntity {
-  @PrimaryGeneratedColumn({ name: 'id' })
-  id: string;
+  @PrimaryGeneratedColumn('uuid', { name: 'id' })
+  id?: string;
 
   @Column({ name: 'name' })
   name: string;
