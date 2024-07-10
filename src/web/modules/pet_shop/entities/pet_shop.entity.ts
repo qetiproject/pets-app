@@ -14,6 +14,15 @@ export class PetShopEntity {
   @Column({ name: 'active' })
   active: boolean;
 
+  @Column({ name: 'address' })
+  address: string;
+
+  @Column({ name: 'city' })
+  city: string;
+
+  @Column({ name: 'work_hours' })
+  work_hours: string;
+
   @OneToMany(() => PetEntity, (pets) => pets.petShop)
   pets?: PetEntity[];
 

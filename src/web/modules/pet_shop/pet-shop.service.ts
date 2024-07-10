@@ -3,11 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
 import { PetShopEntity } from './entities/pet_shop.entity';
-import {
-  AddPetShopRequestDto,
-  PetShopResponseDto,
-  UpdatePetShopRequestDto,
-} from './dto';
+import { AddPetShopRequestDto, PetShopResponseDto } from './dto';
 import { DeleteResponseDto } from '@common/dto';
 
 @Injectable()
@@ -24,6 +20,9 @@ export class PetShopService {
       const petShop = this.petShopRepository.create({
         name: addPetShopDto.name,
         active: true,
+        address: addPetShopDto.address,
+        city: addPetShopDto.city,
+        work_hours: addPetShopDto.work_hours,
         shopItems: [],
       });
       return this.petShopRepository.save<PetShopEntity>(petShop);
