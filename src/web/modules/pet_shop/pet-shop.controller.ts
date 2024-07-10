@@ -1,9 +1,23 @@
-import { Body, Controller, Get, Post, UseFilters } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Put,
+  UseFilters,
+} from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { CommonErrorFilter } from '@common/filters';
 
 import { PetShopService } from './pet-shop.service';
-import { AddPetShopRequestDto } from './dto';
+import {
+  AddPetShopRequestDto,
+  PetShopResponseDto,
+  UpdatePetShopRequestDto,
+} from './dto';
+import { DeleteResponseDto } from '@common/dto';
 
 @UseFilters(CommonErrorFilter)
 @ApiTags('PetShops')
@@ -21,18 +35,13 @@ export class PetShopController {
     return await this.petShopService.getPetShopsService();
   }
 
-  // @Get(':id')
-  // findOne(@Param('id') id: string) {
-  //   return this.pet-shopService.findOne(+id);
-  // }
+  @Get('/:id')
+  getPetShopDetails(@Param('id') id: string): Promise<PetShopResponseDto> {
+    return this.petShopService.getPetShopDetailsService(id);
+  }
 
-  // @Patch(':id')
-  // update(@Param('id') id: string, @Body() updatePetShopDto: UpdatePetShopDto) {
-  //   return this.pet-shopService.update(+id, updatePetShopDto);
-  // }
-
-  // @Delete(':id')
-  // remove(@Param('id') id: string) {
-  //   return this.pet-shopService.remove(+id);
-  // }
+  @Delete('/:id')
+  deletePetShop(@Param('id') id: string): Promise<DeleteResponseDto> {
+    return this.petShopService.deletePetShopService(id);
+  }
 }

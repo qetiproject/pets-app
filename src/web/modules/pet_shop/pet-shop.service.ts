@@ -3,7 +3,12 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
 import { PetShopEntity } from './entities/pet_shop.entity';
-import { AddPetShopRequestDto } from './dto';
+import {
+  AddPetShopRequestDto,
+  PetShopResponseDto,
+  UpdatePetShopRequestDto,
+} from './dto';
+import { DeleteResponseDto } from '@common/dto';
 
 @Injectable()
 export class PetShopService {
@@ -12,9 +17,16 @@ export class PetShopService {
     private readonly petShopRepository: Repository<PetShopEntity>,
   ) {}
 
-  addPetShopService(addPetShopDto: AddPetShopRequestDto): Promise<any> {
+  addPetShopService(
+    addPetShopDto: AddPetShopRequestDto,
+  ): Promise<PetShopResponseDto> {
     try {
-      return this.petShopRepository.save<any>(addPetShopDto);
+      const petShop = this.petShopRepository.create({
+        name: addPetShopDto.name,
+        active: true,
+        shopItems: [],
+      });
+      return this.petShopRepository.save<PetShopEntity>(petShop);
     } catch (error) {
       throw new HttpException(
         { error: 'Failed to add pet' },
@@ -23,9 +35,11 @@ export class PetShopService {
     }
   }
 
-  async getPetShopsService(): Promise<any> {
+  async getPetShopsService(): Promise<PetShopResponseDto[]> {
     try {
-      const petShop = await this.petShopRepository.find();
+      const petShop = await this.petShopRepository.find({
+        relations: ['pets'],
+      });
       return petShop;
     } catch (error) {
       throw new HttpException(
@@ -35,15 +49,18 @@ export class PetShopService {
     }
   }
 
-  // findOne(id: number) {
-  //   return `This action returns a #id pet-shop`;
-  // }
+  getPetShopDetailsService(id: string): Promise<PetShopResponseDto> {
+    try {
+      return this.petShopRepository.findOneOrFail({ where: { id } });
+    } catch (error) {
+      throw new HttpException(
+        { error: `Petshop with id: ${id} not found` },
+        HttpStatus.NOT_FOUND,
+      );
+    }
+  }
 
-  // update(id: number, updatePetShopDto: UpdatePetShopDto) {
-  //   return `This action updates a #id pet-shop`;
-  // }
-
-  // remove(id: number) {
-  //   return `This action removes a #id pet-shop`;
-  // }
+  async deletePetShopService(id: string): Promise<DeleteResponseDto> {
+    return this.petShopRepository.delete(id);
+  }
 }
