@@ -1,7 +1,7 @@
 export class PetShopResponseDto {
   name: string;
-  city: string;
   address: string;
+  city: string;
   work_hours: string;
   active: boolean;
   shopItems: any[];

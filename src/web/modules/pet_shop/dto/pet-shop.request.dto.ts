@@ -7,6 +7,9 @@ export class AddPetShopRequestDto {
 
 export class UpdatePetShopRequestDto {
   name: string;
+  city: string;
+  address: string;
+  work_hours: string;
   active: boolean;
   shopItems: any[];
 }

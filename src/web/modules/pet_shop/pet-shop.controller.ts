@@ -40,6 +40,14 @@ export class PetShopController {
     return this.petShopService.getPetShopDetailsService(id);
   }
 
+  @Put('/:id')
+  updatePetShop(
+    @Param('id') id: string,
+    @Body() updatePetShopDto: UpdatePetShopRequestDto,
+  ): Promise<PetShopResponseDto> {
+    return this.petShopService.updatePetShopService(id, updatePetShopDto);
+  }
+
   @Delete('/:id')
   deletePetShop(@Param('id') id: string): Promise<DeleteResponseDto> {
     return this.petShopService.deletePetShopService(id);

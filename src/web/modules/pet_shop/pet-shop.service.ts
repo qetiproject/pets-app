@@ -3,7 +3,11 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
 import { PetShopEntity } from './entities/pet_shop.entity';
-import { AddPetShopRequestDto, PetShopResponseDto } from './dto';
+import {
+  AddPetShopRequestDto,
+  PetShopResponseDto,
+  UpdatePetShopRequestDto,
+} from './dto';
 import { DeleteResponseDto } from '@common/dto';
 
 @Injectable()
@@ -48,9 +52,29 @@ export class PetShopService {
     }
   }
 
-  getPetShopDetailsService(id: string): Promise<PetShopResponseDto> {
+  async updatePetShopService(
+    id: string,
+    updatePetShopDto: Partial<UpdatePetShopRequestDto>,
+  ): Promise<PetShopResponseDto> {
     try {
-      return this.petShopRepository.findOneOrFail({ where: { id } });
+      const petShop = await this.getPetShopDetailsService(id);
+      Object.assign(petShop, updatePetShopDto);
+      const updatedPetShop =
+        await this.petShopRepository.save<PetShopEntity>(petShop);
+      return updatedPetShop;
+    } catch (error) {
+      throw new HttpException(
+        {
+          error: `Pet with id: ${id} not found`,
+        },
+        HttpStatus.NOT_FOUND,
+      );
+    }
+  }
+
+  async getPetShopDetailsService(id: string): Promise<PetShopResponseDto> {
+    try {
+      return await this.petShopRepository.findOneOrFail({ where: { id } });
     } catch (error) {
       throw new HttpException(
         { error: `Petshop with id: ${id} not found` },
@@ -60,6 +84,13 @@ export class PetShopService {
   }
 
   async deletePetShopService(id: string): Promise<DeleteResponseDto> {
-    return this.petShopRepository.delete(id);
+    try {
+      return await this.petShopRepository.delete(id);
+    } catch (error) {
+      throw new HttpException(
+        { error: `PetShop with id: ${id} not found` },
+        HttpStatus.NOT_FOUND,
+      );
+    }
   }
 }
