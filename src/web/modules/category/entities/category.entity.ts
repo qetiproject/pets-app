@@ -1,5 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToMany } from 'typeorm';
-import { AccessoryEntity } from '@modules/accessories/entities/accessory.entity';
+import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 
 @Entity('category')
 export class CategoryEntity {
@@ -11,9 +10,4 @@ export class CategoryEntity {
 
   @Column({ name: 'description' })
   description: boolean;
-
-  @ManyToMany(() => AccessoryEntity, (accessory) => accessory.categories, {
-    nullable: true,
-  })
-  accessories: AccessoryEntity[];
 }

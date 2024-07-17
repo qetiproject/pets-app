@@ -5,11 +5,11 @@ import {
   TableForeignKey,
 } from 'typeorm';
 
-export class PetShop1719951486833 implements MigrationInterface {
+export class Category1721195144792 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: 'pet_shop',
+        name: 'category',
         columns: [
           {
             name: 'id',
@@ -23,21 +23,15 @@ export class PetShop1719951486833 implements MigrationInterface {
             type: 'varchar',
             isNullable: false,
           },
-          {
-            name: 'active',
-            type: 'boolean',
-            isNullable: false,
-          },
         ],
       }),
     );
-
     await queryRunner.createForeignKey(
-      'pet',
+      'pet_shop',
       new TableForeignKey({
-        columnNames: ['shop_id'],
-        name: 'FK_pet_shop',
-        referencedTableName: 'pet_shop',
+        columnNames: ['product_id'],
+        name: 'FK_pet_shop_product',
+        referencedTableName: 'product',
         referencedColumnNames: ['id'],
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE',
@@ -46,6 +40,6 @@ export class PetShop1719951486833 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('pet_shop');
+    await queryRunner.dropTable('category');
   }
 }

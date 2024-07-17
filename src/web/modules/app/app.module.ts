@@ -5,12 +5,11 @@ import config from '@common/config';
 import * as Joi from 'joi';
 import { AuthModule } from '@common/modules';
 import {
-  AccessoryModule,
   CategoryModule,
   OwnerModule,
   PetModule,
   PetShopModule,
-  ShopItemModule,
+  ProductModule,
   UserModule,
 } from '@modules/index';
 
@@ -34,10 +33,9 @@ import {
     UserModule,
     OwnerModule,
     PetModule,
-    ShopItemModule,
     PetShopModule,
-    AccessoryModule,
     CategoryModule,
+    ProductModule,
   ],
   controllers: [],
   providers: [],
