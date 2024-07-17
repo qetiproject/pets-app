@@ -11,5 +11,4 @@ export class UpdatePetShopRequestDto {
   address: string;
   work_hours: string;
   active: boolean;
-  shopItems: any[];
 }

@@ -9,7 +9,6 @@ import {
   OwnerModule,
   PetModule,
   PetShopModule,
-  ProductModule,
   UserModule,
 } from '@modules/index';
 
@@ -35,7 +34,6 @@ import {
     PetModule,
     PetShopModule,
     CategoryModule,
-    ProductModule,
   ],
   controllers: [],
   providers: [],

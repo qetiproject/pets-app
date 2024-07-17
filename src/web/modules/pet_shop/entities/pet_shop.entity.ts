@@ -1,13 +1,6 @@
-import {
-  Entity,
-  PrimaryGeneratedColumn,
-  Column,
-  OneToMany,
-  JoinColumn,
-} from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
 
 import { PetEntity } from '@modules/pet/entities/pet.entity';
-import { ProductEntity } from '@modules/product/entities/product.entity';
 
 @Entity('pet_shop')
 export class PetShopEntity {
@@ -32,7 +25,7 @@ export class PetShopEntity {
   @OneToMany(() => PetEntity, (pets) => pets.petShop)
   pets?: PetEntity[];
 
-  @JoinColumn({ name: 'product_id' })
-  @OneToMany(() => ProductEntity, (products) => products.petShops)
-  products: ProductEntity[];
+  // @JoinColumn({ name: 'product_id' })
+  // @OneToMany(() => ProductEntity, (products) => products.petShops)
+  // products: ProductEntity[];
 }

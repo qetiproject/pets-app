@@ -20,8 +20,8 @@ import { AddPetRequestDto, PetResponseDto, UpdatePetRequestDto } from './dto';
 import { PetService } from './pet.service';
 
 @UseFilters(CommonErrorFilter)
-@UseGuards(AuthGuard, RoleGuard)
-@Roles(RoleEnum.ADMIN, RoleEnum.USER)
+// @UseGuards(AuthGuard, RoleGuard)
+// @Roles(RoleEnum.ADMIN, RoleEnum.USER)
 @ApiTags('Pets')
 @Controller('pet')
 export class PetController {

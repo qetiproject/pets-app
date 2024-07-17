@@ -7,7 +7,4 @@ export class CategoryEntity {
 
   @Column({ name: 'name' })
   name: string;
-
-  @Column({ name: 'description' })
-  description: boolean;
 }

@@ -27,7 +27,7 @@ export class PetShopService {
         address: addPetShopDto.address,
         city: addPetShopDto.city,
         work_hours: addPetShopDto.work_hours,
-        products: [],
+        // products: [],
       });
       return this.petShopRepository.save<PetShopEntity>(petShop);
     } catch (error) {
