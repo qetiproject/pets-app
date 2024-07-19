@@ -5,8 +5,8 @@ import config from '@common/config';
 import * as Joi from 'joi';
 import { AuthModule } from '@common/modules';
 import {
-  CategoryModule,
   OwnerModule,
+  PetCategoryModule,
   PetModule,
   PetShopModule,
   UserModule,
@@ -33,7 +33,7 @@ import {
     OwnerModule,
     PetModule,
     PetShopModule,
-    CategoryModule,
+    PetCategoryModule,
   ],
   controllers: [],
   providers: [],
