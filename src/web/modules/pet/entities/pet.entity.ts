@@ -20,11 +20,23 @@ export class PetEntity {
   @Column({ name: 'age' })
   age: number;
 
+  @Column({ name: 'price' })
+  price: number;
+
+  @Column({ name: 'color' })
+  color: string;
+
+  @Column({ name: 'type' })
+  type: string;
+
+  @Column({ name: 'has_genealogical_list' })
+  hasGenealogicalList: boolean;
+
   @Column({ name: 'animal' })
   animal: PetEnum;
 
-  @Column({ name: 'price' })
-  price: number;
+  @Column({ name: 'is_club_member' })
+  isClubMember: boolean;
 
   @JoinColumn({ name: 'owner_id' })
   @ManyToOne(() => OwnerEntity, (owner) => owner.pets)

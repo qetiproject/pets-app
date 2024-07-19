@@ -1,4 +1,3 @@
 export class PetCategoryResponseDto {
-    name: string;
-  }
-  
+  name: string;
+}

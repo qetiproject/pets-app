@@ -1,8 +1,14 @@
-import { IsString, IsNotEmpty, IsNumber, IsEnum } from 'class-validator';
+import {
+  IsString,
+  IsNotEmpty,
+  IsNumber,
+  IsEnum,
+  IsBoolean,
+} from 'class-validator';
 
 import { OwnerResponseDto } from '@modules/owner/dto';
-import { PetEnum } from '../enums';
 import { PetShopResponseDto } from '@modules/pet_shop/dto';
+import { PetEnum } from '../enums';
 
 export class AddPetRequestDto {
   @IsNotEmpty()
@@ -20,6 +26,22 @@ export class AddPetRequestDto {
   @IsNotEmpty()
   @IsNumber()
   price: number;
+
+  @IsNotEmpty()
+  @IsString()
+  type: string;
+
+  @IsNotEmpty()
+  @IsString()
+  color: string;
+
+  @IsNotEmpty()
+  @IsBoolean()
+  hasGenealogicalList: boolean;
+
+  @IsNotEmpty()
+  @IsBoolean()
+  isClubMember: boolean;
 }
 
 export class UpdatePetRequestDto {
@@ -27,6 +49,10 @@ export class UpdatePetRequestDto {
   age: number;
   animal: PetEnum;
   price: number;
+  color: string;
+  type: string;
+  hasGenealogicalList: string;
+  isClubMember: boolean;
   owner: OwnerResponseDto;
   petShop?: PetShopResponseDto;
 }

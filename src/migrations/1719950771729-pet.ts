@@ -39,6 +39,26 @@ export class Pet1719950771729 implements MigrationInterface {
             isNullable: false,
           },
           {
+            name: 'color',
+            type: 'varchar',
+            isNullable: false,
+          },
+          {
+            name: 'type',
+            type: 'varchar',
+            isNullable: false,
+          },
+          {
+            name: 'has_genealogical_list',
+            type: 'boolean',
+            isNullable: false,
+          },
+          {
+            name: 'is_club_member',
+            type: 'boolean',
+            isNullable: false,
+          },
+          {
             name: 'shop_id',
             type: 'varchar',
             isNullable: true,
