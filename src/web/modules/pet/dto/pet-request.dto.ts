@@ -42,6 +42,9 @@ export class AddPetRequestDto {
   @IsNotEmpty()
   @IsBoolean()
   isClubMember: boolean;
+
+  @IsNotEmpty()
+  owner: OwnerResponseDto;
 }
 
 export class UpdatePetRequestDto {
@@ -51,7 +54,7 @@ export class UpdatePetRequestDto {
   price: number;
   color: string;
   type: string;
-  hasGenealogicalList: string;
+  hasGenealogicalList: boolean;
   isClubMember: boolean;
   owner: OwnerResponseDto;
   petShop?: PetShopResponseDto;
