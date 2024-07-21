@@ -12,4 +12,5 @@ export class PetResponseDto {
   hasGenealogicalList: boolean;
   owner?: OwnerResponseDto;
   petShop?: string;
+  photoPath?: string;
 }

@@ -44,6 +44,7 @@ export class AddPetRequestDto {
 
   owner?: OwnerResponseDto;
   petShop?: string;
+  photoPath?: string;
 }
 
 export class UpdatePetRequestDto {
@@ -57,4 +58,5 @@ export class UpdatePetRequestDto {
   isClubMember: boolean;
   owner?: OwnerResponseDto;
   petShop?: string;
+  photoPath?: string;
 }
