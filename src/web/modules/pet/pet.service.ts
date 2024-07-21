@@ -25,17 +25,22 @@ export class PetService {
     }
   }
 
-  async getPets(filters?: {
-    name?: string;
-    age?: number;
-    type?: PetTypeEnum;
-    animal?: PetEnum;
-  }): Promise<PetResponseDto[]> {
+  async getPets(
+    page: number,
+    skip: number,
+    filters?: {
+      name?: string;
+      age?: number;
+      type?: PetTypeEnum;
+      animal?: PetEnum;
+    },
+  ): Promise<PetResponseDto[]> {
     const queryBuilder = this.petRepository
       .createQueryBuilder('pet')
       .leftJoinAndSelect('pet.owner', 'owner')
       .leftJoinAndSelect('pet.petShop', 'petShop')
-      .leftJoinAndSelect('pet.breed', 'breed');
+      .leftJoinAndSelect('pet.breed', 'breed')
+      .orderBy('pet.name', 'ASC');
 
     if (filters) {
       if (filters.name) {
@@ -56,6 +61,7 @@ export class PetService {
       }
     }
 
+    queryBuilder.skip(skip).take(page);
     const pets = await queryBuilder.getMany();
     return pets.map(this.mapPetToResponseDto);
   }

@@ -29,6 +29,16 @@ export class PetController {
   }
 
   @ApiQuery({
+    name: 'limit',
+    required: true,
+    description: 'Limit per page',
+  })
+  @ApiQuery({
+    name: 'page',
+    required: true,
+    description: 'Page number',
+  })
+  @ApiQuery({
     name: 'name',
     required: false,
     description: 'Filter by pet name',
@@ -53,6 +63,8 @@ export class PetController {
   })
   @Get('/all')
   getPets(
+    @Query('page') page = 1,
+    @Query('limit') limit = 10,
     @Query('name') name?: string,
     @Query('age') age?: number,
     @Query('type') type?: PetTypeEnum,
@@ -64,7 +76,8 @@ export class PetController {
       type,
       animal,
     };
-    return this.petService.getPets(filters);
+    const skip = (page - 1) * limit;
+    return this.petService.getPets(limit, skip, filters);
   }
 
   @Get('/:id')
