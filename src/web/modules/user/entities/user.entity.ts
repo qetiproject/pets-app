@@ -1,4 +1,4 @@
-import { Column, Entity, OneToOne, PrimaryColumn, JoinColumn } from 'typeorm';
+import { Column, Entity, OneToOne, PrimaryColumn } from 'typeorm';
 
 import { RoleEnum } from '@common/enums';
 import { OwnerEntity } from '@modules/owner/entities/owner.entity';

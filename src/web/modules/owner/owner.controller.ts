@@ -12,7 +12,6 @@ import {
 import { ApiTags } from '@nestjs/swagger';
 
 import { CommonErrorFilter } from '@common/filters';
-import { OwnerService } from './owner.service';
 import {
   CreateOwnerRequestDto,
   OwnerResponseDto,
@@ -22,6 +21,7 @@ import { DeleteResponseDto } from '@common/dto';
 import { Roles } from '@common/decorators';
 import { RoleEnum } from '@common/enums';
 import { AuthGuard, RoleGuard } from '@common/modules/auth/guards';
+import { OwnerService } from './owner.service';
 
 @UseFilters(CommonErrorFilter)
 @UseGuards(AuthGuard, RoleGuard)

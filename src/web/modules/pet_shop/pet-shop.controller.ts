@@ -10,7 +10,6 @@ import {
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 
-import { PetShopService } from './pet-shop.service';
 import {
   AddPetShopRequestDto,
   PetShopResponseDto,
@@ -18,6 +17,7 @@ import {
 } from './dto';
 import { DeleteResponseDto } from '@common/dto';
 import { CommonErrorFilter } from '@common/filters';
+import { PetShopService } from './pet-shop.service';
 
 @UseFilters(CommonErrorFilter)
 @ApiTags('PetShops')

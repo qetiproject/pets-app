@@ -1,17 +1,19 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { PetEntity } from './entities/pet.entity';
 import { Repository } from 'typeorm';
 
 import { DeleteResponseDto } from '@common/dto';
 import { AddPetRequestDto, PetResponseDto, UpdatePetRequestDto } from './dto';
+import { PetEntity } from './entities';
 import { PetEnum, PetTypeEnum } from './enums';
+import { PetResponseMapper } from './mappers';
 
 @Injectable()
 export class PetService {
   constructor(
     @InjectRepository(PetEntity)
     private readonly petRepository: Repository<PetEntity>,
+    private readonly responseMappers: PetResponseMapper,
   ) {}
 
   addPet(addPetDto: AddPetRequestDto): Promise<PetResponseDto> {
@@ -63,21 +65,7 @@ export class PetService {
 
     queryBuilder.skip(skip).take(page);
     const pets = await queryBuilder.getMany();
-    return pets.map(this.mapPetToResponseDto);
-  }
-
-  private mapPetToResponseDto(pet: PetEntity): PetResponseDto {
-    return {
-      name: pet.name,
-      age: pet.age,
-      price: pet.price,
-      color: pet.color,
-      type: pet.type,
-      isClubMember: pet.isClubMember,
-      animal: pet.animal,
-      hasGenealogicalList: pet.hasGenealogicalList,
-      breed: pet.breed,
-    };
+    return pets.map((pet) => this.responseMappers.mapPetToResponseDto(pet));
   }
 
   getPetDetails(id: string): Promise<PetResponseDto> {

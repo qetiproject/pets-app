@@ -6,8 +6,9 @@ import {
   OneToOne,
   JoinColumn,
 } from 'typeorm';
+
 import { UserEntity } from '@modules/user/entities';
-import { PetEntity } from '@modules/pet/entities/pet.entity';
+import { PetEntity } from '@modules/pet/entities';
 
 @Entity('owner')
 export class OwnerEntity {

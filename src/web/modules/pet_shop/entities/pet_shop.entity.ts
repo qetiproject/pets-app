@@ -24,8 +24,4 @@ export class PetShopEntity {
 
   @OneToMany(() => PetEntity, (pets) => pets.petShop)
   pets?: PetEntity[];
-
-  // @JoinColumn({ name: 'product_id' })
-  // @OneToMany(() => ProductEntity, (products) => products.petShops)
-  // products: ProductEntity[];
 }

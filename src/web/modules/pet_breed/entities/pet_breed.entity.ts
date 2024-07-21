@@ -1,5 +1,6 @@
-import { PetEntity } from '@modules/pet/entities';
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
+
+import { PetEntity } from '@modules/pet/entities';
 
 @Entity('pet_breed')
 export class PetBreedEntity {

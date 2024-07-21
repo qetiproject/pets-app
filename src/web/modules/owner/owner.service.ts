@@ -3,11 +3,14 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
 import { UserEntity } from '@modules/user/entities';
-import { OwnerResponseDto } from './dto/owner-response.dto';
-import { OwnerEntity } from './entities/owner.entity';
-import { CreateOwnerRequestDto, UpdateOwnerRequestDto } from './dto';
 import { ResponseMapper } from '@modules/user/mappers';
 import { DeleteResponseDto } from '@common/dto';
+import { OwnerEntity } from './entities/owner.entity';
+import {
+  CreateOwnerRequestDto,
+  UpdateOwnerRequestDto,
+  OwnerResponseDto,
+} from './dto';
 
 @Injectable()
 export class OwnerService {

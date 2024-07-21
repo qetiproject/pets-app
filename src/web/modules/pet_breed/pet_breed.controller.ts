@@ -1,9 +1,9 @@
 import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 
+import { DeleteResponseDto } from '@common/dto';
 import { PetBreedService } from './pet_breed.service';
 import { AddPetBreedRequeseDto, PetBreedResponseDto } from './dto';
-import { ApiTags } from '@nestjs/swagger';
-import { DeleteResponseDto } from '@common/dto';
 
 @ApiTags('PetBreeds')
 @Controller('petBreed')

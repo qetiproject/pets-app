@@ -5,10 +5,11 @@ import {
   ManyToOne,
   JoinColumn,
 } from 'typeorm';
+
 import { OwnerEntity } from '@modules/owner/entities/owner.entity';
 import { PetShopEntity } from '@modules/pet_shop/entities/pet_shop.entity';
-import { PetEnum, PetTypeEnum } from '../enums';
 import { PetBreedEntity } from '@modules/pet_breed/entities/pet_breed.entity';
+import { PetEnum, PetTypeEnum } from '../enums';
 
 @Entity('pet')
 export class PetEntity {

@@ -19,17 +19,17 @@ import {
   ApiQuery,
   ApiTags,
 } from '@nestjs/swagger';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { diskStorage } from 'multer';
 
 import { DeleteResponseDto } from '@common/dto';
-import { AddPetRequestDto, PetResponseDto, UpdatePetRequestDto } from './dto';
-import { PetService } from './pet.service';
-import { PetEnum, PetTypeEnum } from './enums';
 import { Roles } from '@common/decorators';
 import { RoleEnum } from '@common/enums';
 import { AuthGuard, RoleGuard } from '@common/modules/auth/guards';
 import { CommonErrorFilter } from '@common/filters';
-import { FileInterceptor } from '@nestjs/platform-express';
-import { diskStorage } from 'multer';
+import { PetEnum, PetTypeEnum } from './enums';
+import { PetService } from './pet.service';
+import { AddPetRequestDto, PetResponseDto, UpdatePetRequestDto } from './dto';
 
 @UseFilters(CommonErrorFilter)
 @UseGuards(AuthGuard, RoleGuard)
@@ -46,12 +46,12 @@ export class PetController {
 
   @ApiQuery({
     name: 'limit',
-    required: true,
+    required: false,
     description: 'Limit per page',
   })
   @ApiQuery({
     name: 'page',
-    required: true,
+    required: false,
     description: 'Page number',
   })
   @ApiQuery({
