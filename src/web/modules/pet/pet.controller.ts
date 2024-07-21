@@ -9,8 +9,16 @@ import {
   Query,
   UseFilters,
   UseGuards,
+  UploadedFile,
+  UseInterceptors,
 } from '@nestjs/common';
-import { ApiQuery, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBody,
+  ApiConsumes,
+  ApiOperation,
+  ApiQuery,
+  ApiTags,
+} from '@nestjs/swagger';
 
 import { DeleteResponseDto } from '@common/dto';
 import { AddPetRequestDto, PetResponseDto, UpdatePetRequestDto } from './dto';
@@ -20,6 +28,8 @@ import { Roles } from '@common/decorators';
 import { RoleEnum } from '@common/enums';
 import { AuthGuard, RoleGuard } from '@common/modules/auth/guards';
 import { CommonErrorFilter } from '@common/filters';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { diskStorage } from 'multer';
 
 @UseFilters(CommonErrorFilter)
 @UseGuards(AuthGuard, RoleGuard)
@@ -102,5 +112,38 @@ export class PetController {
   @Delete('/:id')
   deletePet(@Param('id') id: string): Promise<DeleteResponseDto> {
     return this.petService.deletePet(id);
+  }
+
+  @ApiOperation({ summary: 'Upload a photo' }) // Describe the operation
+  @ApiConsumes('multipart/form-data')
+  @ApiBody({
+    description: 'Photo file',
+    type: 'multipart/form-data',
+    schema: {
+      type: 'object',
+      properties: {
+        file: {
+          type: 'string',
+          format: 'binary', // This indicates file input
+        },
+      },
+    },
+  })
+  @Post('/upload-photo')
+  @UseInterceptors(
+    FileInterceptor('file', {
+      storage: diskStorage({
+        destination: 'public/img',
+        filename: (req, file, cb) => {
+          cb(null, file.originalname);
+        },
+      }),
+    }),
+  )
+  async uploadPetPhoto(@UploadedFile() file: Express.Multer.File) {
+    return {
+      statusCode: 200,
+      data: file.path,
+    };
   }
 }
