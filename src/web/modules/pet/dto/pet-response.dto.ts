@@ -13,4 +13,5 @@ export class PetResponseDto {
   owner?: OwnerResponseDto;
   petShop?: string;
   photoPath?: string;
+  breed: string;
 }

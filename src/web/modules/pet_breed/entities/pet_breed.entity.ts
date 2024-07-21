@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { PetEntity } from '@modules/pet/entities';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
 
 @Entity('pet_breed')
 export class PetBreedEntity {
@@ -10,4 +11,7 @@ export class PetBreedEntity {
 
   @Column({ name: 'description' })
   description?: string;
+
+  @OneToMany(() => PetEntity, (pets) => pets.breed)
+  pets: PetEntity[];
 }

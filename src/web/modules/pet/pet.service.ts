@@ -25,14 +25,16 @@ export class PetService {
   }
 
   getPets(): Promise<PetResponseDto[]> {
-    return this.petRepository.find({ relations: ['owner', 'petShop'] });
+    return this.petRepository.find({
+      relations: ['owner', 'petShop', 'breed'],
+    });
   }
 
   getPetDetails(id: string): Promise<PetResponseDto> {
     try {
       return this.petRepository.findOneOrFail({
         where: { id },
-        relations: ['owner'],
+        relations: ['owner', 'petShop', 'breed'],
       });
     } catch (error) {
       throw new HttpException(
@@ -44,7 +46,7 @@ export class PetService {
 
   async updatePetService(
     id: string,
-    updatePetDto: Partial<UpdatePetRequestDto>,
+    updatePetDto: UpdatePetRequestDto,
   ): Promise<PetResponseDto> {
     try {
       const pet = await this.getPetDetails(id);

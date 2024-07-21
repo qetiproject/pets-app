@@ -8,6 +8,7 @@ import {
 import { OwnerEntity } from '@modules/owner/entities/owner.entity';
 import { PetShopEntity } from '@modules/pet_shop/entities/pet_shop.entity';
 import { PetEnum, PetTypeEnum } from '../enums';
+import { PetBreedEntity } from '@modules/pet_breed/entities/pet_breed.entity';
 
 @Entity('pet')
 export class PetEntity {
@@ -40,6 +41,10 @@ export class PetEntity {
 
   @Column({ name: 'photo_path' })
   photoPath?: string;
+
+  @JoinColumn({ name: 'breed_id' })
+  @ManyToOne(() => PetBreedEntity, (breed) => breed.pets)
+  breed: string;
 
   @JoinColumn({ name: 'owner_id' })
   @ManyToOne(() => OwnerEntity, (owner) => owner.pets)
