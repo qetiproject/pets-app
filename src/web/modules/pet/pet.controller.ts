@@ -6,12 +6,14 @@ import {
   Param,
   Post,
   Put,
+  Query,
 } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiQuery, ApiTags } from '@nestjs/swagger';
 
 import { DeleteResponseDto } from '@common/dto';
 import { AddPetRequestDto, PetResponseDto, UpdatePetRequestDto } from './dto';
 import { PetService } from './pet.service';
+import { PetEnum, PetTypeEnum } from './enums';
 
 // @UseFilters(CommonErrorFilter)
 // @UseGuards(AuthGuard, RoleGuard)
@@ -26,9 +28,43 @@ export class PetController {
     return this.petService.addPet(petDto);
   }
 
+  @ApiQuery({
+    name: 'name',
+    required: false,
+    description: 'Filter by pet name',
+  })
+  @ApiQuery({
+    name: 'age',
+    required: false,
+    type: Number,
+    description: 'Filter by pet age',
+  })
+  @ApiQuery({
+    name: 'type',
+    required: false,
+    enum: PetTypeEnum,
+    description: 'Filter by pet type',
+  })
+  @ApiQuery({
+    name: 'animal',
+    required: false,
+    enum: PetEnum,
+    description: 'Filter by pet animal',
+  })
   @Get('/all')
-  getPets(): Promise<PetResponseDto[]> {
-    return this.petService.getPets();
+  getPets(
+    @Query('name') name?: string,
+    @Query('age') age?: number,
+    @Query('type') type?: PetTypeEnum,
+    @Query('animal') animal?: PetEnum,
+  ): Promise<PetResponseDto[]> {
+    const filters = {
+      name,
+      age,
+      type,
+      animal,
+    };
+    return this.petService.getPets(filters);
   }
 
   @Get('/:id')

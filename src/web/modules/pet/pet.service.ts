@@ -5,6 +5,7 @@ import { Repository } from 'typeorm';
 
 import { DeleteResponseDto } from '@common/dto';
 import { AddPetRequestDto, PetResponseDto, UpdatePetRequestDto } from './dto';
+import { PetEnum, PetTypeEnum } from './enums';
 
 @Injectable()
 export class PetService {
@@ -24,10 +25,53 @@ export class PetService {
     }
   }
 
-  getPets(): Promise<PetResponseDto[]> {
-    return this.petRepository.find({
-      relations: ['owner', 'petShop', 'breed'],
-    });
+  async getPets(filters?: {
+    name?: string;
+    age?: number;
+    type?: PetTypeEnum;
+    animal?: PetEnum;
+  }): Promise<PetResponseDto[]> {
+    const queryBuilder = this.petRepository
+      .createQueryBuilder('pet')
+      .leftJoinAndSelect('pet.owner', 'owner')
+      .leftJoinAndSelect('pet.petShop', 'petShop')
+      .leftJoinAndSelect('pet.breed', 'breed');
+
+    if (filters) {
+      if (filters.name) {
+        queryBuilder.andWhere('pet.name LIKE :name', {
+          name: `%${filters.name}%`,
+        });
+      }
+      if (filters.age) {
+        queryBuilder.andWhere('pet.age = :age', { age: filters.age });
+      }
+      if (filters.type) {
+        queryBuilder.andWhere('pet.type = :type', { type: filters.type });
+      }
+      if (filters.animal) {
+        queryBuilder.andWhere('pet.animal = :animal', {
+          animal: filters.animal,
+        });
+      }
+    }
+
+    const pets = await queryBuilder.getMany();
+    return pets.map(this.mapPetToResponseDto);
+  }
+
+  private mapPetToResponseDto(pet: PetEntity): PetResponseDto {
+    return {
+      name: pet.name,
+      age: pet.age,
+      price: pet.price,
+      color: pet.color,
+      type: pet.type,
+      isClubMember: pet.isClubMember,
+      animal: pet.animal,
+      hasGenealogicalList: pet.hasGenealogicalList,
+      breed: pet.breed,
+    };
   }
 
   getPetDetails(id: string): Promise<PetResponseDto> {
