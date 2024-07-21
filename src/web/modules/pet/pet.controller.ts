@@ -7,6 +7,8 @@ import {
   Post,
   Put,
   Query,
+  UseFilters,
+  UseGuards,
 } from '@nestjs/common';
 import { ApiQuery, ApiTags } from '@nestjs/swagger';
 
@@ -14,10 +16,14 @@ import { DeleteResponseDto } from '@common/dto';
 import { AddPetRequestDto, PetResponseDto, UpdatePetRequestDto } from './dto';
 import { PetService } from './pet.service';
 import { PetEnum, PetTypeEnum } from './enums';
+import { Roles } from '@common/decorators';
+import { RoleEnum } from '@common/enums';
+import { AuthGuard, RoleGuard } from '@common/modules/auth/guards';
+import { CommonErrorFilter } from '@common/filters';
 
-// @UseFilters(CommonErrorFilter)
-// @UseGuards(AuthGuard, RoleGuard)
-// @Roles(RoleEnum.ADMIN, RoleEnum.USER)
+@UseFilters(CommonErrorFilter)
+@UseGuards(AuthGuard, RoleGuard)
+@Roles(RoleEnum.ADMIN, RoleEnum.USER)
 @ApiTags('Pets')
 @Controller('pet')
 export class PetController {
