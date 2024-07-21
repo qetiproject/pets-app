@@ -6,10 +6,8 @@ import {
   Param,
   Post,
   Put,
-  UseFilters,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { CommonErrorFilter } from '@common/filters';
 
 import { PetShopService } from './pet-shop.service';
 import {
@@ -19,7 +17,7 @@ import {
 } from './dto';
 import { DeleteResponseDto } from '@common/dto';
 
-@UseFilters(CommonErrorFilter)
+// @UseFilters(CommonErrorFilter)
 @ApiTags('PetShops')
 @Controller('petShop')
 export class PetShopController {

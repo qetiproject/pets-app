@@ -8,7 +8,7 @@ import {
 
 import { OwnerResponseDto } from '@modules/owner/dto';
 import { PetShopResponseDto } from '@modules/pet_shop/dto';
-import { PetEnum } from '../enums';
+import { PetEnum, PetTypeEnum } from '../enums';
 
 export class AddPetRequestDto {
   @IsNotEmpty()
@@ -28,8 +28,8 @@ export class AddPetRequestDto {
   price: number;
 
   @IsNotEmpty()
-  @IsString()
-  type: string;
+  @IsEnum(PetTypeEnum)
+  type: PetTypeEnum;
 
   @IsNotEmpty()
   @IsString()
@@ -43,8 +43,10 @@ export class AddPetRequestDto {
   @IsBoolean()
   isClubMember: boolean;
 
-  @IsNotEmpty()
   owner: OwnerResponseDto;
+
+  @IsString()
+  petShop: string;
 }
 
 export class UpdatePetRequestDto {
@@ -53,7 +55,7 @@ export class UpdatePetRequestDto {
   animal: PetEnum;
   price: number;
   color: string;
-  type: string;
+  type: PetTypeEnum;
   hasGenealogicalList: boolean;
   isClubMember: boolean;
   owner: OwnerResponseDto;

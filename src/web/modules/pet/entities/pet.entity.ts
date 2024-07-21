@@ -7,7 +7,7 @@ import {
 } from 'typeorm';
 import { OwnerEntity } from '@modules/owner/entities/owner.entity';
 import { PetShopEntity } from '@modules/pet_shop/entities/pet_shop.entity';
-import { PetEnum } from '../enums';
+import { PetEnum, PetTypeEnum } from '../enums';
 
 @Entity('pet')
 export class PetEntity {
@@ -27,7 +27,7 @@ export class PetEntity {
   color: string;
 
   @Column({ name: 'type' })
-  type: string;
+  type: PetTypeEnum;
 
   @Column({ name: 'has_genealogical_list' })
   hasGenealogicalList: boolean;
@@ -44,5 +44,5 @@ export class PetEntity {
 
   @JoinColumn({ name: 'shop_id' })
   @ManyToOne(() => PetShopEntity, (petShop) => petShop.pets)
-  petShop?: PetShopEntity;
+  petShop?: string;
 }
