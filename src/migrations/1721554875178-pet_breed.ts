@@ -1,10 +1,10 @@
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
-export class PetCategory1721197276990 implements MigrationInterface {
+export class PetBreed1721554875178 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: 'pet_category',
+        name: 'pet_breed',
         columns: [
           {
             name: 'id',
@@ -18,12 +18,17 @@ export class PetCategory1721197276990 implements MigrationInterface {
             type: 'varchar',
             isNullable: false,
           },
+          {
+            name: 'description',
+            type: 'varchar',
+            isNullable: false,
+          },
         ],
       }),
     );
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('pet_category');
+    await queryRunner.dropTable('pet_breed');
   }
 }
