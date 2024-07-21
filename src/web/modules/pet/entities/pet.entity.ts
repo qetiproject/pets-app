@@ -40,9 +40,6 @@ export class PetEntity {
   @Column({ name: 'is_club_member' })
   isClubMember: boolean;
 
-  @Column({ name: 'photo_path' })
-  photoPath?: string;
-
   @JoinColumn({ name: 'breed_id' })
   @ManyToOne(() => PetBreedEntity, (breed) => breed.pets)
   breed: string;

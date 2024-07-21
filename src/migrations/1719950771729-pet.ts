@@ -63,11 +63,6 @@ export class Pet1719950771729 implements MigrationInterface {
             type: 'varchar',
             isNullable: true,
           },
-          {
-            name: 'photo_path',
-            type: 'varchar',
-            isNullable: true,
-          },
         ],
         foreignKeys: [
           {

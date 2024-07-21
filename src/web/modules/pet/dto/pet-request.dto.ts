@@ -44,7 +44,6 @@ export class AddPetRequestDto {
 
   owner?: OwnerResponseDto;
   petShop?: string;
-  photoPath?: string;
   breed: string;
 }
 
@@ -83,6 +82,5 @@ export class UpdatePetRequestDto {
 
   owner?: OwnerResponseDto;
   petShop?: string;
-  photoPath?: string;
   breed: string;
 }
