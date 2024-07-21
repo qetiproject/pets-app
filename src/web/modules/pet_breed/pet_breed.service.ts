@@ -18,6 +18,7 @@ export class PetBreedService {
     try {
       const petBreed = this.petBreedRepository.create({
         name: addPetBreedDto.name,
+        description: addPetBreedDto.description,
       });
       return this.petBreedRepository.save<PetBreedEntity>(petBreed);
     } catch (error) {

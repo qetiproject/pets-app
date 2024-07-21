@@ -21,7 +21,7 @@ export class PetBreed1721554875178 implements MigrationInterface {
           {
             name: 'description',
             type: 'varchar',
-            isNullable: false,
+            isNullable: true,
           },
         ],
       }),
