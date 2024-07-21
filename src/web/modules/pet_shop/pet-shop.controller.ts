@@ -24,12 +24,14 @@ export class PetShopController {
   constructor(private readonly petShopService: PetShopService) {}
 
   @Post('/add')
-  addPetShop(@Body() addPetShopDto: AddPetShopRequestDto): Promise<any> {
+  addPetShop(
+    @Body() addPetShopDto: AddPetShopRequestDto,
+  ): Promise<PetShopResponseDto> {
     return this.petShopService.addPetShopService(addPetShopDto);
   }
 
   @Get('/all')
-  async getPetShops(): Promise<any> {
+  async getPetShops(): Promise<PetShopResponseDto[]> {
     return await this.petShopService.getPetShopsService();
   }
 

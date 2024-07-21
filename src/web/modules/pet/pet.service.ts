@@ -24,8 +24,8 @@ export class PetService {
     }
   }
 
-  getPets(): Promise<any[]> {
-    return this.petRepository.find({ relations: ['owner'] });
+  getPets(): Promise<PetResponseDto[]> {
+    return this.petRepository.find({ relations: ['owner', 'petShop'] });
   }
 
   getPetDetails(id: string): Promise<PetResponseDto> {

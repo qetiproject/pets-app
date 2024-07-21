@@ -17,6 +17,7 @@ import {
   OwnerResponseDto,
   UpdateOwnerRequestDto,
 } from './dto';
+import { DeleteResponseDto } from '@common/dto';
 
 @UseFilters(CommonErrorFilter)
 // @UseGuards(AuthGuard, RoleGuard)
@@ -54,7 +55,7 @@ export class OwnerController {
   }
 
   @Delete('/:username')
-  deleteOwner(@Param('username') username: string): Promise<any> {
+  deleteOwner(@Param('username') username: string): Promise<DeleteResponseDto> {
     return this.ownerService.deleteOwnerService(username);
   }
 }
