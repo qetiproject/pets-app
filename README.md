@@ -1,3 +1,10 @@
+Data for localhost:
+DATABASE_USER=postgres
+DATABASE_PASSWORD=root
+DATABASE_NAME=postgres
+DATABASE_PORT=5432
+PORT=3000
+
 Title: Pets Application
 
 Overview:
