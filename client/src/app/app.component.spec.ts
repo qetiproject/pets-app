@@ -14,16 +14,16 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have the 'pets-app-client' title`, () => {
+  it(`should have the 'todo-managment' title`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('pets-app-client');
+    expect(app.title).toEqual('todo-managment');
   });
 
   it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, pets-app-client');
+    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, todo-managment');
   });
 });
