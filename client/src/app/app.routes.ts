@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
 
 import { authGuard, guestGuard } from './core/guards';
-import { LoginComponent, TodoComponent } from '@pages/index';
+import { HomeComponent, LoginComponent } from '@pages/index';
 import { DefaultComponent, MasterComponent } from '@shared/layouts';
 
 export const routes: Routes = [
@@ -15,6 +15,6 @@ export const routes: Routes = [
     path: '',
     component: MasterComponent,
     canActivate: [authGuard],
-    children: [{ path: 'todo', component: TodoComponent }],
+    children: [{ path: 'home', component: HomeComponent }],
   },
 ];

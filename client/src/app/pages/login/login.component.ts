@@ -21,12 +21,13 @@ export class LoginComponent {
 
   constructor(private fb: FormBuilder, private authService: AuthService) {
     this.loginForm = this.fb.group({
-      email: new FormControl('', [Validators.required, Validators.email]),
+      username: new FormControl('', [Validators.required]),
       password: new FormControl('', [Validators.required]),
     });
   }
 
   onSubmit() {
+    console.log(this.loginForm.value)
     if (this.loginForm.valid) {
       this.authService.onLogin(this.loginForm.value).subscribe({
         next: () => {},
