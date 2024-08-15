@@ -1,0 +1,74 @@
+<div class="flex flex-col gap-2 p-6 bg-white rounded-lg shadow">
+    <h5 class="text-xl mb-2 font-bold text-gray-900">Login Here</h5>
+    <span class="form-error">{{errorMessage}}</span>
+    <form
+      action=""
+      [formGroup]="userRegisterForm"
+      (ngSubmit)="onSubmit()"
+      autocomplete="off"
+      novalidate
+    >
+      <div class="form-group mb-3">
+        <label for="">Username</label>
+        <input
+          type="text"
+          placeholder="Username"
+          class="form-control"
+          formControlName="username"
+          autocomplete="username"
+          [class]="{
+            invalid:
+              userRegisterForm.get('username')?.hasError('required') &&
+              userRegisterForm.get('username')?.touched,
+            valid: userRegisterForm.get('username')?.valid
+          }"
+        />
+        @if (userRegisterForm.get('username')?.hasError('required') &&
+        userRegisterForm.get('username')?.touched) {
+        <span class="form-error">Username Address is required.</span>
+        }
+      </div>
+      <div class="form-group mb-3">
+        <label for="">Username</label>
+        <input
+          type="text"
+          placeholder="email"
+          class="form-control"
+          formControlName="email"
+          autocomplete="email"
+          [class]="{
+            invalid:
+              userRegisterForm.get('email')?.hasError('required') &&
+              userRegisterForm.get('email')?.touched,
+            valid: userRegisterForm.get('email')?.valid
+          }"
+        />
+        @if (userRegisterForm.get('email')?.hasError('required') &&
+        userRegisterForm.get('email')?.touched) {
+        <span class="form-error">Email Address is required.</span>
+        }
+      </div>
+      <div class="form-group mb-3">
+        <label for="">Password</label>
+        <input
+          type="password"
+          placeholder="Password"
+          class="form-control"
+          formControlName="password"
+          autocomplete="password"
+          [class]="{
+            invalid:
+              userRegisterForm.get('password')?.hasError('required') &&
+              userRegisterForm.get('password')?.touched,
+            valid: userRegisterForm.get('password')?.valid
+          }"
+        />
+        @if (userRegisterForm.get('password')?.hasError('required') &&
+        userRegisterForm.get('password')?.touched) {
+        <span class="form-error">Password is required.</span>
+        }
+      </div>
+      <button class="btn btn-primary">Submit</button>
+    </form>
+  </div>
+  

@@ -1,10 +1,10 @@
-import { map } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import { TokenService } from '.';
-import { ILogin, ILoginResponse } from '@core/models';
+import { ILogin, ILoginResponse, IRegister, IRegisterResponse } from '@core/models';
 import { apiEndpoint } from '../constants/constants';
 
 @Injectable({
@@ -17,6 +17,10 @@ export class AuthService {
     private router: Router
   ) {}
 
+  register(data: IRegister): Observable<IRegisterResponse> {
+    return this.http.post<IRegisterResponse>(`${apiEndpoint.AuthEndpoint.register}`, data);
+  }
+
   onLogin(data: ILogin) {
     return this.http
       .post<ILoginResponse>(`${apiEndpoint.AuthEndpoint.login}`, data)
@@ -27,7 +31,7 @@ export class AuthService {
           }
           return response;
         })
-      );
+      )
   }
 
   onLogout() {

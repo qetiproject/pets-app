@@ -6,12 +6,13 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 import { AuthService } from '@app/core/services';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, RouterModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
   providers: [AuthService],
@@ -27,7 +28,6 @@ export class LoginComponent {
   }
 
   onSubmit() {
-    console.log(this.loginForm.value)
     if (this.loginForm.valid) {
       this.authService.onLogin(this.loginForm.value).subscribe({
         next: () => {},
