@@ -7,6 +7,7 @@
 
 @import "./assets/scss/common";
 
+
 body {
   font-family: "Roboto", sans-serif;
   overflow: hidden;
@@ -75,3 +76,6 @@ body {
     @apply w-full py-2 px-3 outline-none border-2 border-gray-200 rounded-lg;
   }
 }
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
