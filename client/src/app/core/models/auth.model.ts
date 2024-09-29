@@ -12,9 +12,11 @@ export interface ILogin {
 }
 
 export interface ILoginResponse {
-  message: string;
-  token: string;
-  user: IUser;
+  accessToken: string;
+  email: string;
+  role: IRole;
+  status: string;
+  username: string;
 }
 
 export interface IRegister {
@@ -25,8 +27,7 @@ export interface IRegister {
 }
 
 export interface IRegisterResponse {
-  email: string;
-  role: IRole;
   username: string;
+  role: IRole;
   status: string;
 }

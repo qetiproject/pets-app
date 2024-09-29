@@ -27,7 +27,8 @@ export class AuthService {
       .pipe(
         map((response) => {
           if (response) {
-            this.tokenService.setToken(response.token);
+            console.log(response)
+            this.tokenService.setToken(response.accessToken);
           }
           return response;
         })
