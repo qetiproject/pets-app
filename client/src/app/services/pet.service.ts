@@ -11,7 +11,7 @@ export class PetService {
 
   constructor(private http: HttpClient) { }
 
-  getPetAll(): Observable<IPet[]> {
+  getAllPets(): Observable<IPet[]> {
     return this.http.get<IPet[]>(`${apiEndpoint.PetEndpoint.getAll}`);
   }
 

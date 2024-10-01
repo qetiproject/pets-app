@@ -1,5 +1,62 @@
-<div class="row">
-  <div class="col-3">
-    <input type="text" class="form-control" value="keti"/>
-  </div>
+<div class="mat-elevation-z8">
+  <table mat-table [dataSource]="dataSource">
+
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef> სახელი</th>
+      <td mat-cell *matCellDef="let pet"> {{pet.name}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="age">
+      <th mat-header-cell *matHeaderCellDef> ასაკი </th>
+      <td mat-cell *matCellDef="let pet"> {{pet.age}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="animal">
+      <th mat-header-cell *matHeaderCellDef> ცხოველი </th>
+      <td mat-cell *matCellDef="let pet"> {{pet.animal}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="breed">
+      <th mat-header-cell *matHeaderCellDef> ჯიში </th>
+      <td mat-cell *matCellDef="let pet"> {{pet.breed}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="type">
+      <th mat-header-cell *matHeaderCellDef> ტიპი </th>
+      <td mat-cell *matCellDef="let pet"> {{pet.type}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="isClubMember">
+      <th mat-header-cell *matHeaderCellDef> კლუბის წევრი </th>
+      <td mat-cell *matCellDef="let pet"> {{pet.isClubMember}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="hasGenealogicalList">
+      <th mat-header-cell *matHeaderCellDef> გენეტიკური ნუსხა </th>
+      <td mat-cell *matCellDef="let pet"> {{pet.hasGenealogicalList}} </td>
+    </ng-container>
+   
+    <ng-container matColumnDef="owner">
+      <th mat-header-cell *matHeaderCellDef> მეპატრონე </th>
+      <td mat-cell *matCellDef="let pet"> {{pet.owner}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="color">
+      <th mat-header-cell *matHeaderCellDef> ფერი </th>
+      <td mat-cell *matCellDef="let pet"> {{pet.color}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="price">
+      <th mat-header-cell *matHeaderCellDef> ფასი </th>
+      <td mat-cell *matCellDef="let pet"> {{pet.price}} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+  <mat-paginator [pageSizeOptions]="[5, 10, 20]"
+                 showFirstLastButtons
+                 aria-label="Select page of periodic pets">
+  </mat-paginator>
 </div>
