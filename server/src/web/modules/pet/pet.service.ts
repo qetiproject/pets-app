@@ -64,8 +64,10 @@ export class PetService {
     }
 
     queryBuilder.skip(skip).take(page);
-    const pets = await queryBuilder.getMany();
-    return pets.map((pet) => this.responseMappers.mapPetToResponseDto(pet));
+    const pets: PetEntity[] = await queryBuilder.getMany();
+    return pets.map((pet: PetEntity) =>
+      this.responseMappers.mapPetToResponseDto(pet),
+    );
   }
 
   getPetDetails(id: string): Promise<PetResponseDto> {

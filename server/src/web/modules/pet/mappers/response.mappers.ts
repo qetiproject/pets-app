@@ -4,6 +4,7 @@ import { PetEntity } from '../entities';
 export class PetResponseMapper {
   mapPetToResponseDto(pet: PetEntity): PetResponseDto {
     const petResponseDto: PetResponseDto = {
+      id: pet.id,
       name: pet.name,
       age: pet.age,
       price: pet.price,
