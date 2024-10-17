@@ -1,7 +1,8 @@
 import { BehaviorSubject } from 'rxjs';
-import { Injectable } from '@angular/core';
+import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 
 import { constants } from '../constants/constants';
+import { isPlatformBrowser } from '@angular/common';
 
 @Injectable({
   providedIn: 'root',
@@ -10,29 +11,35 @@ export class TokenService {
   isAuthentication: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
     false
   );
-  constructor() {
+  constructor(@Inject(PLATFORM_ID) private platformId: Object) {
     const token = this.getToken();
     if (token) {
       this.updateToken(true);
     }
   }
 
-  updateToken(status: boolean) {
-    console.log(status)
+  updateToken(status: boolean): void {
     this.isAuthentication.next(status);
   }
 
-  setToken(token: string) {
+  setToken(token: string): void {
     this.updateToken(true);
-    localStorage.setItem(constants.CURRENT_TOKEN, token);
+    if (isPlatformBrowser(this.platformId)) {
+      localStorage.setItem(constants.CURRENT_TOKEN, token);
+    }
   }
 
   getToken(): string | null {
-    return localStorage.getItem(constants.CURRENT_TOKEN);
+    if (isPlatformBrowser(this.platformId)) {
+      return localStorage.getItem('CURRENT_TOKEN');
+    }
+    return null; // Return null if not in a browser environment
   }
 
-  removeToken() {
+  removeToken(): void {
     this.updateToken(false);
-    localStorage.removeItem(constants.CURRENT_TOKEN);
+    if (isPlatformBrowser(this.platformId)) {
+      localStorage.removeItem(constants.CURRENT_TOKEN);
+    }
   }
 }

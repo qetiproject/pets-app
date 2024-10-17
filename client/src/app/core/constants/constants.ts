@@ -10,6 +10,10 @@ export const apiEndpoint = {
     register: `${apiurl}/api/user/register`,
   },
   PetEndpoint: {
-    getAll: `${apiurl}/pet/all`
+    getAll: `${apiurl}/pet/all`,
+    petAdd: `${apiurl}/pet/add`,
+    getPetById: (id: string) => `${apiurl}/pet/${id}`,
+    updatePetById: (id: string) => `${apiurl}/pet/${id}`,
+    deletePetById: (id: string) => `${apiurl}/pet/${id}`
   }
 };

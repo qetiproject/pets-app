@@ -1,15 +1,15 @@
-<header class="app-header">
-  <div class="container flex items-center justify-between">
-    <h4 class="font-bold text-xl" [routerLink]="['/home']">Pets App</h4>
-    <div class="flex gap-3">
+<header class="app-header bg-light">
+  <div class="container d-flex justify-content-between align-items-center py-3">
+    <h4 class="font-weight-bold text-xl mb-0" [routerLink]="['/home']">Pets App</h4>
+    <div class="d-flex">
       @if (this.isAuthenticated$| async) {
-      <div class="px-2 font-medium cursor-pointer" [routerLink]="['/pets']" routerLinkActive="router-link-active" >Pets</div>
-      <div class="px-2 font-medium cursor-pointer" (click)="onLogout()">
-        Logout
-      </div>
-      }@else {
-      <div class="px-2 font-medium cursor-pointer">Login</div>
-      }
+        <div class="px-2 font-medium cursor-pointer" [routerLink]="['/pets']" routerLinkActive="router-link-active" >Pets</div>
+        <div class="px-2 font-medium cursor-pointer" (click)="onLogout()">
+          Logout
+        </div>
+        }@else {
+        <div class="px-2 font-medium cursor-pointer">Login</div>
+        }
     </div>
   </div>
 </header>

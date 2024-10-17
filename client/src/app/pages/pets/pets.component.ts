@@ -1,49 +1,59 @@
-import { AfterViewInit, ChangeDetectionStrategy, Component, OnInit, ViewChild} from '@angular/core';
-import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
-import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { MatTableModule, MatTableDataSource } from '@angular/material/table';
-import { IPet } from '@app/core/models/pet.model';
+import { Component, inject, OnInit} from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { Observable } from 'rxjs';
+
+import { IAddPet, IPet, ISearchPet } from '@app/core/models/pet.model';
 import { PetService } from '@app/services/pet.service';
-import { FormsModule } from '@angular/forms';
-import { MatButtonModule } from '@angular/material/button';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
+import { RouterModule } from '@angular/router';
+import { AddPetComponent } from '@shared/components/dialog/add-pet/add-pet.component';
 
 @Component({
   selector: 'app-pets',
   standalone: true,
-  imports: [MatTableModule, MatPaginatorModule, MatSlideToggleModule, MatFormFieldModule, MatInputModule, FormsModule, MatButtonModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    RouterModule,
+    AddPetComponent,
+  ],
   templateUrl: './pets.component.html',
   styleUrl: './pets.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PetsComponent implements AfterViewInit, OnInit{
-  displayedColumns: string[] = [  "name","age", "animal", "breed", "type","isClubMember","hasGenealogicalList","owner","color", "price",];
-  pets: IPet[] = []
+export class PetsComponent implements OnInit{
+  petService = inject(PetService);
 
-  dataSource = new MatTableDataSource<IPet>(this.pets);
+  pets$: Observable<IPet[] | null>;
+  isClubMember: boolean = false;
 
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-
-  constructor(private petService: PetService) {}
-  ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
+  constructor() {
+    this.pets$ = this.petService.petList$; 
   }
 
-  ngOnInit(): void {
-    this.getAllPets()
+  ngOnInit(): void {   
+    this.getAllPets();
   }
 
-  getAllPets() {
-    this.petService.getAllPets().subscribe({
-      next: (response) => {
-        this.pets = response;
-        this.dataSource.data = response
-      },
-      error: (err) => {
-        console.error(err);
-      }
+  getAllPets(data?: ISearchPet): void {
+    this.petService.getAllPets(data).subscribe({
+      next: () => {},
+      error: (e) => {console.log(e)}
+    })
+  }
+
+  handleAddPetFormSubmission(data: IAddPet): void {
+    this.petService.addPetService(data).subscribe({
+      next: () => {},
+      error: (error) => console.error('Error adding pet:', error)
     });
   }
+  
+  deletePet(id: string): void {
+    this.petService.deletePetById(id).subscribe({
+      next: () => {},
+      error: (error) => {console.error(error)}
+    })
+  } 
 
 }

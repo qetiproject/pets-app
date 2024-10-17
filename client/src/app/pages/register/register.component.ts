@@ -1,6 +1,8 @@
-import { Component } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { Component, inject } from '@angular/core';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+
 import { IRegisterResponse } from '@app/core/models';
 import { IRole } from '@app/core/models/enums';
 import { AuthService } from '@app/core/services';
@@ -8,7 +10,7 @@ import { AuthService } from '@app/core/services';
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss',
   providers: [AuthService]
@@ -16,11 +18,11 @@ import { AuthService } from '@app/core/services';
 export class RegisterComponent {
   userRegisterForm!: FormGroup;
   errorMessage: string = ""
+  authService = inject(AuthService);
+  fb = inject(FormBuilder);
+  router = inject(Router);
 
-  constructor(
-    private fb: FormBuilder, private authService: AuthService,
-    private route: Router
-  ) {
+  constructor() {
     this.userRegisterForm = this.fb.group({
       username: ['', [Validators.required]],
       role: [IRole.ADMIN],
@@ -34,7 +36,7 @@ export class RegisterComponent {
       this.authService.register(this.userRegisterForm.value)
         .subscribe({
           next: (data: IRegisterResponse) => {
-            this.route.navigate(['']);
+            this.router.navigate(['']);
           },
           error: (err: string) =>this.errorMessage = err
         });

@@ -1,13 +1,13 @@
-<div class="grid grid-cols-1 lg:grid-cols-2 h-screen">
-  <div class="bg-blue-600 flex flex-col gap-4 justify-center p-6 lg:p-12">
-    <h1 class="text-blue-100 text-3xl font-bold">Pets App</h1>
-    <p class="max-w-md text-blue-300 text-xl">
-      Pets App Description
-    </p>
-  </div>
-  <div class="flex w-full justify-center items-center">
-    <div class="w-full lg:w-1/2">
-      <router-outlet></router-outlet>
+<div class="container-fluid vh-100">
+  <div class="row h-100">
+    <div class="col-lg-6 d-flex flex-column justify-content-center bg-primary text-white p-4 p-lg-5">
+      <h1 class="display-4">Pets App</h1>
+      <p class="lead">Pets App Description</p>
+    </div>
+    <div class="col-lg-6 d-flex justify-content-center align-items-center">
+      <div class="w-100">
+        <router-outlet></router-outlet>
+      </div>
     </div>
   </div>
 </div>

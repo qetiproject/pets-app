@@ -4,11 +4,11 @@ export enum IRole {
 }
 
 export enum IType {
-    PURE_BLOOD,
-    METIS
+    PURE_BLOOD = 'PURE_BLOOD',
+    METIS = 'METIS'
 }
 
 export enum IAnimal {
-    DOG,
-    CAT
+    DOG = 'DOG',
+    CAT = 'CAT'
 }
