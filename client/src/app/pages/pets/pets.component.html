@@ -1,8 +1,12 @@
 <div class="container mt-4">
-
+  
   <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addPetForm">
     Add Pet
   </button>
+  
+  @defer {
+    <app-search-item (searchFormSubmission)="handleSearchFormSubmission($event)"></app-search-item>
+  }
   
   <ng-container *ngIf="pets$ | async as pets"> 
     @if (pets.length > 0) {

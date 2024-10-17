@@ -1,12 +1,12 @@
 import { Component, inject, OnInit} from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 import { Observable } from 'rxjs';
 
 import { IAddPet, IPet, ISearchPet } from '@app/core/models/pet.model';
 import { PetService } from '@app/services/pet.service';
-import { RouterModule } from '@angular/router';
-import { AddPetComponent } from '@shared/components/dialog/add-pet/add-pet.component';
+import { AddPetComponent, SearchItemComponent } from '@shared/components';
 
 @Component({
   selector: 'app-pets',
@@ -17,6 +17,7 @@ import { AddPetComponent } from '@shared/components/dialog/add-pet/add-pet.compo
     ReactiveFormsModule,
     RouterModule,
     AddPetComponent,
+    SearchItemComponent
   ],
   templateUrl: './pets.component.html',
   styleUrl: './pets.component.scss',
@@ -40,6 +41,10 @@ export class PetsComponent implements OnInit{
       next: () => {},
       error: (e) => {console.log(e)}
     })
+  }
+
+  handleSearchFormSubmission(data: ISearchPet): void {
+    this.getAllPets(data)
   }
 
   handleAddPetFormSubmission(data: IAddPet): void {
