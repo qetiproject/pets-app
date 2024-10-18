@@ -7,7 +7,7 @@ import {
   Post,
   Patch,
   UseFilters,
-  UseGuards,
+  // UseGuards,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 
@@ -18,14 +18,14 @@ import {
   UpdateOwnerRequestDto,
 } from './dto';
 import { DeleteResponseDto } from '@common/dto';
-import { Roles } from '@common/decorators';
-import { RoleEnum } from '@common/enums';
-import { AuthGuard, RoleGuard } from '@common/modules/auth/guards';
+// import { Roles } from '@common/decorators';
+// import { RoleEnum } from '@common/enums';
+// import { AuthGuard, RoleGuard } from '@common/modules/auth/guards';
 import { OwnerService } from './owner.service';
 
 @UseFilters(CommonErrorFilter)
-@UseGuards(AuthGuard, RoleGuard)
-@Roles(RoleEnum.ADMIN, RoleEnum.USER)
+// @UseGuards(AuthGuard, RoleGuard)
+// @Roles(RoleEnum.ADMIN, RoleEnum.USER)
 @ApiTags('Owner')
 @Controller('owner')
 export class OwnerController {

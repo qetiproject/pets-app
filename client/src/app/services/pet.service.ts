@@ -11,7 +11,7 @@ import { DeleteSuccessResponse, ErrorResponse, SuccessResponse } from '@app/core
 })
 export class PetService {
   private _addPet$ = new Subject<IAddPet>();
-  private _petList$ = new BehaviorSubject<IPet[] | null>(null)
+  private _petList$ = new BehaviorSubject<IPet[]>([])
   private _petById$ = new Subject<IPet>();
   private _updatePet$ = new BehaviorSubject<IPet | null>(null);
   private _deletePet$ = new Subject<DeleteSuccessResponse| ErrorResponse>();
@@ -20,7 +20,7 @@ export class PetService {
     private http: HttpClient
   ) { }
 
-  get petList$(): Observable<IPet[] | null> {
+  get petList$(): Observable<IPet[]> {
     return this._petList$.asObservable();
   }
   getAllPets(data?: ISearchPet): Observable<IPet[]> {

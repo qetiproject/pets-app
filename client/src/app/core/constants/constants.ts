@@ -15,5 +15,11 @@ export const apiEndpoint = {
     getPetById: (id: string) => `${apiurl}/pet/${id}`,
     updatePetById: (id: string) => `${apiurl}/pet/${id}`,
     deletePetById: (id: string) => `${apiurl}/pet/${id}`
+  },
+  OwnerEndpoint: {
+    getAllOwners: `${apiurl}/owner/all`,
+    ownerAdd: `${apiurl}/owner/add`,
+    updateOwner: (username: string) => `${apiurl}/owner/${username}`,
   }
+
 };
