@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 
-import { LoginComponent } from '@app/pages';
+import { LoginComponent } from '@app/pages/auth-module';
 
 @Component({
   selector: 'app-default',

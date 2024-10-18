@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { PetsComponent } from '..';
+
+import { PetsComponent } from '../pets-module';
 
 @Component({
   selector: 'app-home',
