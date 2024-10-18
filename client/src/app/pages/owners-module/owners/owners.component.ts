@@ -5,7 +5,7 @@ import { RouterModule } from '@angular/router';
 
 import { IOwner } from '@app/core/models';
 import { OwnerService } from '@app/services/owner.service';
-import { AddOwnerComponent } from '@shared/components/dialog/add-owner/add-owner.component';
+import { AddOwnerComponent } from '@app/pages/owners-module/components/add-owner/add-owner.component';
 import { Observable } from 'rxjs';
 
 @Component({
