@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
-import { PetsComponent } from "../pets-module/pets/pets.component";
+import { PetsComponent } from '..';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [PetsComponent],
+  imports: [
+    PetsComponent
+  ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })

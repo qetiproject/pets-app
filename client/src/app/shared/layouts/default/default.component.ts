@@ -1,12 +1,17 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
-import { LoginComponent } from "../../../pages/login/login.component";
+
+import { LoginComponent } from '@app/pages';
 
 @Component({
   selector: 'app-default',
   standalone: true,
-  imports: [RouterOutlet, CommonModule, LoginComponent],
+  imports: [
+    CommonModule,
+    RouterOutlet, 
+    LoginComponent
+  ],
   templateUrl: './default.component.html',
   styleUrl: './default.component.scss',
 })

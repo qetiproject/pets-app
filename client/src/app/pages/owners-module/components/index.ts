@@ -1,0 +1,1 @@
+export * from './add-owner/add-owner.component';

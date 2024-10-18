@@ -5,8 +5,9 @@ import { RouterModule } from '@angular/router';
 import { Observable } from 'rxjs';
 
 import { IAddPet, IPet, ISearchPet } from '@app/core/models/pet.model';
-import { PetService } from '@app/services/pet.service';
-import { AddPetComponent, SearchItemComponent } from '@shared/components';
+import { SearchItemComponent } from '@shared/components';
+import { AddPetComponent } from '../components';
+import { PetService } from '@app/pages/services';
 
 @Component({
   selector: 'app-pets',

@@ -2,9 +2,10 @@ import { catchError, map, Observable, throwError } from 'rxjs';
 import { Router } from '@angular/router';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+
 import { ILogin, ILoginResponse, IRegister, IRegisterResponse } from '@core/models';
 import { apiEndpoint } from '../constants/constants';
-import { TokenService } from './token.service';
+import { TokenService } from '.';
 
 @Injectable({
   providedIn: 'root',
@@ -31,8 +32,7 @@ export class AuthService {
           return response;
         }),
         catchError((error) => {
-          // Optional: You can handle specific error messages here if needed
-          return throwError(error); // Re-throw the error for the component to handle
+          return throwError(() => new Error(error)); 
         })
       )
   }

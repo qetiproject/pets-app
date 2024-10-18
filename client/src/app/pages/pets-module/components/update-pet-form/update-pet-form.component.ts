@@ -2,8 +2,9 @@ import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+
 import { IAnimal, IPet, IType } from '@app/core/models';
-import { PetService } from '@app/services/pet.service';
+import { PetService } from '@app/pages/services';
 
 @Component({
   selector: 'app-update-pet-form',
@@ -47,7 +48,7 @@ export class UpdatePetFormComponent {
     this.getPetById(this.id)
   }
 
-  initialUpdatePetForm(pet: IPet) {
+  initialUpdatePetForm(pet: IPet): void {
     this.hasGenealogicalList = pet.hasGenealogicalList;
     this.isClubMember = pet.isClubMember;
 
@@ -90,7 +91,7 @@ export class UpdatePetFormComponent {
     this.hasGenealogicalList = isChecked; 
   }
 
-  updatePetFormButton() {
+  updatePetFormButton(): void {
     this.updatePetForm.patchValue({
       hasGenealogicalList: this.hasGenealogicalList || false,
       isClubMember: this.isClubMember || false,
@@ -109,4 +110,5 @@ export class UpdatePetFormComponent {
       console.warn('Form is invalid');
     }
   }
+
 }

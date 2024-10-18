@@ -1,22 +1,25 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 
 import { AuthService, TokenService } from '@app/core/services';
-import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [
+    CommonModule, 
+    RouterModule],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
 })
 export class HeaderComponent {
   isAuthenticated$;
-  constructor(
-    private tokenService: TokenService,
-    private authService: AuthService
-  ) {
+
+  tokenService = inject(TokenService)
+  authService = inject(AuthService)
+
+  constructor() {
     this.isAuthenticated$ = this.tokenService.isAuthentication;
   }
 

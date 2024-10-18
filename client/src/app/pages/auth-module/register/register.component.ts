@@ -10,7 +10,10 @@ import { AuthService } from '@app/core/services';
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule
+  ],
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss',
   providers: [AuthService]
@@ -42,4 +45,5 @@ export class RegisterComponent {
         });
     }
   }
+
 }

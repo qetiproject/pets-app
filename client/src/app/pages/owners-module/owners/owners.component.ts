@@ -4,7 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
 import { IOwner } from '@app/core/models';
-import { OwnerService } from '@app/services/owner.service';
+import { OwnerService } from '@app/pages/services/owner.service';
 import { AddOwnerComponent } from '@app/pages/owners-module/components/add-owner/add-owner.component';
 import { Observable } from 'rxjs';
 
