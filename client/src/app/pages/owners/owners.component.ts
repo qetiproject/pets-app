@@ -2,8 +2,10 @@ import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+
 import { IOwner } from '@app/core/models';
 import { OwnerService } from '@app/services/owner.service';
+import { AddOwnerComponent } from '@shared/components/dialog/add-owner/add-owner.component';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -13,61 +15,45 @@ import { Observable } from 'rxjs';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    RouterModule
+    RouterModule,
+    AddOwnerComponent
   ],
   templateUrl: './owners.component.html',
   styleUrl: './owners.component.scss'
 })
 export class OwnersComponent implements OnInit{
   ownerServive = inject(OwnerService)
-  owners: IOwner[] = [];
+
+  owners$!: Observable<IOwner[]>
   
   constructor() {
+    this.owners$ = this.ownerServive.owners$
   }
 
   ngOnInit(): void {
     this.getOwners();
-    this.updateOwner();
-    this.addOwner()
   }
   
   getOwners() {
     this.ownerServive.getAllOwners().subscribe({
-      next: (data) => {
-        this.owners = data
-      }
+      next: () => {},
+      error: (e) => console.error(e)
     })
   }
 
-  addOwner() {
-    const data: IOwner = {
-      username: "test23",
-      firstName: "ketitews",
-      lastName: "khetsuriani",
-      age: 28,
-      balance: 2
-    }
-
+  handleAddownerFormSubmission(data: IOwner) {
     this.ownerServive.addOwner(data).subscribe({
       next: () => {},
-      error: (e) => {}
+      error: (e) => {console.error(e)}
     })
   }
 
-  updateOwner() {
-    const data: IOwner = {
-      username: "testdev",
-      firstName: "ketisd",
-      lastName: "khetsuriani",
-      age: 28,
-      balance: 0
-    }
-    this.ownerServive.updateOwner("testdev", data).subscribe({
+  deleteOwner(username: string) {
+    this.ownerServive.deleteOwnerByUsername(username).subscribe({
       next: () => {},
-      error: (e) => {e}
+      error: (e) => console.error(e)
     })
   }
-  deleteOwner(id: number) {}
 
 
 }

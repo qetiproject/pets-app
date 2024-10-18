@@ -12,5 +12,6 @@ export interface ErrorResponse {
 
 export interface DeleteSuccessResponse {
   success: boolean; 
-  id: string;
+  id?: string;
+  username?: string;
 }

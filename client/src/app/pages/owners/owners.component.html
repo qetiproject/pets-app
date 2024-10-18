@@ -1,10 +1,10 @@
 <div class="container mt-4">
   
-    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addownerForm" (click)="addOwner()">
+    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addOwnerForm">
       Add Owner
     </button>
     
-    <!-- <ng-container *ngIf="owners$ | async as owners"> 
+    <ng-container *ngIf="owners$ | async as owners">
       @if (owners.length > 0) {
         <div class="table-responsive">
           <h3 class="pt-3 pb-3">Owner List</h3>
@@ -26,12 +26,7 @@
                   <td>{{ owner.lastName }}</td>
                   <td>{{ owner.age }}</td>
                   <td>
-                    <button class="btn btn-primary btn-sm rounded-0" type="button" data-toggle="tooltip" data-placement="top" title="Add" data-bs-toggle="modal" data-bs-target="#addOwnerForm">
-                      <i class="fa fa-table"></i>
-                    </button>
-                  </td>
-                  <td>
-                    <button class="btn btn-danger btn-sm rounded-0" type="button" data-toggle="tooltip" data-placement="top" title="Delete" (click)="deleteOwner(owner.id)">
+                    <button class="btn btn-danger btn-sm rounded-0" type="button" data-toggle="tooltip" data-placement="top" title="Delete" (click)="deleteOwner(owner.username)">
                       <i class="fa fa-trash"></i>
                     </button>
                   </td>
@@ -46,9 +41,10 @@
         </div>
       }
     </ng-container>
-     -->
+   
+    
   </div>
   
-  <!-- <app-add-owner (addownerFormSubmitted)="handleAddownerFormSubmission($event)" ></app-add-owner> -->
+  <app-add-owner (addownerFormSubmitted)="handleAddownerFormSubmission($event)" ></app-add-owner>
   
   

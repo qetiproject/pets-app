@@ -1,0 +1,67 @@
+<div class="modal fade" id="addOwnerForm" tabindex="-1" aria-labelledby="addOwnerForm" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="addOwnerForm">Add Pet</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <form [formGroup]="ownerForm">
+              <div class="mb-3">
+                <label for="username" class="form-label">Username</label>
+                <input id="username" type="text" formControlName="username" class="form-control" required>
+                @if(ownerForm.get('username')?.hasError('required') && ownerForm.get('username')?.touched) {
+                  <div class="text-danger">
+                    Username is required.
+                </div>
+                }
+              </div>
+
+              <div class="mb-3">
+                <label for="firstName" class="form-label">FirstName</label>
+                <input id="firstName" type="text" formControlName="firstName" class="form-control" required>
+                @if(ownerForm.get('firstName')?.hasError('required') && ownerForm.get('firstName')?.touched) {
+                  <div class="text-danger">
+                    FirstName is required.
+                </div>
+                }
+              </div>
+  
+              <div class="mb-3">
+                <label for="lastName" class="form-label">LastName</label>
+                <input id="lastName" type="text" formControlName="lastName" class="form-control" required>
+                @if(ownerForm.get('lastName')?.hasError('required') && ownerForm.get('lastName')?.touched) {
+                  <div class="text-danger">
+                    LastName is required.
+                </div>
+                }
+              </div>
+
+              <div class="mb-3">
+                <label for="age" class="form-label">Age</label>
+                <input id="age" type="number" formControlName="age" class="form-control" required>
+                @if(ownerForm.get('age')?.hasError('required') && ownerForm.get('age')?.touched) {
+                  <div class="text-danger">
+                    Age is required.
+                </div>
+                }
+              </div>
+    
+              <div class="mb-3">
+                <label for="balance" class="form-label">Balance</label>
+                <input id="balance" type="number" formControlName="balance" class="form-control" required>
+                @if(ownerForm.get('balance')?.hasError('required') && ownerForm.get('balance')?.touched) {
+                  <div class="text-danger">
+                    Balance is required.
+                </div>
+                }
+              </div>
+            </form>
+        </div>
+        <footer class="modal-footer">
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="saveOwnerButton()">Save</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </footer>
+      </div>
+    </div>
+  </div>

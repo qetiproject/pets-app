@@ -20,6 +20,7 @@ export const apiEndpoint = {
     getAllOwners: `${apiurl}/owner/all`,
     ownerAdd: `${apiurl}/owner/add`,
     updateOwner: (username: string) => `${apiurl}/owner/${username}`,
+    deleteOwnerByUsername: (username: string) => `${apiurl}/owner/${username}`
   }
 
 };
