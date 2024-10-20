@@ -9,21 +9,11 @@
             <form [formGroup]="ownerForm">
               <div class="mb-3">
                 <label for="username">Username</label>
-                <select class="form-control" id="username" formControlName="username" (change)="usernameChangeValue($event)">
+                <select class="form-control" id="username" formControlName="username">
                   <option value="" disabled>Select a username</option>
                   <option *ngFor="let username of usernames" [value]="username">{{ username }}</option>
                 </select>
               </div>
-
-              <!-- <div class="mb-3">
-                <label for="email" class="form-label" >email</label>
-                <input id="email" type="text" formControlName="email" class="form-control" [value]="email()" [disabled]="true">
-              </div>
-
-              <div class="mb-3">
-                <label for="role" class="form-label">role</label>
-                <input id="role" type="text" formControlName="role" class="form-control" [value]="role()" [disabled]="true">
-              </div> -->
 
               <div class="mb-3">
                 <label for="firstName" class="form-label">FirstName</label>
@@ -67,7 +57,7 @@
             </form>
         </div>
         <footer class="modal-footer">
-          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="saveOwnerButton()">Save</button>
+          <button type="button" class="btn btn-primary"  (click)="saveOwnerButton()">Save</button>
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
         </footer>
       </div>

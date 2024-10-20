@@ -6,7 +6,7 @@ import { RouterModule } from '@angular/router';
 import { IOwner } from '@app/core/models';
 import { OwnerService } from '@app/pages/services/owner.service';
 import { AddOwnerComponent } from '@app/pages/owners-module/components/add-owner/add-owner.component';
-import { Observable } from 'rxjs';
+import { catchError, Observable, of } from 'rxjs';
 
 @Component({
   selector: 'app-owners',
@@ -44,7 +44,7 @@ export class OwnersComponent implements OnInit{
   handleAddownerFormSubmission(data: IOwner): void {
     this.ownerServive.addOwner(data).subscribe({
       next: () => {},
-      error: (e) => {console.error(e)}
+      error: (e) => {console.log(e, "e")}
     })
   }
 

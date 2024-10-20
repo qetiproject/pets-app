@@ -41,6 +41,7 @@ export class AddOwnerComponent implements OnInit{
       role: new FormControl()
     });
   }
+
   ngOnInit(): void {
     this.getAllUsers();
   }
@@ -49,32 +50,19 @@ export class AddOwnerComponent implements OnInit{
     return this.users.map((user) => user.username)
   }
 
-  usernameChangeValue(event: Event): void {
-    const username = (event.target as HTMLInputElement).value;
-    this.getUserByUsername(username)
-  }
-  
   getAllUsers(): void {
     this.userService.getAllUsers().subscribe({
       next: (response) => {
-        this.users = response.filter((x) => x.role === "user");
+        this.users = response.filter((x: any) => x.role === "user");
       },
       error: (error) => console.error(error)
     })
   }
 
-  getUserByUsername(username: string): void {
-    this.userService.getUserByUsername(username).subscribe({
-      next: () => {},
-      error: (error) => {
-        return throwError(() => new Error(error))
-      }
-    })
-  }
-
   saveOwnerButton(){
     if(this.ownerForm.valid) {
-      this.addownerFormSubmitted.emit(this.ownerForm.value)
+      this.addownerFormSubmitted.emit(this.ownerForm.value);
+      this.ownerForm.reset();
     }
   }
 

@@ -35,15 +35,16 @@ export class OwnerService {
     return this._addOwner$.asObservable();
   }
 
-  addOwner(data: IOwner): Observable<IOwner> {
+  addOwner(data: IOwner): Observable<IOwner | ErrorResponse> {
     return this.http.post<IOwner>(apiEndpoint.OwnerEndpoint.ownerAdd, data).pipe(
       tap((owner: IOwner) => {
         const currentOwners = this._owners$.getValue();
         this._owners$.next(currentOwners ? [owner, ...currentOwners] : [owner]);
       }),
       catchError((error) => {
-        return throwError(() => new Error(error));
-      })
+        console.log(error, "error")
+        return of({success: false, message: error.message} as unknown as ErrorResponse)
+       })
     );
   }
 
