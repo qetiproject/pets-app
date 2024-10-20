@@ -1,4 +1,4 @@
-import { Component, inject, OnInit} from '@angular/core';
+import { Component, inject, OnInit, signal} from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
@@ -27,7 +27,6 @@ export class PetsComponent implements OnInit{
   petService = inject(PetService);
 
   pets$: Observable<IPet[] | null>;
-  isClubMember: boolean = false;
 
   constructor() {
     this.pets$ = this.petService.petList$; 

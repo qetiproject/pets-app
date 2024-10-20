@@ -39,7 +39,7 @@
               class="form-check-input" 
               type="checkbox" 
               id="hasGenealogicalList" 
-              [checked]="hasGenealogicalList" 
+              [checked]="hasGenealogicalList()" 
               (change)="hasGenealogicalListEvent($event)">
             <label class="form-check-label" for="hasGenealogicalList">hasGenealogicalList</label>
           </div>
@@ -51,7 +51,7 @@
               class="form-check-input" 
               type="checkbox" 
               id="isClubMember" 
-              [checked]="isClubMember" 
+              [checked]="isClubMember()" 
               (change)="isClubMemberEvent($event)">
             <label class="form-check-label" for="isClubMember">isClubMember</label>
           </div>

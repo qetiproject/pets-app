@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 
@@ -27,8 +27,8 @@ export class UpdatePetFormComponent {
   id: string;
   animal = IAnimal;
   type = IType;
-  isClubMember: boolean = false;
-  hasGenealogicalList: boolean = false;
+  isClubMember = signal<boolean>(false);
+  hasGenealogicalList = signal<boolean>(false)
 
   constructor() {
     this.id  = this.route.snapshot.params['id']
@@ -39,8 +39,8 @@ export class UpdatePetFormComponent {
       animal: new FormControl(''),
       type: new FormControl(''),
       color: new FormControl(''),
-      hasGenealogicalList: new FormControl(null),
-      isClubMember: new FormControl(null),
+      hasGenealogicalList: new FormControl(this.hasGenealogicalList()),
+      isClubMember: new FormControl(this.isClubMember()),
     });
   }
 
@@ -49,8 +49,8 @@ export class UpdatePetFormComponent {
   }
 
   initialUpdatePetForm(pet: IPet): void {
-    this.hasGenealogicalList = pet.hasGenealogicalList;
-    this.isClubMember = pet.isClubMember;
+    this.hasGenealogicalList.set(pet.hasGenealogicalList);
+    this.isClubMember.set(pet.isClubMember);
 
     this.updatePetForm.patchValue({
       name: pet.name,
@@ -83,18 +83,18 @@ export class UpdatePetFormComponent {
 
   isClubMemberEvent(event: Event): void {
     const isChecked = (event.target as HTMLInputElement).checked;
-    this.isClubMember = isChecked; 
+    this.isClubMember.set(isChecked); 
   }
 
   hasGenealogicalListEvent(event: Event): void {
     const isChecked = (event.target as HTMLInputElement).checked;
-    this.hasGenealogicalList = isChecked; 
+    this.hasGenealogicalList.set(isChecked); 
   }
 
   updatePetFormButton(): void {
     this.updatePetForm.patchValue({
-      hasGenealogicalList: this.hasGenealogicalList || false,
-      isClubMember: this.isClubMember || false,
+      hasGenealogicalList: this.hasGenealogicalList() || false,
+      isClubMember: this.isClubMember() || false,
     })
 
     if (this.updatePetForm.valid) {

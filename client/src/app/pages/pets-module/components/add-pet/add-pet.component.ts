@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, signal } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 
 import { IAddPet, IAnimal, IType } from '@app/core/models';
@@ -21,8 +21,8 @@ export class AddPetComponent implements OnInit{
   petForm: FormGroup;
   animal = IAnimal;
   type = IType;
-  isClubMember: boolean = false;
-  hasGenealogicalList: boolean = false;
+  isClubMember = signal<boolean>(false)
+  hasGenealogicalList = signal<boolean>(false)
 
   constructor() {
     this.petForm = new FormGroup({
@@ -32,10 +32,11 @@ export class AddPetComponent implements OnInit{
       animal: new FormControl('', [Validators.required]),
       type: new FormControl('', [Validators.required]),
       color: new FormControl('', [Validators.required]),
-      hasGenealogicalList: new FormControl(),
-      isClubMember: new FormControl(),
+      hasGenealogicalList: new FormControl(this.hasGenealogicalList()),
+      isClubMember: new FormControl(this.isClubMember()),
     });
   }
+
   ngOnInit(): void {}
 
   getAnimals(): string[] {
@@ -48,8 +49,8 @@ export class AddPetComponent implements OnInit{
 
   savePetButton(): void {
     this.petForm.patchValue({
-      hasGenealogicalList: this.hasGenealogicalList || false,
-      isClubMember: this.isClubMember || false,
+      hasGenealogicalList: this.hasGenealogicalList() || false,
+      isClubMember: this.isClubMember() || false,
     })
     if (this.petForm.valid) {
       this.addPetFormSubmitted.emit(this.petForm.value);
@@ -59,12 +60,12 @@ export class AddPetComponent implements OnInit{
 
   isClubMemberEvent(event: Event): void {
     const isChecked = (event.target as HTMLInputElement).checked;
-    this.isClubMember = isChecked; 
+    this.isClubMember.set(isChecked)
   }
 
   hasGenealogicalListEvent(event: Event): void {
     const isChecked = (event.target as HTMLInputElement).checked;
-    this.hasGenealogicalList = isChecked; 
+    this.hasGenealogicalList.set(isChecked)
   }
 
 }
