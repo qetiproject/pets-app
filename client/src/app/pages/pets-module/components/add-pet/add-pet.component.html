@@ -81,8 +81,7 @@
           </form>
       </div>
       <footer class="modal-footer">
-        <!-- [disabled]="petForm.invalid" -->
-        <button type="button" class="btn btn-primary" data-bs-dismiss="modal"    (click)="savePetButton()">Save</button>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" [disabled]="petForm.invalid"  (click)="savePetButton()">Save</button>
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
       </footer>
     </div>

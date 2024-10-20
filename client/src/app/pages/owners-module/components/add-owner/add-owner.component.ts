@@ -1,12 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, inject, Input, OnInit, Output, signal } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { debounceTime, Observable, switchMap } from 'rxjs';
 
-import { IOwner } from '@app/core/models';
-import { USerService } from '@app/pages/services/user.service';
-import { IUser} from '@app/core/models/auth.model';
-import { Observable } from 'rxjs';
-import { OwnerService } from '@app/pages/services';
+import { IOwner, IUser } from '@app/core/models';
+import { OwnerService, USerService } from '@app/pages/services';
 
 @Component({
   selector: 'app-add-owner',
@@ -27,9 +25,7 @@ export class AddOwnerComponent implements OnInit{
   ownerService = inject(OwnerService)
 
   users = signal<IUser[]>([]);
-  username = signal<string>("");
-  existingOwners = signal<IOwner[]>([]); 
-
+  existingOwners: IOwner[] = []; 
   ownerForm: FormGroup
 
   constructor(){    
@@ -40,10 +36,26 @@ export class AddOwnerComponent implements OnInit{
       age: new FormControl(null, [Validators.required]),
       balance: new FormControl(null, [Validators.required]),
     });
+
+    this.ownerForm.get('username')?.valueChanges.pipe(
+      debounceTime(300),
+      switchMap(username => this.checkUsernameExists(username))
+    ).subscribe(exists => {
+      if(exists) {
+        this.ownerForm.get("username")?.setErrors({usernameExists: true})
+      }
+    })
   }
 
   ngOnInit(): void {
-    this.getAllUsers()
+    this.getAllUsers();
+    this.getOwners();
+  }
+
+  getOwners(): void {
+    this.owners.subscribe(data => {
+      this.existingOwners = data
+    })
   }
 
   get usernames(): string[] {
@@ -53,7 +65,7 @@ export class AddOwnerComponent implements OnInit{
   getAllUsers(): void {
     this.userService.getAllUsers().subscribe({
       next: (data) => {
-        const response = data.filter((x: any) => x.role === "user");
+        const response = data.filter((x: IUser) => x.role === "user");
         this.users.set(response)
       },
       error: (error) => console.error(error)
@@ -63,22 +75,18 @@ export class AddOwnerComponent implements OnInit{
   saveOwnerButton(){
     if (this.ownerForm.valid) {
       const username = this.ownerForm.value.username;
-
-      if (this.usernameExists(username)) {
-        this.ownerForm.get('username')?.setErrors({ usernameExists: true });
-        return;
-      }
       this.addownerFormSubmitted.emit(this.ownerForm.value);
       this.ownerForm.reset();
     }
    
   }
 
-  usernameExists(username: string): boolean {
-    this.owners.subscribe(data => {
-      this.existingOwners.set(data)
+  checkUsernameExists(username: string): Observable<boolean> {
+    return new Observable<boolean>(observer => {
+      const exists = this.existingOwners.some(owner => owner.username === username);
+      observer.next(exists)
+      observer.complete();
     })
-    return this.existingOwners().some(owner => owner.username === username);
   }
 
 }
