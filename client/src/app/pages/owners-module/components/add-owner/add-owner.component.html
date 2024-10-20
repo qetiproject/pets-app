@@ -9,10 +9,20 @@
             <form [formGroup]="ownerForm">
               <div class="mb-3">
                 <label for="username">Username</label>
-                <select class="form-control" id="username" formControlName="username">
+                <select class="form-control" id="username" formControlName="username" >
                   <option value="" disabled>Select a username</option>
                   <option *ngFor="let username of usernames" [value]="username">{{ username }}</option>
                 </select>
+                @if(ownerForm.get('username')?.hasError('required') && ownerForm.get('username')?.touched) {
+                  <div class="text-danger">
+                    username is required.
+                  </div>
+                }
+                @if(ownerForm.get('username')?.hasError('usernameExists') && ownerForm.get('username')?.touched) {
+                  <div class="text-danger">
+                    username is already exists.
+                  </div>
+                }
               </div>
 
               <div class="mb-3">

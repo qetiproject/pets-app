@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
@@ -25,7 +25,8 @@ export class OwnersComponent implements OnInit{
   ownerServive = inject(OwnerService)
   
   owners$!: Observable<IOwner[]>
-  
+  errorMessage = signal<string>("")
+
   constructor() {
     this.owners$ = this.ownerServive.owners$
   }
@@ -44,8 +45,8 @@ export class OwnersComponent implements OnInit{
   handleAddownerFormSubmission(data: IOwner): void {
     this.ownerServive.addOwner(data).subscribe({
       next: () => {},
-      error: (e) => {console.log(e, "e")}
-    })
+      error: (errorResponse) => {}
+    });
   }
 
   deleteOwner(username: string): void {

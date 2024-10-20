@@ -42,10 +42,8 @@ export class OwnerService {
         this._owners$.next(currentOwners ? [owner, ...currentOwners] : [owner]);
       }),
       catchError((error) => {
-        console.log(error, "error")
-        return of({success: false, message: error.message} as unknown as ErrorResponse)
-       })
-    );
+        return of({ status: error.status, message: error.message } as ErrorResponse);
+      }))
   }
 
   get updateOwner$(): Observable<IOwner>{
@@ -66,13 +64,12 @@ export class OwnerService {
         }
       }),
       catchError((error) => {
-        console.error('Error updating owner:', error);
         return throwError(() => new Error('Failed to update owner'));
       })
     );
   }
 
-  deleteOwnerByUsername(username: string): Observable<any> {
+  deleteOwnerByUsername(username: string): Observable<ErrorResponse | unknown> {
     return this.http.delete<SuccessResponse>(apiEndpoint.OwnerEndpoint.deleteOwnerByUsername(username)).pipe(
       tap(() => {
         this._deleteOwner$.next({success: true, username});
@@ -83,7 +80,7 @@ export class OwnerService {
         }
       }),
       catchError((error) => {
-        return of({ success: false, message: error.message } as unknown as ErrorResponse);
+        return of({ status: error.status, message: error.message } as ErrorResponse);
       })
     )
   }

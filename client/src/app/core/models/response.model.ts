@@ -5,7 +5,7 @@ export interface SuccessResponse {
 
 export interface ErrorResponse {
     message: {
-      error: string
+      errorMessage: string
     },
     status: number
 }

@@ -47,6 +47,9 @@
     
   </div>
   
-  <app-add-owner (addownerFormSubmitted)="handleAddownerFormSubmission($event)" ></app-add-owner>
+  <app-add-owner 
+    [owners]="owners$"
+    (addownerFormSubmitted)="handleAddownerFormSubmission($event)" 
+  ></app-add-owner>
   
   
