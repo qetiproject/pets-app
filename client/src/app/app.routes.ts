@@ -30,4 +30,8 @@ export const routes: Routes = [
           { path: "owners", component: OwnersComponent}
         ],
       },
+      {
+        path: '**',
+        redirectTo: ''
+      }
 ];
