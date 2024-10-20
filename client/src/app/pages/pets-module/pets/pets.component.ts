@@ -37,7 +37,7 @@ export class PetsComponent implements OnInit{
   }
 
   getAllPets(data?: ISearchPet): void {
-    this.petService.getAllPets(data).subscribe({
+    this.petService.getAllPetsService(data).subscribe({
       next: () => {},
       error: (e) => {console.log(e)}
     })
@@ -55,7 +55,7 @@ export class PetsComponent implements OnInit{
   }
   
   deletePet(id: string): void {
-    this.petService.deletePetById(id).subscribe({
+    this.petService.deletePetService(id).subscribe({
       next: () => {},
       error: (error) => {console.error(error)}
     })

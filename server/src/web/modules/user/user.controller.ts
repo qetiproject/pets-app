@@ -32,9 +32,9 @@ export class UserController {
     return this.userService.login(loginDto);
   }
 
-  @ApiBearerAuth()
-  @UseGuards(AuthGuard, RoleGuard)
-  @Roles(RoleEnum.ADMIN)
+  // @ApiBearerAuth()
+  // @UseGuards(AuthGuard, RoleGuard)
+  // @Roles(RoleEnum.ADMIN)
   @Get('/all')
   getUsers(): Promise<UsersResponseDto[]> {
     return this.userService.getUsersService();

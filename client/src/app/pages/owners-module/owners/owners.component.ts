@@ -58,7 +58,7 @@ export class OwnersComponent implements OnInit{
   }
 
   deleteOwner(username: string): void {
-    this.ownerService.deleteOwnerByUsernameService(username).pipe(
+    this.ownerService.deleteOwnerService(username).pipe(
       catchError(error => {
         console.error('Error deleting owner:', error);
         return of(null)

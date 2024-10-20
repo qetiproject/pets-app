@@ -45,23 +45,25 @@ export class UpdatePetFormComponent {
   }
 
   ngOnInit(): void {
-    this.getPetById(this.id)
+    this.loadPetData(this.id)
   }
 
-  initialUpdatePetForm(pet: IPet): void {
+  private loadPetData(id: string): void {
+    this.petService.getPetByIdService(id).subscribe({
+      next: (response) => {
+        if('id' in response) {
+          this.initializeForm(response);
+        }
+      },
+      error: (error) => console.error('Error fetching pet data:', error)
+    });
+  }
+
+  private initializeForm(pet: IPet): void {
     this.hasGenealogicalList.set(pet.hasGenealogicalList);
     this.isClubMember.set(pet.isClubMember);
 
-    this.updatePetForm.patchValue({
-      name: pet.name,
-      age: pet.age,
-      price: pet.price,
-      animal: pet.animal,
-      type: pet.type,
-      color: pet.color,
-      hasGenealogicalList: pet.hasGenealogicalList,
-      isClubMember: pet.isClubMember,
-    });
+    this.updatePetForm.patchValue({ ...pet });
   }
   
   getAnimals(): string[]{
@@ -72,26 +74,15 @@ export class UpdatePetFormComponent {
     return Object.values(IType)
   }
 
-  getPetById(id: string): void {
-    this.petService.getPetByIdService(id).subscribe({
-      next: (data) => {
-        this.initialUpdatePetForm(data);
-      },
-      error: (e) => { console.log(e)}
-    })
-  }
-
   isClubMemberEvent(event: Event): void {
-    const isChecked = (event.target as HTMLInputElement).checked;
-    this.isClubMember.set(isChecked); 
+    this.isClubMember.set((event.target as HTMLInputElement).checked); 
   }
 
   hasGenealogicalListEvent(event: Event): void {
-    const isChecked = (event.target as HTMLInputElement).checked;
-    this.hasGenealogicalList.set(isChecked); 
+    this.hasGenealogicalList.set((event.target as HTMLInputElement).checked); 
   }
 
-  updatePetFormButton(): void {
+  onSubmit(): void {
     this.updatePetForm.patchValue({
       hasGenealogicalList: this.hasGenealogicalList() || false,
       isClubMember: this.isClubMember() || false,
@@ -99,12 +90,8 @@ export class UpdatePetFormComponent {
 
     if (this.updatePetForm.valid) {
       this.petService.updatePetService(this.id, this.updatePetForm.value).subscribe({
-        next: () => {
-          this.router.navigate(['/pets'])
-        },
-        error: (e) => {
-          console.error(e);
-        }
+        next: () => this.router.navigate(['/pets']),
+        error: (error) => console.error("Error updating pet:", error)
       });
     } else {
       console.warn('Form is invalid');

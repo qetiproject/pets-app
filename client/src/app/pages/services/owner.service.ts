@@ -1,10 +1,10 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable, signal } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { BehaviorSubject, catchError, Observable, of} from 'rxjs';
 
 import { apiEndpoint } from '@app/core/constants/constants';
 import { ErrorResponse, IOwner, SuccessResponse } from '@app/core/models';
-import { handleError, handleResponse } from '@app/core/filters/common-error.filter';
+import { handleError, handleResponse } from '@app/core/filters';
 
 @Injectable({
   providedIn: 'root'
@@ -28,39 +28,40 @@ export class OwnerService {
   addOwnerService(data: IOwner): Observable<IOwner | ErrorResponse> {
     return this.http.post<IOwner>(apiEndpoint.OwnerEndpoint.ownerAdd, data).pipe(
       handleResponse(owner => {
-        const currentOwners = this._owners$.getValue();
-        this._owners$.next([owner, ...currentOwners])
+        this._owners$.next([owner, ...this._owners$.getValue()])
       }),
       catchError(handleError<ErrorResponse>('addOwnerService'))
     )
   }
 
-  updateOwner(username: string, data: Partial<IOwner>): Observable<IOwner | ErrorResponse> {
+  updateOwnerService(username: string, data: Partial<IOwner>): Observable<IOwner | ErrorResponse> {
     return this.http.patch<IOwner>(apiEndpoint.OwnerEndpoint.updateOwner(username), data).pipe(
-      handleResponse(owner => {
-        const currentOwners = this._owners$.getValue();
-        const index = currentOwners.findIndex(x => x.username === username);
-        if (index !== -1) {
-          currentOwners[index] = owner;
-          this._owners$.next([...currentOwners]);
-        }
-      }),
-      catchError(handleError<ErrorResponse>('updateOwner'))
+      handleResponse(owner => this.updateOwnerInList(username, owner)),
+      catchError(handleError<ErrorResponse>('updateOwnerService'))
     );
   }
 
-  deleteOwnerByUsernameService(username: string): Observable<ErrorResponse | unknown> {
+  deleteOwnerService(username: string): Observable<SuccessResponse | ErrorResponse> {
     return this.http.delete<SuccessResponse>(apiEndpoint.OwnerEndpoint.deleteOwnerByUsername(username)).pipe(
-      handleResponse(() => {
-        const currentOwners = this._owners$.getValue();
-        if(currentOwners) {
-          const updateOwners = currentOwners.filter(x => x.username != username)
-          this._owners$.next([...updateOwners])
-        }
-      }),
-      catchError(handleError<ErrorResponse>('deleteOwnerByUsernameService'))
+      handleResponse(() => this.deleteOwnerFromList(username)),
+      catchError(error => {
+        console.error('Error in deletePetService:', error);
+        return handleError<ErrorResponse>('deleteOwnerService')(error)
+      })
     )
   }
 
+  private updateOwnerInList(username: string, owner: IOwner): void {
+    const currentOwners = this._owners$.getValue()
+      .map(existingOwner => 
+        existingOwner.username === username ? owner : existingOwner
+      );
+    this._owners$.next(currentOwners);
+  }
+
+  private deleteOwnerFromList(username: string): void {
+    const updatedOwnerList = this._owners$.getValue().filter(owner => owner.username !== username);
+    this._owners$.next(updatedOwnerList);
+  }
 
 }

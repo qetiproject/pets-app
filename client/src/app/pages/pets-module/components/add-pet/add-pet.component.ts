@@ -27,8 +27,8 @@ export class AddPetComponent implements OnInit{
   constructor() {
     this.petForm = new FormGroup({
       name: new FormControl('', [Validators.required]),
-      age: new FormControl(null, [Validators.required]),
-      price: new FormControl(null,[Validators.required]),
+      age: new FormControl(null, [Validators.required, Validators.min(0)]),
+      price: new FormControl(null,[Validators.required, Validators.min(1)]),
       animal: new FormControl('', [Validators.required]),
       type: new FormControl('', [Validators.required]),
       color: new FormControl('', [Validators.required]),
@@ -47,7 +47,7 @@ export class AddPetComponent implements OnInit{
     return Object.values(IType)
   }
 
-  savePetButton(): void {
+  onSubmit(): void {
     this.petForm.patchValue({
       hasGenealogicalList: this.hasGenealogicalList() || false,
       isClubMember: this.isClubMember() || false,
@@ -55,17 +55,21 @@ export class AddPetComponent implements OnInit{
     if (this.petForm.valid) {
       this.addPetFormSubmitted.emit(this.petForm.value);
       this.petForm.reset();
+      this.resetSignals()
     }
   }
 
   isClubMemberEvent(event: Event): void {
-    const isChecked = (event.target as HTMLInputElement).checked;
-    this.isClubMember.set(isChecked)
+    this.isClubMember.set((event.target as HTMLInputElement).checked)
   }
 
   hasGenealogicalListEvent(event: Event): void {
-    const isChecked = (event.target as HTMLInputElement).checked;
-    this.hasGenealogicalList.set(isChecked)
+    this.hasGenealogicalList.set((event.target as HTMLInputElement).checked)
+  }
+
+  resetSignals(): void {
+    this.isClubMember.set(false);
+    this.hasGenealogicalList.set(false);
   }
 
 }

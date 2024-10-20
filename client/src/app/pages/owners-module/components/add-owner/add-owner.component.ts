@@ -76,7 +76,7 @@ export class AddOwnerComponent implements OnInit{
     })
   }
 
-  saveOwner(){
+  onSubmit(){
     if (this.ownerForm.valid) {
       this.addOwnerFormSubmitted.emit(this.ownerForm.value);
       this.ownerForm.reset();

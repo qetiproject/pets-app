@@ -1,9 +1,9 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { catchError, Observable, of, tap, throwError } from "rxjs";
+import { catchError, Observable, tap, throwError } from "rxjs";
 
 import { apiEndpoint } from "@app/core/constants/constants";
-import { ErrorResponse, IUser } from "@app/core/models";
+import { IUser } from "@app/core/models";
 
 @Injectable({
     providedIn: 'root'
