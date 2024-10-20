@@ -22,13 +22,13 @@ import { catchError, Observable, of } from 'rxjs';
   styleUrl: './owners.component.scss'
 })
 export class OwnersComponent implements OnInit{
-  ownerServive = inject(OwnerService)
+  ownerService = inject(OwnerService)
   
   owners$!: Observable<IOwner[]>
   errorMessage = signal<string>("")
 
   constructor() {
-    this.owners$ = this.ownerServive.owners$
+    this.owners$ = this.ownerService.owners$
   }
 
   ngOnInit(): void {
@@ -36,23 +36,35 @@ export class OwnersComponent implements OnInit{
   }
   
   getOwners(): void {
-    this.ownerServive.getAllOwners().subscribe({
-      next: () => {},
-      error: (e) => console.error(e)
+    this.ownerService.getAllOwnersService().pipe(
+      catchError((error) => {
+        console.error('Error fetching owners:', error);
+        return of([])
+      })
+    ).subscribe({
+      next: () => {}
     })
   }
 
   handleAddownerFormSubmission(data: IOwner): void {
-    this.ownerServive.addOwner(data).subscribe({
-      next: () => {},
-      error: (errorResponse) => {}
-    });
+    this.ownerService.addOwnerService(data).pipe(
+      catchError(error => {
+        console.error('Error adding owner:', error);
+        return of(null)
+      })
+    ).subscribe({
+      next: () => {}
+    })
   }
 
   deleteOwner(username: string): void {
-    this.ownerServive.deleteOwnerByUsername(username).subscribe({
-      next: () => {},
-      error: (e) => console.error(e)
+    this.ownerService.deleteOwnerByUsernameService(username).pipe(
+      catchError(error => {
+        console.error('Error deleting owner:', error);
+        return of(null)
+      })
+    ).subscribe({
+      next: () => {}
     })
   }
 
