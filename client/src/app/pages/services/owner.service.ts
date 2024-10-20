@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, signal } from '@angular/core';
 import { BehaviorSubject, catchError, Observable, of, Subject, tap, throwError } from 'rxjs';
 import { apiEndpoint } from '@app/core/constants/constants';
-import { DeleteSuccessResponse, ErrorResponse, IOwner, SuccessResponse } from '@app/core/models';
+import { DeleteSuccessResponse, ErrorResponse, IOwner, IUser, SuccessResponse } from '@app/core/models';
 
 @Injectable({
   providedIn: 'root'
@@ -86,6 +86,5 @@ export class OwnerService {
       })
     )
   }
-
 
 }

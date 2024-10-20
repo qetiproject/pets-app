@@ -11,6 +11,7 @@ export class TokenService {
   isAuthentication: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
     false
   );
+  
   constructor(@Inject(PLATFORM_ID) private platformId: Object) {
     const token = this.getToken();
     if (token) {
@@ -33,7 +34,7 @@ export class TokenService {
     if (isPlatformBrowser(this.platformId)) {
       return localStorage.getItem('CURRENT_TOKEN');
     }
-    return null; // Return null if not in a browser environment
+    return null;
   }
 
   removeToken(): void {

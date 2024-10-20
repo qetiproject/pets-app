@@ -1,9 +1,9 @@
 import { IRole } from "./enums";
 
 export interface IUser {
-  id: number;
-  name: string;
+  username: string;
   email: string;
+  role: string;
 }
 
 export interface ILogin {

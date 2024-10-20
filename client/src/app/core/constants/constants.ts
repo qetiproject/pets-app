@@ -9,6 +9,10 @@ export const apiEndpoint = {
     login: `${apiurl}/api/user/login`,
     register: `${apiurl}/api/user/register`,
   },
+  UserEndpoint: {
+    getAllUsers: `${apiurl}/api/user/all`,
+    getUserByUsername: (username: string) => `${apiurl}/api/user/${username}`
+  },
   PetEndpoint: {
     getAll: `${apiurl}/pet/all`,
     petAdd: `${apiurl}/pet/add`,

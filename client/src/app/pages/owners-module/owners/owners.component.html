@@ -15,6 +15,7 @@
                 <th scope="col">FirstName</th>
                 <th scope="col">LastName</th>
                 <th scope="col">Age</th>
+                <th scope="col">Balance</th>
                 <th></th>
               </tr>
             </thead>
@@ -25,6 +26,7 @@
                   <td>{{ owner.firstName }}</td>
                   <td>{{ owner.lastName }}</td>
                   <td>{{ owner.age }}</td>
+                  <td>{{ owner.balance }}</td>
                   <td>
                     <button class="btn btn-danger btn-sm rounded-0" type="button" data-toggle="tooltip" data-placement="top" title="Delete" (click)="deleteOwner(owner.username)">
                       <i class="fa fa-trash"></i>

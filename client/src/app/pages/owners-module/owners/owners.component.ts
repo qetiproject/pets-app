@@ -23,7 +23,7 @@ import { Observable } from 'rxjs';
 })
 export class OwnersComponent implements OnInit{
   ownerServive = inject(OwnerService)
-
+  
   owners$!: Observable<IOwner[]>
   
   constructor() {
@@ -34,21 +34,21 @@ export class OwnersComponent implements OnInit{
     this.getOwners();
   }
   
-  getOwners() {
+  getOwners(): void {
     this.ownerServive.getAllOwners().subscribe({
       next: () => {},
       error: (e) => console.error(e)
     })
   }
 
-  handleAddownerFormSubmission(data: IOwner) {
+  handleAddownerFormSubmission(data: IOwner): void {
     this.ownerServive.addOwner(data).subscribe({
       next: () => {},
       error: (e) => {console.error(e)}
     })
   }
 
-  deleteOwner(username: string) {
+  deleteOwner(username: string): void {
     this.ownerServive.deleteOwnerByUsername(username).subscribe({
       next: () => {},
       error: (e) => console.error(e)
