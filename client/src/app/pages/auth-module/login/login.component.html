@@ -1,6 +1,6 @@
 <div class="p-4 bg-white rounded-lg shadow">
   <h5 class="text-xl mb-3 font-weight-bold text-dark">Login Here</h5>
-  <p>{{errorMessage}}</p>
+  <p>{{errorMessage()}}</p>
   <form
     [formGroup]="loginForm"
     (ngSubmit)="onSubmit()"

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, catchError, Observable, of} from 'rxjs';
+import { BehaviorSubject, catchError, Observable} from 'rxjs';
 
 import { apiEndpoint } from '@app/core/constants/constants';
 import { ErrorResponse, IOwner, SuccessResponse } from '@app/core/models';

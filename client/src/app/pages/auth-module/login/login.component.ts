@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import {
-  FormBuilder,
   FormControl,
   FormGroup,
   ReactiveFormsModule,
@@ -10,6 +9,7 @@ import {
 import { RouterModule } from '@angular/router';
 
 import { AuthService } from '@app/core/services';
+import { catchError } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -26,7 +26,7 @@ import { AuthService } from '@app/core/services';
 export class LoginComponent {
   authService = inject(AuthService);
   loginForm!: FormGroup;
-  errorMessage: string = '';
+  errorMessage = signal<string>('');
   
   constructor() {
     this.loginForm = new FormGroup({
@@ -37,12 +37,13 @@ export class LoginComponent {
 
   onSubmit() {
     if (this.loginForm.valid) {
-      this.authService.onLogin(this.loginForm.value).subscribe({
+      this.authService.onLogin(this.loginForm.value).pipe(
+        catchError(error => {
+          this.errorMessage.set(error.error.message);
+          return [];
+        })
+      ).subscribe({
         next: () => {},
-        error: (e) => {
-          console.log(e)
-          this.errorMessage = e.error.message
-        }
       });
     } else {
       this.loginForm.markAllAsTouched();

@@ -48,32 +48,11 @@ export class AddOwnerComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    this.getAllUsers();
-    this.getOwners();
-  }
-
-  getOwners(): void {
-    this.owners.subscribe(data => {
-      this.existingOwners = data
-    })
+    this.loadInitialData();
   }
 
   get usernames(): string[] {
     return this.users().map((user) => user.username)
-  }
-
-  getAllUsers(): void {
-    this.userService.getAllUsers().pipe(
-      catchError(error => {
-        console.error("Error fetching users:", error)
-        return of([])
-      })
-    ).subscribe({
-      next: (data) => {
-        const response = data.filter((x: IUser) => x.role === "user");
-        this.users.set(response)
-      }
-    })
   }
 
   onSubmit(){
@@ -83,11 +62,36 @@ export class AddOwnerComponent implements OnInit{
     }
   }
 
-  checkUsernameExists(username: string): Observable<boolean> {
+  private checkUsernameExists(username: string): Observable<boolean> {
     return new Observable<boolean>(observer => {
       const exists = this.existingOwners.some(owner => owner.username === username);
       observer.next(exists)
       observer.complete();
+    })
+  }
+
+  private loadInitialData(): void {
+    this.getAllUsers();
+    this.getOwners();
+  }
+
+  private getOwners(): void {
+    this.owners.subscribe(data => {
+      this.existingOwners = data
+    })
+  }
+
+  private getAllUsers(): void {
+    this.userService.getAllUserService().pipe(
+      catchError(error => {
+        console.error("Error fetching users:", error)
+        return of([])
+      })
+    ).subscribe({
+      next: (data) => {
+        const filteredUsers = data.filter((x: IUser) => x.role === "user");
+        this.users.set(filteredUsers)
+      }
     })
   }
 

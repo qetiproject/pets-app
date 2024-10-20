@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, catchError, Observable, of, tap } from 'rxjs';
-import { ErrorHandler, Injectable } from '@angular/core';
+import { BehaviorSubject, catchError, Observable, tap } from 'rxjs';
+import { Injectable } from '@angular/core';
 
 import { apiEndpoint } from '@app/core/constants/constants';
 import { IAddPet, IPet, ISearchPet } from '@app/core/models/pet.model';
