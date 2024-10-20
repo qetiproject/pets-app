@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, inject, Input, OnInit, Output, signal } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { debounceTime, Observable, switchMap } from 'rxjs';
+import { catchError, debounceTime, Observable, of, switchMap } from 'rxjs';
 
 import { IOwner, IUser } from '@app/core/models';
 import { OwnerService, USerService } from '@app/pages/services';
@@ -18,7 +18,7 @@ import { OwnerService, USerService } from '@app/pages/services';
   styleUrl: './add-owner.component.scss'
 })
 export class AddOwnerComponent implements OnInit{
-  @Output() addownerFormSubmitted = new EventEmitter<IOwner>();
+  @Output() addOwnerFormSubmitted = new EventEmitter<IOwner>();
   @Input() owners!: Observable<IOwner[]>;
 
   userService = inject(USerService)
@@ -63,22 +63,24 @@ export class AddOwnerComponent implements OnInit{
   }
 
   getAllUsers(): void {
-    this.userService.getAllUsers().subscribe({
+    this.userService.getAllUsers().pipe(
+      catchError(error => {
+        console.error("Error fetching users:", error)
+        return of([])
+      })
+    ).subscribe({
       next: (data) => {
         const response = data.filter((x: IUser) => x.role === "user");
         this.users.set(response)
-      },
-      error: (error) => console.error(error)
+      }
     })
   }
 
-  saveOwnerButton(){
+  saveOwner(){
     if (this.ownerForm.valid) {
-      const username = this.ownerForm.value.username;
-      this.addownerFormSubmitted.emit(this.ownerForm.value);
+      this.addOwnerFormSubmitted.emit(this.ownerForm.value);
       this.ownerForm.reset();
     }
-   
   }
 
   checkUsernameExists(username: string): Observable<boolean> {
