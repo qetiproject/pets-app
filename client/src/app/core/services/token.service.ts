@@ -8,14 +8,14 @@ import { isPlatformBrowser } from '@angular/common';
   providedIn: 'root',
 })
 export class TokenService {
-  isAuthentication: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  isAuthentication$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   
   constructor(@Inject(PLATFORM_ID) private platformId: Object) {
     this.initializeAuthState();
   }
 
   updateToken(status: boolean): void {
-    this.isAuthentication.next(status);
+    this.isAuthentication$.next(status);
   }
 
   setToken(token: string): void {
@@ -45,7 +45,7 @@ export class TokenService {
   }
 
   isAuthenticated(): boolean {
-    return this.isAuthentication.value;
+    return this.isAuthentication$.value;
   }
   
   private initializeAuthState(): void {
