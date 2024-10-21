@@ -28,15 +28,19 @@ export class RegisterComponent {
   userRegisterForm!: FormGroup;
 
   errorMessage = signal<string>('');
- 
+  role = IRole;
 
   constructor() {
     this.userRegisterForm = this.fb.group({
       username: ['', [Validators.required]],
-      role: [IRole.ADMIN],
+      role: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, passwordValidator()]]
     });
+  }
+
+  getRoles(): string[] {
+    return Object.values(IRole)
   }
 
   onSubmit() {
