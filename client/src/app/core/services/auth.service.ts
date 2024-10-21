@@ -18,7 +18,10 @@ export class AuthService {
   ) {}
 
   register(data: IRegister): Observable<IRegisterResponse> {
-    return this.http.post<IRegisterResponse>(`${apiEndpoint.AuthEndpoint.register}`, data);
+    return this.http.post<IRegisterResponse>(`${apiEndpoint.AuthEndpoint.register}`, data)
+      .pipe(
+        catchError(this.handleError)
+      )
   }
 
   onLogin(data: ILogin): Observable<ILoginResponse> {
@@ -26,19 +29,22 @@ export class AuthService {
       .post<ILoginResponse>(`${apiEndpoint.AuthEndpoint.login}`, data)
       .pipe(
         map((response) => {
-          if (response) {
+          if (response?.accessToken) {
             this.tokenService.setToken(response.accessToken);
           }
           return response;
         }),
-        catchError((error) => {
-          return throwError(() => new Error(error)); 
-        })
+        catchError(this.handleError)
       )
   }
 
   onLogout() {
     this.tokenService.removeToken();
     this.router.navigate(['/']);
+  }
+
+  private handleError(error: any): Observable<never> {
+    const errorMessage = error.error?.message || 'An unknown error occurred';
+    return throwError(() => new Error(errorMessage));
   }
 }

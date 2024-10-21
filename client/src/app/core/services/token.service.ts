@@ -8,15 +8,10 @@ import { isPlatformBrowser } from '@angular/common';
   providedIn: 'root',
 })
 export class TokenService {
-  isAuthentication: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
-    false
-  );
+  isAuthentication: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   
   constructor(@Inject(PLATFORM_ID) private platformId: Object) {
-    const token = this.getToken();
-    if (token) {
-      this.updateToken(true);
-    }
+    this.initializeAuthState();
   }
 
   updateToken(status: boolean): void {
@@ -24,23 +19,51 @@ export class TokenService {
   }
 
   setToken(token: string): void {
-    this.updateToken(true);
     if (isPlatformBrowser(this.platformId)) {
-      localStorage.setItem(constants.CURRENT_TOKEN, token);
+      try {
+        localStorage.setItem(constants.CURRENT_TOKEN, token);
+        this.updateToken(true);
+      } catch (error) {
+        console.error('Could not set token in localStorage', error);
+      }
     }
   }
 
   getToken(): string | null {
-    if (isPlatformBrowser(this.platformId)) {
-      return localStorage.getItem('CURRENT_TOKEN');
-    }
-    return null;
+    return isPlatformBrowser(this.platformId) ? localStorage.getItem('CURRENT_TOKEN') : null;
   }
 
   removeToken(): void {
-    this.updateToken(false);
     if (isPlatformBrowser(this.platformId)) {
-      localStorage.removeItem(constants.CURRENT_TOKEN);
+      try {
+        localStorage.removeItem(constants.CURRENT_TOKEN);
+        this.updateToken(false);
+      } catch (error) {
+        console.error('Could not remove token from localStorage', error);
+      }
     }
   }
+
+  isAuthenticated(): boolean {
+    return this.isAuthentication.value;
+  }
+  
+  private initializeAuthState(): void {
+    const token = this.getToken();
+    this.updateToken(!!token);
+     if (token && this.isTokenExpired(token)) {
+      this.removeToken();
+    }
+  }
+
+  private isTokenExpired(token: string): boolean {
+    try {
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      return payload.exp < Date.now() / 1000;
+    } catch (error) {
+      console.error('Error parsing token payload:', error);
+      return true; 
+    }
+  }
+
 }

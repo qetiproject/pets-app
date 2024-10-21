@@ -9,17 +9,13 @@ export const httpInterceptor: HttpInterceptorFn = (req, next) => {
   const tokenService = inject(TokenService);
   const router = inject(Router);
 
-  tokenService.isAuthentication.subscribe({
-    next: (value) => {
-      if (value) {
-        req = req.clone({
-          setHeaders: {
-            Authorization: `Bearer ${tokenService.getToken()}`,
-          },
-        });
-      }
-    },
-  });
+  if (tokenService.isAuthenticated()) {
+    req = req.clone({
+      setHeaders: {
+        Authorization: `Bearer ${tokenService.getToken()}`,
+      },
+    });
+  }
 
   return next(req).pipe(
     catchError((e: HttpErrorResponse) => {
@@ -28,7 +24,7 @@ export const httpInterceptor: HttpInterceptorFn = (req, next) => {
         router.navigate(['']);
       }
       const error = e.error?.error?.message || e.statusText;
-      return throwError(() => error);
+      return throwError(() => new Error(error));
     })
   );
 };
