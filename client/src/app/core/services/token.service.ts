@@ -8,14 +8,14 @@ import { isPlatformBrowser } from '@angular/common';
   providedIn: 'root',
 })
 export class TokenService {
-  isAuthentication: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  isAuthentication$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   
   constructor(@Inject(PLATFORM_ID) private platformId: Object) {
     this.initializeAuthState();
   }
 
   updateToken(status: boolean): void {
-    this.isAuthentication.next(status);
+    this.isAuthentication$.next(status);
   }
 
   setToken(token: string): void {
@@ -30,11 +30,7 @@ export class TokenService {
   }
 
   getToken(): string | null {
-    // return isPlatformBrowser(this.platformId) ? localStorage.getItem('CURRENT_TOKEN') : null;
-    if (isPlatformBrowser(this.platformId)) {
-      return localStorage.getItem('CURRENT_TOKEN');
-    }
-    return null;
+    return isPlatformBrowser(this.platformId) ? localStorage.getItem('CURRENT_TOKEN') : null;
   }
 
   removeToken(): void {
@@ -49,34 +45,24 @@ export class TokenService {
   }
 
   isAuthenticated(): boolean {
-    return this.isAuthentication.value;
+    return this.isAuthentication$.value;
   }
   
   private initializeAuthState(): void {
-    // const token = this.getToken();
-    // this.updateToken(!!token);
-    //  if (token && this.isTokenExpired(token)) {
-    //   this.removeToken();
-    // }
     const token = this.getToken();
-    if (token) {
-      if (this.isTokenExpired(token)) {
-        this.removeToken();
-      } else {
-        this.updateToken(true);
-      }
+    this.updateToken(!!token);
+     if (token && this.isTokenExpired(token)) {
+      this.removeToken();
     }
   }
 
   private isTokenExpired(token: string): boolean {
-    // const payload = JSON.parse(atob(token.split('.')[1]));
-    // return payload.exp < Date.now() / 1000;
     try {
       const payload = JSON.parse(atob(token.split('.')[1]));
       return payload.exp < Date.now() / 1000;
     } catch (error) {
       console.error('Error parsing token payload:', error);
-      return true; // Consider expired if there's an error
+      return true; 
     }
   }
 

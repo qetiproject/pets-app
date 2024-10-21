@@ -2,19 +2,27 @@ import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
 
 import { TokenService } from '@core/services';
-import { map } from 'rxjs';
 
-export const authGuard: CanActivateFn = (route, state) => {
+export const AuthGuard: CanActivateFn = (route, state) => {
   const tokenService = inject(TokenService);
   const router = inject(Router);
 
-  return tokenService.isAuthentication.pipe(
-    map((isAuthenticated) => {
-      if(!isAuthenticated) {
+  import { inject } from '@angular/core';
+import { CanActivateFn, Router } from '@angular/router';
+
+import { TokenService } from '@core/services';
+
+export const AuthGuard: CanActivateFn = (route, state) => {
+  const tokenService = inject(TokenService);
+  const router = inject(Router);
+
+  tokenService.isAuthentication$.subscribe({
+    next: ((isAuthentication: boolean) => {
+      if (!isAuthentication) {
         router.navigate(['']);
         return false
       }
-      return true;
+     
     })
-  )
-};
+  })
+}

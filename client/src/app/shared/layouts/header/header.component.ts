@@ -20,7 +20,7 @@ export class HeaderComponent {
   authService = inject(AuthService)
 
   constructor() {
-    this.isAuthenticated$ = this.tokenService.isAuthentication;
+    this.isAuthenticated$ = this.tokenService.isAuthentication$;
   }
 
   onLogout() {
