@@ -23,7 +23,7 @@ export const httpInterceptor: HttpInterceptorFn = (req, next) => {
         tokenService.removeToken();
         router.navigate(['']);
       }
-      const error = e.error?.error?.message || e.statusText;
+      const error = e.error?.errorMessage || e.statusText;
       return throwError(() => new Error(error));
     })
   );

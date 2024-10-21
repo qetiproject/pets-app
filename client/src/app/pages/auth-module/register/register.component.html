@@ -1,6 +1,8 @@
 <div class="p-4 bg-white rounded-lg shadow">
   <h5 class="text-xl mb-3 font-weight-bold text-dark">Login Here</h5>
-  <span class="text-danger">{{ errorMessage }}</span>
+  @if(errorMessage()) {
+    <p class="text-danger">{{ errorMessage() }}</p>
+  }
   
   <form
     [formGroup]="userRegisterForm"
@@ -13,18 +15,20 @@
       <input
         type="text"
         id="username"
-        placeholder="Username"
+        placeholder="Enter your username"
         class="form-control"
         formControlName="username"
-        autocomplete="username"
+        autocomplete="current-username"
         [ngClass]="{
           'is-invalid': userRegisterForm.get('username')?.hasError('required') && userRegisterForm.get('username')?.touched,
           'is-valid': userRegisterForm.get('username')?.valid
         }"
       />
-      <div *ngIf="userRegisterForm.get('username')?.hasError('required') && userRegisterForm.get('username')?.touched" class="invalid-feedback">
-        Username Address is required.
-      </div>
+      @if(userRegisterForm.get('username')?.hasError('required') && userRegisterForm.get('username')?.touched) {
+        <div class="invalid-feedback">
+          Username Address is required.
+        </div>
+      }
     </div>
 
     <div class="form-group mb-3">
@@ -32,18 +36,25 @@
       <input
         type="email"
         id="email"
-        placeholder="Email"
+        placeholder="Enter your email"
         class="form-control"
         formControlName="email"
-        autocomplete="email"
+        autocomplete="current-email"
         [ngClass]="{
-          'is-invalid': userRegisterForm.get('email')?.hasError('required') && userRegisterForm.get('email')?.touched,
-          'is-valid': userRegisterForm.get('email')?.valid
+         'is-invalid': userRegisterForm.get('email')?.invalid && userRegisterForm.get('email')?.touched,
+         'is-valid': userRegisterForm.get('email')?.valid
         }"
       />
-      <div *ngIf="userRegisterForm.get('email')?.hasError('required') && userRegisterForm.get('email')?.touched" class="invalid-feedback">
-        Email Address is required.
-      </div>
+      @if(userRegisterForm.get('email')?.hasError('required') && userRegisterForm.get('email')?.touched){
+        <div class="invalid-feedback">
+          Email Address is required.
+        </div>
+      }
+      @if(userRegisterForm.get('email')?.hasError('email') && userRegisterForm.get('email')?.touched){
+        <div class="invalid-feedback">
+          Please enter a valid email address.
+        </div>
+      }      
     </div>
 
     <div class="form-group mb-3">
@@ -51,20 +62,31 @@
       <input
         type="password"
         id="password"
-        placeholder="Password"
+        placeholder="Enter your password"
         class="form-control"
         formControlName="password"
-        autocomplete="password"
+        autocomplete="current-password"
         [ngClass]="{
-          'is-invalid': userRegisterForm.get('password')?.hasError('required') && userRegisterForm.get('password')?.touched,
+          'is-invalid': userRegisterForm.get('password')?.hasError('required') && userRegisterForm.get('password')?.touched || userRegisterForm.get('password')?.hasError('weakPassword') && userRegisterForm.get('password')?.touched,
           'is-valid': userRegisterForm.get('password')?.valid
         }"
       />
-      <div *ngIf="userRegisterForm.get('password')?.hasError('required') && userRegisterForm.get('password')?.touched" class="invalid-feedback">
-        Password is required.
-      </div>
+      @if (userRegisterForm.get('password')?.hasError('required') && userRegisterForm.get('password')?.touched) {
+        <div class="invalid-feedback">
+          Password is required.
+        </div>
+      }
+      @if (userRegisterForm.get('password')?.hasError('weakPassword') && userRegisterForm.get('password')?.touched) {
+        <div class="invalid-feedback">
+          Password must be at least 8 characters long and include uppercase letters, lowercase letters, numbers, and special characters.
+        </div>
+      }
     </div>
 
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <button type="submit" class="btn btn-primary">Register</button>
+    <div class="mt-3 d-flex align-items-center">
+      <p class="text-primary mb-0">If you have an account</p>
+      <button type="button" class="btn btn-outline-primary ms-2" routerLink="/login">Login</button>
+    </div>
   </form>
 </div>

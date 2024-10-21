@@ -43,8 +43,13 @@ export class AuthService {
     this.router.navigate(['/']);
   }
 
-  private handleError(error: any): Observable<never> {
-    const errorMessage = error.error?.message || 'An unknown error occurred';
-    return throwError(() => new Error(errorMessage));
+  private handleError(error: any): Observable<never> {    
+    const errorMessage = error?.message || 'An unknown error occurred';
+    const cleanedMessage = typeof errorMessage === 'string'
+      ? errorMessage.replace(/^(Error:\s*)+/g, '').trim()
+      : 'An unknown error occurred';
+    
+    return throwError(() => new Error(cleanedMessage));
   }
+
 }
