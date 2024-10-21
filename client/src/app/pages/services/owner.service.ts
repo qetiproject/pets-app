@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, catchError, Observable} from 'rxjs';
+import { BehaviorSubject, catchError, Observable, tap} from 'rxjs';
 
 import { apiEndpoint } from '@app/core/constants/constants';
 import { ErrorResponse, IOwner, SuccessResponse } from '@app/core/models';
@@ -21,6 +21,7 @@ export class OwnerService {
   getAllOwnersService(): Observable<IOwner[]> {
     return this.http.get<IOwner[]>(apiEndpoint.OwnerEndpoint.getAllOwners).pipe(
      handleResponse(),
+     tap(owners => this._owners$.next(owners)),
      catchError(handleError<IOwner[]>('getAllOwnersService', []))
     );
   }
