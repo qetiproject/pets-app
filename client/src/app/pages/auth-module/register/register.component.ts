@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { catchError, of } from 'rxjs';
 
 import { passwordValidator } from '@app/core/constants/password-validator';
@@ -13,8 +13,9 @@ import { AuthService } from '@app/core/services';
   standalone: true,
   imports: [
     CommonModule,
-    ReactiveFormsModule
-  ],
+    ReactiveFormsModule,
+    RouterModule
+],
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss',
   providers: [AuthService]
@@ -59,5 +60,5 @@ export class RegisterComponent {
       this.userRegisterForm.markAllAsTouched();
     }
   }
-
+  
 }
