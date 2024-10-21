@@ -1,10 +1,27 @@
-import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  UseFilters,
+  UseGuards,
+} from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 
 import { DeleteResponseDto } from '@common/dto';
 import { PetBreedService } from './pet_breed.service';
 import { AddPetBreedRequeseDto, PetBreedResponseDto } from './dto';
+import { RoleEnum } from '@common/enums';
+import { Roles } from '@common/decorators';
+import { CommonErrorFilter } from '@common/filters';
+import { RoleGuard } from '@common/modules/auth/guards';
+import { AuthGuard } from '@nestjs/passport';
 
+@UseFilters(CommonErrorFilter)
+@UseGuards(AuthGuard, RoleGuard)
+@Roles(RoleEnum.ADMIN, RoleEnum.USER)
 @ApiTags('PetBreeds')
 @Controller('petBreed')
 export class PetBreedController {
