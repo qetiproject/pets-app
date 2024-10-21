@@ -7,22 +7,13 @@ export const AuthGuard: CanActivateFn = (route, state) => {
   const tokenService = inject(TokenService);
   const router = inject(Router);
 
-  import { inject } from '@angular/core';
-import { CanActivateFn, Router } from '@angular/router';
-
-import { TokenService } from '@core/services';
-
-export const AuthGuard: CanActivateFn = (route, state) => {
-  const tokenService = inject(TokenService);
-  const router = inject(Router);
-
   tokenService.isAuthentication$.subscribe({
-    next: ((isAuthentication: boolean) => {
+    next: (isAuthentication: boolean) => {
       if (!isAuthentication) {
         router.navigate(['']);
-        return false
       }
-     
-    })
-  })
-}
+    },
+  });
+
+  return true;
+};
