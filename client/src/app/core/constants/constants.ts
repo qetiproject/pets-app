@@ -25,6 +25,11 @@ export const apiEndpoint = {
     ownerAdd: `${apiurl}/owner/add`,
     updateOwner: (username: string) => `${apiurl}/owner/${username}`,
     deleteOwnerByUsername: (username: string) => `${apiurl}/owner/${username}`
+  },
+  BreedEndpoint: {
+    getAllBreeds: `${apiurl}/petBreed/all`,
+    addBreed: `${apiurl}/petBreed/add`,
+    deleteBreedById: (id: string) => `${apiurl}/petBreed/${id}`,
   }
 
 };

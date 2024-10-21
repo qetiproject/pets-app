@@ -5,6 +5,7 @@
       @if (this.isAuthenticated$| async) {
         <div class="px-2 font-medium cursor-pointer" [routerLink]="['/pets']" routerLinkActive="router-link-active" >Pets</div>
         <div class="px-2 font-medium cursor-pointer" [routerLink]="['/owners']" >Owners</div>
+        <div class="px-2 font-medium cursor-pointer" [routerLink]="['/breeds']" >Breeds</div>
         <div class="px-2 font-medium cursor-pointer" (click)="onLogout()">
           Logout
         </div>

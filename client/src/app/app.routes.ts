@@ -7,6 +7,7 @@ import { UpdatePetFormComponent } from './pages/pets-module/components';
 import { OwnersComponent } from './pages/owners-module';
 import { HomeComponent } from './pages/home/home.component';
 import { AuthGuard, GuestGuard } from './core/guards';
+import { BreedComponent } from './pages/breed/breed.component';
 
 
 export const routes: Routes = [
@@ -27,7 +28,8 @@ export const routes: Routes = [
           { path: 'home', component: HomeComponent },
           { path: 'pets', component: PetsComponent },
           { path: 'update-pet/:id', component: UpdatePetFormComponent},
-          { path: "owners", component: OwnersComponent}
+          { path: "owners", component: OwnersComponent},
+          { path: "breeds", component: BreedComponent}
         ],
       },
       {
