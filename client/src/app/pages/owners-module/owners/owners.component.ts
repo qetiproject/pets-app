@@ -2,11 +2,11 @@ import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { catchError, Observable, of } from 'rxjs';
 
 import { IOwner } from '@app/core/models';
 import { OwnerService } from '@app/pages/services/owner.service';
 import { AddOwnerComponent } from '@app/pages/owners-module/components/add-owner/add-owner.component';
-import { catchError, Observable, of } from 'rxjs';
 
 @Component({
   selector: 'app-owners',

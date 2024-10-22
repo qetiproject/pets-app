@@ -3,7 +3,7 @@ import { Component, inject, signal } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 
-import { ErrorResponse, IAnimal, IOwner, IPet, IType } from '@app/core/models';
+import { IAnimal, IPet, IType } from '@app/core/models';
 import { PetService } from '@app/pages/services';
 
 @Component({

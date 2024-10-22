@@ -1,10 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, inject, OnInit, Output, signal } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-
-import { IAddPet, IAnimal, IBreed, IOwner, IType, IUser } from '@app/core/models';
-import { BreedService, OwnerService, PetService, USerService } from '@app/pages/services';
 import { catchError, Observable, of } from 'rxjs';
+
+import { IAddPet, IAnimal, IBreed, IOwner, IType } from '@app/core/models';
+import { BreedService, OwnerService, PetService } from '@app/pages/services';
 
 @Component({
   selector: 'app-add-pet',
