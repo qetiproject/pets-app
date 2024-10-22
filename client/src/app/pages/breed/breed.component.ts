@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 
 import { BreedService } from '../services';
+import { ConfirmDeleteModalComponent } from '@shared/components';
 
 @Component({
   selector: 'app-breed',
@@ -12,8 +13,9 @@ import { BreedService } from '../services';
   imports: [
     CommonModule,
     FormsModule,
-    ReactiveFormsModule
-  ],
+    ReactiveFormsModule,
+    ConfirmDeleteModalComponent
+],
   templateUrl: './breed.component.html',
   styleUrl: './breed.component.scss'
 })
@@ -22,6 +24,8 @@ export class BreedComponent implements OnInit{
 
   breeds$: Observable<IBreed[] | null>
   breedForm: FormGroup;
+  title = "Breed"
+  selectedBreedId: string = ""
 
   constructor() {
     this.breeds$ = this.breedService.breeds$;
@@ -52,11 +56,17 @@ export class BreedComponent implements OnInit{
     }
   }
 
-  deleteBreed(id: string): void {
-    // this.breedService.deleteBreedService(id).subscribe({
-    //   next: () => {},
-    //   error: (error) => {console.error(error)}
-    // })
+  deleteBreed(): void {
+    console.log("delete")
+    this.breedService.deleteBreedService(this.selectedBreedId).subscribe({
+      next: () => {},
+      error: (error) => {console.error(error)}
+    })
+  }
+
+  confirmDelete(breedId: string): void {
+    console.log(breedId)
+    this.selectedBreedId = breedId;
   }
 
 }
