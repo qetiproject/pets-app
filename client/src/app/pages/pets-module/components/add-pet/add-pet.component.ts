@@ -2,8 +2,8 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, inject, OnInit, Output, signal } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 
-import { IAddPet, IAnimal, IBreed, IType, IUser } from '@app/core/models';
-import { BreedService, USerService } from '@app/pages/services';
+import { IAddPet, IAnimal, IBreed, IOwner, IType, IUser } from '@app/core/models';
+import { BreedService, OwnerService, PetService, USerService } from '@app/pages/services';
 import { catchError, Observable, of } from 'rxjs';
 
 @Component({
@@ -20,9 +20,10 @@ import { catchError, Observable, of } from 'rxjs';
 export class AddPetComponent implements OnInit{
   @Output() addPetFormSubmitted = new EventEmitter<IAddPet>();
   breedService = inject(BreedService);
-  userService = inject(USerService)
+  ownerService = inject(OwnerService)
+  petService = inject(PetService)
 
-  users = signal<IUser[]>([]);
+  owners = signal<IOwner[]>([]);
   petForm: FormGroup;
   animal = IAnimal;
   type = IType;
@@ -42,13 +43,19 @@ export class AddPetComponent implements OnInit{
       hasGenealogicalList: new FormControl(this.hasGenealogicalList()),
       isClubMember: new FormControl(this.isClubMember()),
       breed: new FormControl('', [Validators.required]),
-      ownerUsername: new FormControl(''),
+      owners: new FormGroup({
+        username: new FormControl(''),
+        firstName: new FormControl(''),
+        lastName: new FormControl(''),
+        age: new FormControl(null),
+        balance: new FormControl(null)
+      })
     });
   }
 
   ngOnInit(): void {
     this.getBreeds();
-    this.getAllUsers();
+    this.getOwners();
   }
 
   getAnimals(): string[] {
@@ -60,14 +67,51 @@ export class AddPetComponent implements OnInit{
   }
 
   get usernames(): string[] {
-    return this.users().map((user) => user.username)
+    return this.owners().map((user) => user.username)
   }
 
+  // onSubmit(): void {
+  //   if (this.petForm.valid) {
+  //     this.addPetFormSubmitted.emit(this.petForm.value);
+  //     this.petForm.reset();
+  //   }
+  // }
+
   onSubmit(): void {
-    if (this.petForm.valid) {
-      this.addPetFormSubmitted.emit(this.petForm.value);
-      this.petForm.reset();
-    }
+  
+    const username = this.petForm.value.owners.username;
+    this.ownerService.getOwnerByUsernameService(username).subscribe({
+      next: (data: any) => {
+        this.petForm.patchValue({
+          owners: {
+            firstName: data.firstName,
+            lastName: data.lastName,
+            age: data.age,
+            balance: data.balance
+          }
+        });
+  
+        if (this.petForm.valid) {
+            this.addPetFormSubmitted.emit(this.petForm.value);
+            this.petForm.reset();
+        } else {
+          console.warn('Form is invalid');
+        }
+      },
+    });
+
+    console.log(this.petForm.value, "add pet form")
+  }
+
+  getOwners(): void {
+    this.ownerService.getAllOwnersService().pipe(
+      catchError((error) => {
+        console.error('Error fetching owners:', error);
+        return of([])
+      })
+    ).subscribe({
+      next: (data) => {this.owners.set(data)}
+    })
   }
 
   getBreeds(): void {
@@ -76,20 +120,6 @@ export class AddPetComponent implements OnInit{
       error: (error) => { console.error(error)}
     })
   }
-  
 
-  private getAllUsers(): void {
-    this.userService.getAllUserService().pipe(
-      catchError(error => {
-        console.error("Error fetching users:", error)
-        return of([])
-      })
-    ).subscribe({
-      next: (data) => {
-        const filteredUsers = data.filter((x: IUser) => x.role === "user");
-        this.users.set(filteredUsers)
-      }
-    })
-  }
   
 }

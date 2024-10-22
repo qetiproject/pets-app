@@ -41,12 +41,14 @@
               </select>
             </div>
 
-            <div class="mb-3">
-              <label for="owner">Owner</label>
-              <select class="form-control" id="owner" formControlName="ownerUsername">
-                <option value="" disabled>Select an owner username</option>
-                <option *ngFor="let username of usernames" [value]="username">{{ username }}</option>
-              </select>
+            <div formGroupName="owners">
+              <div class="mb-3">
+                <label for="owner">Owner</label>
+                <select class="form-control" id="owner" formControlName="username">
+                  <option value="" disabled>Select an owner username</option>
+                  <option *ngFor="let username of usernames" [value]="username">{{ username }}</option>
+                </select>
+              </div>
             </div>
 
             <div class="mb-3">

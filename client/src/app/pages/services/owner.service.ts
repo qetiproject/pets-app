@@ -35,6 +35,12 @@ export class OwnerService {
     )
   }
 
+  getOwnerByUsernameService(username:string): any{
+    return this.http.get<IOwner>(apiEndpoint.OwnerEndpoint.getOwnerByUsername(username)).pipe(
+      handleResponse(owner => this.updateOwnerInList(username, owner)),
+      catchError(handleError<ErrorResponse>('getOwnerByUsernameService'))
+    )
+  }
   updateOwnerService(username: string, data: Partial<IOwner>): Observable<IOwner | ErrorResponse> {
     return this.http.patch<IOwner>(apiEndpoint.OwnerEndpoint.updateOwner(username), data).pipe(
       handleResponse(owner => this.updateOwnerInList(username, owner)),
