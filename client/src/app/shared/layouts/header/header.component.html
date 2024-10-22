@@ -1,6 +1,6 @@
 <header class="app-header bg-light">
-  <div class="container d-flex justify-content-between align-items-center py-3">
-    <h4 class="font-weight-bold text-xl mb-0" [routerLink]="['/home']">Pets App</h4>
+  <div class="container d-flex flex-column flex-md-row justify-content-between align-items-center py-3">
+    <h4 class="ont-weight-bold text-xl mb-2 mb-md-0" [routerLink]="['/pets']">Pets App</h4>
     <div class="d-flex">
       @if (this.isAuthenticated$| async) {
         <div class="px-2 font-medium cursor-pointer" [routerLink]="['/pets']" routerLinkActive="router-link-active" >Pets</div>
@@ -10,7 +10,7 @@
           Logout
         </div>
         }@else {
-        <div class="px-2 font-medium cursor-pointer">Login</div>
+        <div class="px-2 font-medium cursor-pointer" [routerLink]="['/login']">Login</div>
         }
     </div>
   </div>

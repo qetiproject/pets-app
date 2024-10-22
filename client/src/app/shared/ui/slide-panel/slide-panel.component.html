@@ -1,7 +1,7 @@
 @if(isOpen) {
   <div class="fixed top-0 right-0 w-100 h-100 z-30">
     <div class="bg-dark opacity-75 w-100 h-100 position-fixed"></div>
-    <div class="position-fixed top-0 right-0 max-w-md w-100 h-100 bg-white shadow" @fadeSlideInRight>
+    <div class="position-fixed top-0 right-0 max-w-md w-100 h-100 bg-white shadow d-flex flex-column">
       <div class="d-flex justify-content-between align-items-center p-3 border-bottom">
         <h4 class="font-weight-bold text-xl mb-0">{{ headerText }}</h4>
         <i
@@ -9,11 +9,9 @@
           (click)="onClosePanel()"
         ></i>
       </div>
-      <div class="d-flex flex-column p-3">
+      <div class="flex-grow-1 d-flex flex-column p-3 overflow-auto">
         <ng-content></ng-content>
       </div>
     </div>
   </div>
 }
-
-
