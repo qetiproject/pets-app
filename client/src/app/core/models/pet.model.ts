@@ -12,7 +12,7 @@ export interface IPet {
     hasGenealogicalList: boolean,
     owner?: IOwner,
     petShop?: string,
-    breed?: IBreed,
+    breed: IBreed,
   }
   
 export interface IAddPet {
@@ -26,7 +26,7 @@ export interface IAddPet {
     isClubMember: boolean;
     owner?: IOwner;
     petShop?: string;
-    breed?: string;
+    breed: string;
 }
 
 export interface ISearchPet {

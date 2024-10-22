@@ -18,6 +18,7 @@
               <th scope="col">Name</th>
               <th scope="col">Animal</th>
               <th scope="col">Breed</th>
+              <th scope="col">Owner username</th>
               <th scope="col">Type</th>
               <th scope="col">Color</th>
               <th scope="col">Age</th>
@@ -30,7 +31,8 @@
               <tr>
                 <td>{{ pet.name }}</td>
                 <td>{{ pet.animal }}</td>
-                <td>{{ pet.breed?.name }}</td>
+                <td>{{ pet.breed.name }}</td>
+                <td>{{ pet.owner?.username}}</td>
                 <td>{{ pet.type }}</td>
                 <td>{{ pet.color }}</td>
                 <td>{{ pet.age }}</td>
