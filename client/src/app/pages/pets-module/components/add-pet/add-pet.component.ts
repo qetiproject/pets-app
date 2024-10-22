@@ -70,13 +70,6 @@ export class AddPetComponent implements OnInit{
     return this.owners().map((user) => user.username)
   }
 
-  // onSubmit(): void {
-  //   if (this.petForm.valid) {
-  //     this.addPetFormSubmitted.emit(this.petForm.value);
-  //     this.petForm.reset();
-  //   }
-  // }
-
   onSubmit(): void {
   
     const username = this.petForm.value.owners.username;
@@ -99,8 +92,6 @@ export class AddPetComponent implements OnInit{
         }
       },
     });
-
-    console.log(this.petForm.value, "add pet form")
   }
 
   getOwners(): void {
