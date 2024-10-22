@@ -7,6 +7,7 @@ import { catchError, Observable, of } from 'rxjs';
 import { IOwner } from '@app/core/models';
 import { OwnerService } from '@app/pages/services/owner.service';
 import { AddOwnerComponent } from '@app/pages/owners-module/components/add-owner/add-owner.component';
+import { ConfirmDeleteModalComponent } from '@shared/components';
 
 @Component({
   selector: 'app-owners',
@@ -16,7 +17,8 @@ import { AddOwnerComponent } from '@app/pages/owners-module/components/add-owner
     FormsModule,
     ReactiveFormsModule,
     RouterModule,
-    AddOwnerComponent
+    AddOwnerComponent,
+    ConfirmDeleteModalComponent
   ],
   templateUrl: './owners.component.html',
   styleUrl: './owners.component.scss'
@@ -26,6 +28,8 @@ export class OwnersComponent implements OnInit{
   
   owners$!: Observable<IOwner[]>
   errorMessage = signal<string>("")
+  selectedUsername: string = ""
+  title: string = "Owner"
 
   constructor() {
     this.owners$ = this.ownerService.owners$
@@ -57,8 +61,12 @@ export class OwnersComponent implements OnInit{
     })
   }
 
-  deleteOwner(username: string): void {
-    this.ownerService.deleteOwnerService(username).pipe(
+  confirmDelete(username: string): void {
+    this.selectedUsername = username;
+  }
+
+  deleteOwner(): void {
+    this.ownerService.deleteOwnerService(this.selectedUsername).pipe(
       catchError(error => {
         console.error('Error deleting owner:', error);
         return of(null)
@@ -68,5 +76,6 @@ export class OwnersComponent implements OnInit{
     })
   }
 
+  
 
 }

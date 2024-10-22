@@ -28,7 +28,7 @@
                   <td>{{ owner.age }}</td>
                   <td>{{ owner.balance }}</td>
                   <td>
-                    <button class="btn btn-danger btn-sm rounded-0" type="button" data-toggle="tooltip" data-placement="top" title="Delete" (click)="deleteOwner(owner.username)">
+                    <button class="btn btn-danger btn-sm rounded-0" type="button" data-toggle="tooltip" data-placement="top" title="Delete" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal" (click)="confirmDelete(owner.username)">
                       <i class="fa fa-trash"></i>
                     </button>
                   </td>
@@ -51,5 +51,10 @@
     [owners]="owners$"
     (addOwnerFormSubmitted)="handleAddownerFormSubmission($event)" 
   ></app-add-owner>
+
+  <app-confirm-delete-modal 
+  [title]="title"
+  (deleteConfirmed)="deleteOwner()"
+></app-confirm-delete-modal>
   
   

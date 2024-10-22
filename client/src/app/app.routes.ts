@@ -8,8 +8,6 @@ import { UpdatePetFormComponent } from './pages/pets-module/components';
 import { OwnersComponent } from './pages/owners-module';
 import { BreedComponent } from './pages/breed/breed.component';
 
-
-
 export const routes: Routes = [
     {
         path: '',
