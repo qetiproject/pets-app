@@ -22,7 +22,7 @@
                   <td>{{ breed.name }}</td>
                   <td>{{ breed.description }}</td>
                   <td>
-                    <button class="btn btn-danger btn-sm rounded-0" type="button" data-toggle="tooltip" data-placement="top" title="Delete"  data-bs-toggle="modal" data-bs-target="#confirmDeleteModal">
+                    <button class="btn btn-danger btn-sm rounded-0" type="button" data-toggle="tooltip" data-placement="top" title="Delete"  data-bs-toggle="modal" data-bs-target="#confirmDeleteModal" (click)="confirmDelete(breed.id)">
                       <i class="fa fa-trash"></i>
                     </button>
                   </td>

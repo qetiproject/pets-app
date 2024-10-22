@@ -56,17 +56,17 @@ export class BreedComponent implements OnInit{
     }
   }
 
-  deleteBreed(): void {
-    console.log("delete")
-    this.breedService.deleteBreedService(this.selectedBreedId).subscribe({
-      next: () => {},
-      error: (error) => {console.error(error)}
-    })
-  }
-
   confirmDelete(breedId: string): void {
-    console.log(breedId)
     this.selectedBreedId = breedId;
+  }
+  
+  deleteBreed(): void {
+    if (this.selectedBreedId) {
+      this.breedService.deleteBreedService(this.selectedBreedId).subscribe({
+        next: () => {},
+        error: (error) => { console.error(error) }
+      });
+    }
   }
 
 }
