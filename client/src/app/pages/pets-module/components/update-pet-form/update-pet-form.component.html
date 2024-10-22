@@ -11,6 +11,18 @@
               Name is required.
           </div>
         </div>
+
+        @if(pet?.owner?.username){
+          <div class="mb-3">
+            <label for="username" class="form-label">Owner Username</label>
+            <input id="username" type="text" class="form-control" formControlName="username" [disabled]="true" [value]="updatePetForm.value.username">
+          </div>
+        }
+
+        <div class="mb-3">
+          <label for="breed" class="form-label">Breed</label>
+          <input id="breed" type="text" class="form-control" [disabled]="true" [value]="pet?.breed.name" >
+        </div>
     
         <div class="mb-3">
           <label for="animal">Animal</label>
@@ -20,19 +32,7 @@
           </select>
         </div>
     
-        <div class="mb-3">
-          <label for="type">Type</label>
-          <select class="form-control" id="type" formControlName="type">
-            <option value="" disabled>Select a type</option>
-            <option *ngFor="let type of getTypes()" [value]="type">{{ type }}</option>
-          </select>
-        </div>
-  
-        <div class="mb-3">
-          <label for="age" class="form-label">Age</label>
-          <input id="age" type="number" formControlName="age" class="form-control" required>
-        </div>
-
+        
         <div class="mb-3">
           <div class="form-check form-switch">
             <input 
@@ -68,7 +68,22 @@
           <label for="color" class="form-label">Color</label>
           <input id="color" type="text" formControlName="color" class="form-control" required>
         </div>
+
+        <div class="mb-3">
+          <label for="type">Type</label>
+          <select class="form-control" id="type" formControlName="type">
+            <option value="" disabled>Select a type</option>
+            <option *ngFor="let type of getTypes()" [value]="type">{{ type }}</option>
+          </select>
+        </div>
+  
+        <div class="mb-3">
+          <label for="age" class="form-label">Age</label>
+          <input id="age" type="number" formControlName="age" class="form-control" required>
+        </div>
+
       </div>
+
 
     </div>
 

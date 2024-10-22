@@ -3,7 +3,7 @@ import { Component, inject, signal } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 
-import { IAnimal, IPet, IType } from '@app/core/models';
+import { ErrorResponse, IAnimal, IOwner, IPet, IType } from '@app/core/models';
 import { PetService } from '@app/pages/services';
 
 @Component({
@@ -29,6 +29,7 @@ export class UpdatePetFormComponent {
   type = IType;
   isClubMember = signal<boolean>(false);
   hasGenealogicalList = signal<boolean>(false)
+  pet!: any;
 
   constructor() {
     this.id  = this.route.snapshot.params['id']
@@ -41,6 +42,8 @@ export class UpdatePetFormComponent {
       color: new FormControl(''),
       hasGenealogicalList: new FormControl(this.hasGenealogicalList()),
       isClubMember: new FormControl(this.isClubMember()),
+      username: new FormControl({value: '', disabled: true}),
+      breed: new FormControl({value: '', disabled: true}),
     });
   }
 
@@ -51,6 +54,7 @@ export class UpdatePetFormComponent {
   private loadPetData(id: string): void {
     this.petService.getPetByIdService(id).subscribe({
       next: (response) => {
+        this.pet = response;
         if('id' in response) {
           this.initializeForm(response);
         }
@@ -62,8 +66,20 @@ export class UpdatePetFormComponent {
   private initializeForm(pet: IPet): void {
     this.hasGenealogicalList.set(pet.hasGenealogicalList);
     this.isClubMember.set(pet.isClubMember);
+    // this.updatePetForm.patchValue({ ...pet });
 
-    this.updatePetForm.patchValue({ ...pet });
+    this.updatePetForm.patchValue({
+      id: pet.id,
+      name: pet.name,
+      age: pet.age,
+      price: pet.price,
+      color: pet.color,
+      type: pet.type,
+      animal: pet.animal,
+      username: pet.owner?.username,
+      petShop: pet.petShop,
+      breed: pet.breed
+    });
   }
   
   getAnimals(): string[]{
