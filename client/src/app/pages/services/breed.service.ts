@@ -35,11 +35,27 @@ export class BreedService {
     )
   }
 
+  getBreedByIdService(id: string): Observable<IBreed | ErrorResponse> {
+    return this.http.get<IBreed>(apiEndpoint.BreedEndpoint.getBreedById(id)).pipe(
+      handleResponse(breed => this.updateBreedInList(id, breed)),
+      catchError(handleError<ErrorResponse>('getBreedByIdService'))
+    )
+  }
+
   deleteBreedService(id: string): Observable<SuccessResponse |ErrorResponse> {
     return this.http.delete<any>(apiEndpoint.BreedEndpoint.deleteBreedById(id)).pipe(
       handleResponse(() => this.deleteBreedFromList(id)),
       catchError(handleError<any>('deleteBreedService'))
     )
+  }
+
+  private updateBreedInList(id: string, breed: IBreed): void {
+    const currentBreeds = this._breeds$.getValue();
+    const index = currentBreeds.findIndex(x => x.id === id);
+    if(index != -1) {
+      currentBreeds[index] = breed;
+      this._breeds$.next(currentBreeds);
+    }
   }
 
   private deleteBreedFromList(id: string): void {

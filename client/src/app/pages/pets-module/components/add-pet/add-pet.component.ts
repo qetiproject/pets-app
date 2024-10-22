@@ -1,8 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, OnInit, Output, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, inject, OnInit, Output, signal } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 
-import { IAddPet, IAnimal, IType } from '@app/core/models';
+import { IAddPet, IAnimal, IBreed, IType } from '@app/core/models';
+import { BreedService } from '@app/pages/services';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-add-pet',
@@ -13,18 +15,21 @@ import { IAddPet, IAnimal, IType } from '@app/core/models';
     ReactiveFormsModule
   ],
   templateUrl: './add-pet.component.html',
-  styleUrl: './add-pet.component.scss'
+  styleUrl: './add-pet.component.scss',
 })
 export class AddPetComponent implements OnInit{
   @Output() addPetFormSubmitted = new EventEmitter<IAddPet>();
-  
+  breedService = inject(BreedService);
+
   petForm: FormGroup;
   animal = IAnimal;
   type = IType;
   isClubMember = signal<boolean>(false)
   hasGenealogicalList = signal<boolean>(false)
-
+  breeds$: Observable<IBreed[] | []>
+  
   constructor() {
+    this.breeds$ = this.breedService.breeds$;
     this.petForm = new FormGroup({
       name: new FormControl('', [Validators.required]),
       age: new FormControl(null, [Validators.required, Validators.min(0)]),
@@ -34,10 +39,13 @@ export class AddPetComponent implements OnInit{
       color: new FormControl('', [Validators.required]),
       hasGenealogicalList: new FormControl(this.hasGenealogicalList()),
       isClubMember: new FormControl(this.isClubMember()),
+      breed: new FormControl('', [Validators.required])
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.getBreeds();
+  }
 
   getAnimals(): string[] {
     return Object.values(IAnimal);
@@ -71,5 +79,14 @@ export class AddPetComponent implements OnInit{
     this.isClubMember.set(false);
     this.hasGenealogicalList.set(false);
   }
+  
+
+  getBreeds(): void {
+    this.breedService.getBreedsService().subscribe({
+      next: () => {},
+      error: (error) => { console.error(error)}
+    })
+  }
+  
 
 }

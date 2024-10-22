@@ -29,6 +29,7 @@ export const apiEndpoint = {
   BreedEndpoint: {
     getAllBreeds: `${apiurl}/petBreed/all`,
     addBreed: `${apiurl}/petBreed/add`,
+    getBreedById: (id: string) => `${apiurl}/petBreed/${id}`,
     deleteBreedById: (id: string) => `${apiurl}/petBreed/${id}`,
   }
 

@@ -25,7 +25,7 @@ export class BreedComponent implements OnInit{
   breeds$: Observable<IBreed[] | null>
   breedForm: FormGroup;
   title = "Breed"
-  selectedBreedId: string = ""
+  selectedId: string = ""
 
   constructor() {
     this.breeds$ = this.breedService.breeds$;
@@ -56,13 +56,13 @@ export class BreedComponent implements OnInit{
     }
   }
 
-  confirmDelete(breedId: string): void {
-    this.selectedBreedId = breedId;
+  confirmDelete(id: string): void {
+    this.selectedId = id;
   }
   
   deleteBreed(): void {
-    if (this.selectedBreedId) {
-      this.breedService.deleteBreedService(this.selectedBreedId).subscribe({
+    if (this.selectedId) {
+      this.breedService.deleteBreedService(this.selectedId).subscribe({
         next: () => {},
         error: (error) => { console.error(error) }
       });

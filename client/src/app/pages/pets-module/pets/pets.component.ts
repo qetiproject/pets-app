@@ -5,7 +5,7 @@ import { RouterModule } from '@angular/router';
 import { Observable } from 'rxjs';
 
 import { IAddPet, IPet, ISearchPet } from '@app/core/models/pet.model';
-import { SearchItemComponent } from '@shared/components';
+import { ConfirmDeleteModalComponent, SearchItemComponent } from '@shared/components';
 import { AddPetComponent } from '../components';
 import { PetService } from '@app/pages/services';
 
@@ -18,7 +18,8 @@ import { PetService } from '@app/pages/services';
     ReactiveFormsModule,
     RouterModule,
     AddPetComponent,
-    SearchItemComponent
+    SearchItemComponent,
+    ConfirmDeleteModalComponent
   ],
   templateUrl: './pets.component.html',
   styleUrl: './pets.component.scss',
@@ -27,6 +28,8 @@ export class PetsComponent implements OnInit{
   petService = inject(PetService);
 
   pets$: Observable<IPet[] | null>;
+  selectedId: string = "";
+  title: string = "Pet";
 
   constructor() {
     this.pets$ = this.petService.petList$; 
@@ -49,13 +52,17 @@ export class PetsComponent implements OnInit{
 
   handleAddPetFormSubmission(data: IAddPet): void {
     this.petService.addPetService(data).subscribe({
-      next: () => {},
+      next: () => {this.getAllPets()},
       error: (error) => console.error('Error adding pet:', error)
     });
   }
   
-  deletePet(id: string): void {
-    this.petService.deletePetService(id).subscribe({
+  confirmDelete(id: string): void {
+    this.selectedId = id;
+  }
+  
+  deletePet(): void {
+    this.petService.deletePetService(this.selectedId).subscribe({
       next: () => {},
       error: (error) => {console.error(error)}
     })

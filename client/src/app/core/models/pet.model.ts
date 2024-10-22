@@ -1,4 +1,4 @@
-import { IAnimal, IOwner, IType } from "."
+import { IAnimal, IBreed, IOwner, IType } from "."
 
 export interface IPet {
     id: string,
@@ -12,7 +12,7 @@ export interface IPet {
     hasGenealogicalList: boolean,
     owner?: IOwner,
     petShop?: string,
-    breed?: string
+    breed?: IBreed,
   }
   
 export interface IAddPet {

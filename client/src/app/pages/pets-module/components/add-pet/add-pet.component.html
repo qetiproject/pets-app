@@ -26,6 +26,14 @@
             </div>
 
             <div class="mb-3">
+              <label for="breed">Breed</label>
+              <select class="form-control" id="breed" formControlName="breed">
+                <option value="" disabled>Select an breed</option>
+                <option *ngFor="let breed of breeds$ | async" [value]="breed.id">{{ breed.name }}</option>
+              </select>
+            </div>
+            
+            <div class="mb-3">
               <label for="type">Type</label>
               <select class="form-control" id="type" formControlName="type">
                 <option value="" disabled>Select a type</option>
