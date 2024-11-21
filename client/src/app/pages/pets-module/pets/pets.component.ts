@@ -1,4 +1,4 @@
-import { Component, inject, OnInit} from '@angular/core';
+import { Component, ComponentFactoryResolver, inject, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
@@ -8,6 +8,7 @@ import { IAddPet, IPet, ISearchPet } from '@app/core/models/pet.model';
 import { ConfirmDeleteModalComponent, SearchItemComponent } from '@shared/components';
 import { AddPetComponent } from '../components';
 import { PetService } from '@app/pages/services';
+import { ViewContainer } from '../viewContainer.directive';
 
 @Component({
   selector: 'app-pets',
@@ -27,11 +28,20 @@ import { PetService } from '@app/pages/services';
 export class PetsComponent implements OnInit{
   petService = inject(PetService);
 
-  pets$: Observable<IPet[] | null>;
-  selectedId: string = "";
-  title: string = "Pet";
+  vcr = inject(ViewContainerRef)
+  showConfirmDeleteComponent: boolean = false;
+  petToDelete!: IPet;
 
-  constructor() {
+  @ViewChild('container') container!: ViewContainer;
+  
+  pets$: Observable<IPet[] | null>;
+  title: string = "Pet";
+  onConfirmationObs: any;
+
+  constructor(
+    private viewContainerRef: ViewContainerRef,
+    private componentFactoryResolver: ComponentFactoryResolver
+  ) {
     this.pets$ = this.petService.petList$; 
   }
 
@@ -57,15 +67,30 @@ export class PetsComponent implements OnInit{
     });
   }
   
-  confirmDelete(id: string): void {
-    this.selectedId = id;
+  OnDeleteClicked(pet: IPet): void {
+    this.petToDelete = pet;
+    this.showConfirmDelete(this.petToDelete);
+
   }
   
-  deletePet(): void {
-    this.petService.deletePetService(this.selectedId).subscribe({
+  showConfirmDelete(pet: IPet): void {
+    const containerViewRef = this.viewContainerRef.createComponent(ConfirmDeleteModalComponent);
+    containerViewRef.instance.pettoDelete = pet;
+
+    containerViewRef.instance.OnConfirmation.subscribe((confirmed) => {
+      if (confirmed) {
+        this.deletePet(pet.id);
+      }
+      this.viewContainerRef.clear();
+    });
+  }
+
+  deletePet(id: string): void {
+    this.petService.deletePetService(id).subscribe({
       next: () => {},
       error: (error) => {console.error(error)}
     })
   } 
+
 
 }

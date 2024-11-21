@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { IPet } from '@app/core/models';
 
 @Component({
   selector: 'app-confirm-delete-modal',
@@ -8,11 +9,12 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   styleUrl: './confirm-delete-modal.component.scss'
 })
 export class ConfirmDeleteModalComponent {
-  @Input() title: string = "";
-  @Output() deleteConfirmed = new EventEmitter<void>();
+  @Input() pettoDelete!: IPet;
 
-  confirmDelete(): void {
-    this.deleteConfirmed.emit();
+  @Output() OnConfirmation: EventEmitter<boolean> = new EventEmitter<boolean>();
+
+  OnConfirmationBtmClicked(value: boolean){
+    this.OnConfirmation.emit(value);
   }
 
 }

@@ -4,9 +4,9 @@
     Add Pet
   </button>
   
-  @defer {
+  <!-- @defer {
     <app-search-item (searchFormSubmission)="handleSearchFormSubmission($event)"></app-search-item>
-  }
+  } -->
   
   <ng-container *ngIf="pets$ | async as pets"> 
     @if (pets.length > 0) {
@@ -46,8 +46,8 @@
                   </button>
                 </td>
                 <td>
-                  <button class="btn btn-danger btn-sm rounded-0" type="button" data-toggle="tooltip" data-placement="top" title="Delete" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal" (click)="confirmDelete(pet.id)">
-                    <i class="fa fa-trash"></i>
+                  <button class="btn btn-danger btn-sm rounded-0" type="button" data-toggle="tooltip" data-placement="top" title="Delete" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal" (click)="OnDeleteClicked(pet)">
+                    <i class="fa fa-trash" aria-hidden="true"></i>
                   </button>
                 </td>
               </tr>  
@@ -63,10 +63,7 @@
   </ng-container>
   
 </div>
-
+<div appContainer></div>
 <app-add-pet (addPetFormSubmitted)="handleAddPetFormSubmission($event)" ></app-add-pet>
 
-<app-confirm-delete-modal 
-  [title]="title"
-  (deleteConfirmed)="deletePet()"
-></app-confirm-delete-modal>
+<!-- <button (click)="createComponent()"> create component</button>-->
