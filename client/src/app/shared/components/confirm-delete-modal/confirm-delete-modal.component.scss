@@ -1,0 +1,40 @@
+.modal-popup {
+  display: flex; 
+  position: fixed; 
+  z-index: 1; 
+  padding-top: 100px; 
+  left: 0;
+  top: 0;
+  width: 100%; 
+  overflow: auto; 
+}
+
+  .modal-content {
+    background-color: #fefefe;
+    margin: 150px auto;
+    padding: 30px 100px;
+    border: 1px solid #888;
+    width: 40%;
+    border-radius: 5px;
+  }
+
+  .modal-actions{
+    padding-right: 30px;
+    padding-top: 20px;
+    text-align: right;
+  }
+  button{
+    border: none;
+    padding: 10px 20px;
+    margin: 0px 5px;
+  }
+
+  .btn-ok{
+    background-color: #3498DB;
+    border: #3498DB 3px solid;
+    color: white;
+  }
+  .btn-cancel{
+    border: #3498DB 3px solid;
+    color: #3498DB;
+  }

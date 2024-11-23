@@ -1,4 +1,4 @@
-import { Component, ComponentFactoryResolver, inject, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
+import { Component, inject, OnInit, ViewContainerRef} from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
@@ -8,7 +8,6 @@ import { IAddPet, IPet, ISearchPet } from '@app/core/models/pet.model';
 import { ConfirmDeleteModalComponent, SearchItemComponent } from '@shared/components';
 import { AddPetComponent } from '../components';
 import { PetService } from '@app/pages/services';
-import { ViewContainer } from '../viewContainer.directive';
 
 @Component({
   selector: 'app-pets',
@@ -28,19 +27,13 @@ import { ViewContainer } from '../viewContainer.directive';
 export class PetsComponent implements OnInit{
   petService = inject(PetService);
 
-  vcr = inject(ViewContainerRef)
+  viewContainerRef = inject(ViewContainerRef)
   showConfirmDeleteComponent: boolean = false;
   petToDelete!: IPet;
-
-  @ViewChild('container') container!: ViewContainer;
   
   pets$: Observable<IPet[] | null>;
-  title: string = "Pet";
-  onConfirmationObs: any;
 
   constructor(
-    private viewContainerRef: ViewContainerRef,
-    private componentFactoryResolver: ComponentFactoryResolver
   ) {
     this.pets$ = this.petService.petList$; 
   }
@@ -70,12 +63,11 @@ export class PetsComponent implements OnInit{
   OnDeleteClicked(pet: IPet): void {
     this.petToDelete = pet;
     this.showConfirmDelete(this.petToDelete);
-
   }
   
   showConfirmDelete(pet: IPet): void {
     const containerViewRef = this.viewContainerRef.createComponent(ConfirmDeleteModalComponent);
-    containerViewRef.instance.pettoDelete = pet;
+    containerViewRef.setInput("pettoDelete", pet);
 
     containerViewRef.instance.OnConfirmation.subscribe((confirmed) => {
       if (confirmed) {
@@ -91,6 +83,5 @@ export class PetsComponent implements OnInit{
       error: (error) => {console.error(error)}
     })
   } 
-
 
 }
