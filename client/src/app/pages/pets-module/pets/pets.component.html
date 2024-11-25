@@ -1,15 +1,23 @@
 <div class="container mt-4">
   
-  <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addPetForm">
+  <!-- <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addPetForm">
     Add Pet
   </button>
-  
+   -->
   <!-- @defer {
     <app-search-item (searchFormSubmission)="handleSearchFormSubmission($event)"></app-search-item>
   } -->
   
-  <ng-container *ngIf="pets$ | async as pets"> 
-    @if (pets.length > 0) {
+  <!-- <ng-container *ngIf="pets$ | async as pets"> 
+    @if (pets.length > 0) { -->
+    @if(pets.isLoading()) {
+      <div class="spinner-border" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+    }
+    @if(pets.error()) {
+      <div class="error">{{pets.error()}}</div>
+     }
       <div class="table-responsive">
         <h3 class="pt-3 pb-3">Pet List</h3>
         <table class="table">
@@ -26,7 +34,7 @@
             </tr>
           </thead>
           <tbody>
-            @for (pet of pets; track $index) {
+            @for (pet of pets.value(); track pet.id) {
               <tr>
                 <td>{{ pet.name }}</td>
                 <td>{{ pet.animal }}</td>
@@ -51,17 +59,19 @@
                   </button>
                 </td>
               </tr>  
-            }        
+            } @empty {
+              <div class="pt-3 pb-3">
+                <h3>No Data</h3>
+              </div>
+            } 
           </tbody>
         </table>
       </div>
-    }@else {
-      <div class="pt-3 pb-3">
-        <h3>No Data</h3>
-      </div>
-    }
-  </ng-container>
+    <!-- }@else { -->
+    
+    <!-- } -->
+  <!-- </ng-container> -->
   
 </div>
 
-<app-add-pet (addPetFormSubmitted)="handleAddPetFormSubmission($event)" ></app-add-pet>
+<!-- <app-add-pet (addPetFormSubmitted)="handleAddPetFormSubmission($event)" ></app-add-pet> -->

@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, ViewContainerRef} from '@angular/core';
+import { Component, inject, OnInit, resource, ViewContainerRef} from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
@@ -19,46 +19,59 @@ import { PetService } from '@app/pages/services';
     RouterModule,
     AddPetComponent,
     SearchItemComponent,
-    ConfirmDeleteModalComponent
   ],
   templateUrl: './pets.component.html',
   styleUrl: './pets.component.scss',
 })
 export class PetsComponent implements OnInit{
+
+  pets = resource<IPet[], unknown>({
+    loader: async () => {
+      const pets = await fetch(`http://localhost:3000/pet/all`);
+      if(pets.ok) throw Error(`Could not fetch...`)
+      return await pets.json();
+    }
+  })
+
+  constructor() {
+  }
+  ngOnInit(): void {
+  }
+  
   petService = inject(PetService);
 
   viewContainerRef = inject(ViewContainerRef)
-  showConfirmDeleteComponent: boolean = false;
+  // showConfirmDeleteComponent: boolean = false;
   petToDelete!: IPet;
   
-  pets$: Observable<IPet[] | null>;
+  // pets$: Observable<IPet[] | null>;
 
-  constructor(
-  ) {
-    this.pets$ = this.petService.petList$; 
-  }
+  // constructor(
+  // ) {
+  //   this.pets$ = this.petService.petList$; 
+  // }
 
-  ngOnInit(): void {   
-    this.getAllPets();
-  }
+  // ngOnInit(): void {   
+  //   this.getAllPets();
+  // }
 
-  getAllPets(data?: ISearchPet): void {
-    this.petService.getAllPetsService(data).subscribe({
-      next: () => {},
-      error: (e) => {console.log(e)}
-    })
-  }
+  // getAllPets(data?: ISearchPet): void {
+  //   this.petService.getAllPetsService(data).subscribe({
+  //     next: () => {},
+  //     error: (e) => {console.log(e)}
+  //   })
+  // }
 
-  handleSearchFormSubmission(data: ISearchPet): void {
-    this.getAllPets(data)
-  }
+  // handleSearchFormSubmission(data: ISearchPet): void {
+  //   this.getAllPets(data)
+  // }
 
-  handleAddPetFormSubmission(data: IAddPet): void {
-    this.petService.addPetService(data).subscribe({
-      next: () => {this.getAllPets()},
-      error: (error) => console.error('Error adding pet:', error)
-    });
-  }
+  // handleAddPetFormSubmission(data: IAddPet): void {
+  //   this.petService.addPetService(data).subscribe({
+  //     next: () => {this.getAllPets()},
+  //     error: (error) => console.error('Error adding pet:', error)
+  //   });
+  // }
   
   OnDeleteClicked(pet: IPet): void {
     this.petToDelete = pet;
