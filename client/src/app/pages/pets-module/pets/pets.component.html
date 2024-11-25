@@ -8,6 +8,8 @@
     <app-search-item (searchFormSubmission)="handleSearchFormSubmission($event)"></app-search-item>
   } -->
   
+  <input (input)="name.set($any($event.target).value)" type="search" placeholder="search"/>
+
   <!-- <ng-container *ngIf="pets$ | async as pets"> 
     @if (pets.length > 0) { -->
     @if(pets.isLoading()) {

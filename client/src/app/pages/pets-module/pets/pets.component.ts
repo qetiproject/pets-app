@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, resource, ViewContainerRef} from '@angular/core';
+import { Component, inject, OnInit, resource, signal, ViewContainerRef} from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
@@ -8,6 +8,7 @@ import { IAddPet, IPet, ISearchPet } from '@app/core/models/pet.model';
 import { ConfirmDeleteModalComponent, SearchItemComponent } from '@shared/components';
 import { AddPetComponent } from '../components';
 import { PetService } from '@app/pages/services';
+import { apiEndpoint } from '@app/core/constants/constants';
 
 @Component({
   selector: 'app-pets',
@@ -17,21 +18,23 @@ import { PetService } from '@app/pages/services';
     FormsModule,
     ReactiveFormsModule,
     RouterModule,
-    AddPetComponent,
-    SearchItemComponent,
   ],
   templateUrl: './pets.component.html',
   styleUrl: './pets.component.scss',
 })
 export class PetsComponent implements OnInit{
 
-  pets = resource<IPet[], unknown>({
-    loader: async () => {
-      const pets = await fetch(`http://localhost:3000/pet/all`);
-      if(pets.ok) throw Error(`Could not fetch...`)
-      return await pets.json();
+  name = signal('')
+  pets = resource<IPet[], {name: string}>({
+    request: () => ({name: this.name()}),
+    loader: async ({request, abortSignal}) => {
+      const users = await fetch(`${apiEndpoint.PetEndpoint.getAll}?name=${request.name}`, {
+        signal: abortSignal
+      });
+      if (!users.ok) throw Error(`Could not fetch...`)
+      return await users.json();
     }
-  })
+  });
 
   constructor() {
   }

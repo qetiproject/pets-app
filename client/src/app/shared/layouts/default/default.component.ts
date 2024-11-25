@@ -10,7 +10,6 @@ import { LoginComponent } from '@app/pages/auth-module';
   imports: [
     CommonModule,
     RouterOutlet, 
-    LoginComponent
   ],
   templateUrl: './default.component.html',
   styleUrl: './default.component.scss',
